@@ -44,7 +44,7 @@ const NAV2 = [
 
 const INITIAL = {
   screen: 'overview', sortKey: 'gmv', sortDir: -1, q: '', kocIdx: 0, cmp: [0, 1, 3],
-  range: 'Tất cả', brandOpen: false, brand: 'Tất cả Brand', alertFilter: 'all', alertOpen: 0,
+  range: 'Hôm nay', brandOpen: false, brand: 'Tất cả Brand', alertFilter: 'all', alertOpen: 0,
   stackHover: -1, hourHover: -1, scHover: -1, barHover: -1, funnelHover: -1, donutHover: null,
   hoverDay: null, pickOpen: false, pickQ: '',
   // custom date picker state
