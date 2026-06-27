@@ -36,12 +36,12 @@ await ensureAdmin(db);
   }
 }
 
-// --- dashboard cache (keyed by from+to so date filters get their own cache) ---
+// --- dashboard cache (keyed by from+to+brand so filters get their own cache) ---
 const cacheMap = new Map();
-const cacheKey = (from, to) => `${from || ''}|${to || ''}`;
-const dashboard = async (from, to) => {
-  const k = cacheKey(from, to);
-  if (!cacheMap.has(k)) cacheMap.set(k, await buildDashboard(db, { from, to }));
+const cacheKey = (from, to, brand) => `${from || ''}|${to || ''}|${brand || 'Tất cả Brand'}`;
+const dashboard = async (from, to, brand) => {
+  const k = cacheKey(from, to, brand);
+  if (!cacheMap.has(k)) cacheMap.set(k, await buildDashboard(db, { from, to, brand }));
   return cacheMap.get(k);
 };
 const invalidate = () => { cacheMap.clear(); };
@@ -90,11 +90,12 @@ app.get('/api/dashboard', requireAuth, async (req, res) => {
   try {
     const from = req.query.from || null;
     const to   = req.query.to   || null;
+    const brand = req.query.brand || null;
     // Basic date validation
     const dateRe = /^\d{4}-\d{2}-\d{2}$/;
     if (from && !dateRe.test(from)) return res.status(400).json({ error: 'from must be YYYY-MM-DD' });
     if (to   && !dateRe.test(to))   return res.status(400).json({ error: 'to must be YYYY-MM-DD' });
-    res.json(await dashboard(from, to));
+    res.json(await dashboard(from, to, brand));
   }
   catch (e) { console.error(e); res.status(500).json({ error: String(e) }); }
 });

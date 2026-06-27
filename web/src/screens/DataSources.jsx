@@ -46,10 +46,12 @@ export default function DataSources({ data, reload, user }) {
       <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.08em', color: '#9C8F75', textTransform: 'uppercase', marginBottom: 9 }}>Gán dữ liệu cho Brand</div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 11, background: '#FBF7EF', border: '1px solid #E7DDCA', borderRadius: 12, padding: '13px 16px', marginBottom: 7, maxWidth: 380 }}>
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#F47B27" strokeWidth="2"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8z" /><circle cx="7" cy="7" r="1.4" fill="#F47B27" stroke="none" /></svg>
-        <input value={brand} onChange={(e) => setBrand(e.target.value)} disabled={!canUpload}
-          list="brand-list"
-          style={{ flex: 1, background: 'none', border: 'none', outline: 'none', fontSize: 14, fontWeight: 600, color: '#211A0E', fontFamily: 'Manrope' }} />
-        <datalist id="brand-list">{meta.brands.map((b) => <option key={b.id} value={b.name} />)}</datalist>
+        <select value={brand} onChange={(e) => setBrand(e.target.value)} disabled={!canUpload}
+          style={{ flex: 1, background: 'none', border: 'none', outline: 'none', fontSize: 14, fontWeight: 600, color: '#211A0E', fontFamily: 'Manrope', cursor: 'pointer' }}>
+          {meta.brands.map((b) => (
+            <option key={b.id} value={b.name}>{b.name}</option>
+          ))}
+        </select>
       </div>
       <div style={{ fontSize: 11.5, color: '#9C8F75', fontStyle: 'italic', marginBottom: 18 }}>* Một file upload chỉ phục vụ dữ liệu cho 1 brand duy nhất</div>
 

@@ -24,10 +24,11 @@ export const login = (username, password) => req('/api/auth/login', { method: 'P
 export const me = () => req('/api/auth/me');
 
 // Fetch dashboard with optional date range filter.
-export const fetchDashboard = (from, to) => {
+export const fetchDashboard = (from, to, brand) => {
   const params = new URLSearchParams();
   if (from) params.set('from', from);
   if (to)   params.set('to', to);
+  if (brand) params.set('brand', brand);
   const qs = params.toString();
   return req('/api/dashboard' + (qs ? '?' + qs : ''));
 };

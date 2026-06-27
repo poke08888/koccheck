@@ -238,10 +238,10 @@ export default function App() {
   }, [S.range, S.customFrom, S.customTo]);
 
   // Load dashboard data.
-  const doFetch = useCallback(async (from, to) => {
+  const doFetch = useCallback(async (from, to, brand) => {
     setLoading(true);
     try {
-      const d = await fetchDashboard(from || undefined, to || undefined);
+      const d = await fetchDashboard(from || undefined, to || undefined, brand || undefined);
       setData(d);
       setErr(null);
     } catch (e) {
@@ -251,19 +251,19 @@ export default function App() {
     }
   }, []);
 
-  // Refetch whenever user logs in OR the active range changes.
+  // Refetch whenever user logs in OR the active range changes OR S.brand changes.
   // Using a ref-based key comparison so we don't add `data` to deps
   // (that would create a circular loop: fetch → data changes → effect runs → fetch…).
   const prevRangeKey = useRef(null);
   useEffect(() => {
     if (!user) return;
-    const key = `${activeRange.from}|${activeRange.to}`;
+    const key = `${activeRange.from}|${activeRange.to}|${S.brand || ''}`;
     if (prevRangeKey.current === key) return;
     prevRangeKey.current = key;
-    doFetch(activeRange.from, activeRange.to);
-  }, [user, activeRange, doFetch]);
+    doFetch(activeRange.from, activeRange.to, S.brand);
+  }, [user, activeRange, S.brand, doFetch]);
 
-  const reload = () => doFetch(activeRange.from, activeRange.to);
+  const reload = () => doFetch(activeRange.from, activeRange.to, S.brand);
   const doLogout = () => { apiLogout(); setUser(null); setData(null); setS(INITIAL); };
 
   const brands = useMemo(

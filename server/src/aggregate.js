@@ -9,25 +9,34 @@ import { SAMPLE_PRODUCTS } from './products.js';
 
 const M = 1e6;
 
-// Build WHERE clause + params for optional date range filter.
+// Build WHERE clause + params for optional date range & brand filter.
 // Returns { where: ' WHERE ...', params: [...] }
-function dateFilter(from, to) {
-  if (from && to) return { where: ' WHERE day BETWEEN ? AND ?', params: [from, to] };
-  if (from)       return { where: ' WHERE day >= ?',           params: [from] };
-  if (to)         return { where: ' WHERE day <= ?',           params: [to] };
-  return { where: '', params: [] };
+function combineFilter(from, to, brand, prefix = '') {
+  let conds = [];
+  let params = [];
+  const col = (name) => prefix ? `${prefix}.${name}` : name;
+  if (from && to) {
+    conds.push(`${col('day')} BETWEEN ? AND ?`);
+    params.push(from, to);
+  } else if (from) {
+    conds.push(`${col('day')} >= ?`);
+    params.push(from);
+  } else if (to) {
+    conds.push(`${col('day')} <= ?`);
+    params.push(to);
+  }
+  if (brand && brand !== 'Tất cả Brand') {
+    conds.push(`${col('brand_id')} = (SELECT id FROM brands WHERE name = ?)`);
+    params.push(brand);
+  }
+  return {
+    where: conds.length ? ' WHERE ' + conds.join(' AND ') : '',
+    params
+  };
 }
 
-// Append extra AND conditions to an existing WHERE clause.
-function andFilter(base, extra) {
-  if (!extra) return base;
-  return base.where
-    ? { where: base.where + ' AND ' + extra, params: base.params }
-    : { where: ' WHERE ' + extra, params: base.params };
-}
-
-export async function totals(db, { from, to } = {}) {
-  const f = dateFilter(from, to);
+export async function totals(db, { from, to, brand } = {}) {
+  const f = combineFilter(from, to, brand);
   const t = await db.get(`
     SELECT
       COALESCE(SUM(gmv),0)            AS gmv,
@@ -57,8 +66,8 @@ export async function totals(db, { from, to } = {}) {
 }
 
 // Per-day series with Top1-2 / Top3-5 / rest GMV attribution (in millions VND).
-export async function dailySeries(db, { from, to } = {}) {
-  const f = dateFilter(from, to);
+export async function dailySeries(db, { from, to, brand } = {}) {
+  const f = combineFilter(from, to, brand);
   // Combine: always filter day IS NOT NULL; optionally also filter by from/to
   const whereClause = f.where
     ? f.where + ' AND day IS NOT NULL'
@@ -75,9 +84,13 @@ export async function dailySeries(db, { from, to } = {}) {
 
   const out = [];
   for (const d of days) {
+    const brandCond = brand && brand !== 'Tất cả Brand'
+      ? ' AND brand_id = (SELECT id FROM brands WHERE name = ?)'
+      : '';
+    const brandParams = brand && brand !== 'Tất cả Brand' ? [brand] : [];
     const ranked = await db.all(
-      'SELECT koc_id, COALESCE(SUM(gmv),0) g FROM sessions WHERE day = ? GROUP BY koc_id ORDER BY g DESC',
-      [d.d]
+      `SELECT koc_id, COALESCE(SUM(gmv),0) g FROM sessions WHERE day = ?${brandCond} GROUP BY koc_id ORDER BY g DESC`,
+      [d.d, ...brandParams]
     );
     const sum = (a, b) => ranked.slice(a, b).reduce((s, r) => s + r.g, 0);
     out.push({
@@ -90,8 +103,8 @@ export async function dailySeries(db, { from, to } = {}) {
 }
 
 // 24-hour distribution: w = sessions that produced an order, n = the rest.
-export async function hourSeries(db, { from, to } = {}) {
-  const f = dateFilter(from, to);
+export async function hourSeries(db, { from, to, brand } = {}) {
+  const f = combineFilter(from, to, brand);
   const baseWhere = f.where
     ? f.where + ' AND hour IS NOT NULL'
     : ' WHERE hour IS NOT NULL';
@@ -105,10 +118,10 @@ export async function hourSeries(db, { from, to } = {}) {
   return Array.from({ length: 24 }, (_, h) => ({ h, w: byHour[h]?.w || 0, n: byHour[h]?.n || 0 }));
 }
 
-export async function kocList(db, { from, to } = {}) {
-  if (from || to) {
-    // When date-filtered: aggregate directly from sessions, not the pre-computed koc_stats cache.
-    const f = dateFilter(from, to);
+export async function kocList(db, { from, to, brand } = {}) {
+  if (from || to || (brand && brand !== 'Tất cả Brand')) {
+    // When filtered: aggregate directly from sessions, not the pre-computed koc_stats cache.
+    const f = combineFilter(from, to, brand, 's');
     return db.all(`
       SELECT k.id, k.name, k.username AS "user",
              COUNT(s.id)                          AS sessions,
@@ -154,10 +167,10 @@ export async function kocList(db, { from, to } = {}) {
   `);
 }
 
-export async function gradeCounts(db, { from, to } = {}) {
-  if (from || to) {
-    // Recompute grades on filtered koc list (use the cached grade per koc, just filter which kocs appear)
-    const f = dateFilter(from, to);
+export async function gradeCounts(db, { from, to, brand } = {}) {
+  if (from || to || (brand && brand !== 'Tất cả Brand')) {
+    // Recompute grades on filtered koc list
+    const f = combineFilter(from, to, brand, 's');
     const rows = await db.all(`
       SELECT st.grade, COUNT(DISTINCT s.koc_id) n
       FROM sessions s
@@ -188,8 +201,8 @@ export async function kocSessions(db, kocId, limit = 12) {
   }));
 }
 
-export async function sessionsSample(db, { from, to } = {}, limit = 12) {
-  const f = dateFilter(from, to);
+export async function sessionsSample(db, { from, to, brand } = {}, limit = 12) {
+  const f = combineFilter(from, to, brand);
   const rows = await db.all(`
     SELECT day, start_hm, duration_min, gmv, orders, viewers, impressions, clicks, ctr
     FROM sessions${f.where} ORDER BY started_at DESC LIMIT ?
@@ -211,8 +224,8 @@ export async function meta(db) {
 
 // One bundle that mirrors the prototype's KOCDATA object so the SPA can render
 // every screen from a single fetch.
-export async function buildDashboard(db, { from, to } = {}) {
-  const filter = { from, to };
+export async function buildDashboard(db, { from, to, brand } = {}) {
+  const filter = { from, to, brand };
   const total = await totals(db, filter);
   const koc = await kocList(db, filter);
   const grades = await gradeCounts(db, filter);
