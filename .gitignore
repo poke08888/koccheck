@@ -1,0 +1,13 @@
+node_modules/
+*.log
+
+# generated SQLite database (reproduce with: cd server && npm run seed)
+server/data/*.db
+server/data/*.db-shm
+server/data/*.db-wal
+
+# build output
+web/dist/
+
+# os
+.DS_Store

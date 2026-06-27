@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="koc-data.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#EEF1F8;font-family:'Manrope',sans-serif;-webkit-font-smoothing:antialiased}
+  ::-webkit-scrollbar{width:9px;height:9px}
+  ::-webkit-scrollbar-thumb{background:#D8DDE8;border-radius:6px}
+  ::-webkit-scrollbar-track{background:transparent}
+  @keyframes flo{0%,100%{opacity:.5}50%{opacity:.9}}
+  @keyframes dash{to{stroke-dashoffset:0}}
+  .num{font-family:'Space Grotesk',sans-serif;font-feature-settings:'tnum';letter-spacing:-.02em}
+  .navi:hover{background:#EEF1F880!important;color:#1B1F2C!important}
+  .row:hover{background:#EDF0F6!important}
+  .lift{transition:transform .18s ease,border-color .18s ease,background .18s ease}
+  .lift:hover{transform:translateY(-2px);border-color:#C8CEDA!important}
+</style>
+</helmet>
+<div style="display:flex;min-height:1024px;width:1440px;background:#EEF1F8;color:#1B1F2C;position:relative;overflow:hidden">
+
+  <div style="position:absolute;top:-180px;left:180px;width:680px;height:520px;background:radial-gradient(circle,rgba(94,91,230,.09),transparent 70%);pointer-events:none;animation:flo 9s ease-in-out infinite"></div>
+  <div style="position:absolute;top:-120px;right:60px;width:520px;height:460px;background:radial-gradient(circle,rgba(15,163,145,.07),transparent 70%);pointer-events:none"></div>
+
+  <!-- SIDEBAR -->
+  <aside style="width:248px;flex-shrink:0;background:#FFFFFF;border-right:1px solid #E6E9F100;border-image:linear-gradient(180deg,#E6E9F1,#FFFFFF) 1;display:flex;flex-direction:column;padding:24px 16px;position:relative;z-index:2">
+    <div style="display:flex;align-items:center;gap:12px;padding:6px 8px 22px">
+      <div style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#5E5BE6,#0FA391);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(109,107,246,.4)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+      </div>
+      <div>
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:16px;letter-spacing:-.01em;line-height:1">LiveScope</div>
+        <div style="font-size:11px;color:#7A8197;margin-top:2px">KOC Intelligence</div>
+      </div>
+    </div>
+
+    <div style="font-size:10.5px;font-weight:700;letter-spacing:.12em;color:#A7AEBF;padding:8px 10px 8px">PHÂN TÍCH</div>
+    <sc-for list="{{ nav1 }}" as="item" hint-placeholder-count="4">
+      <div class="navi" onClick="{{ item.go }}" style="display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:11px;cursor:pointer;color:{{ item.col }};background:{{ item.bg }};margin-bottom:3px;transition:all .15s;font-weight:{{ item.fw }};font-size:14px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ item.icon }}"/></svg>
+        <span>{{ item.label }}</span>
+      </div>
+    </sc-for>
+
+    <div style="font-size:10.5px;font-weight:700;letter-spacing:.12em;color:#A7AEBF;padding:18px 10px 8px">QUẢN LÝ</div>
+    <sc-for list="{{ nav2 }}" as="item" hint-placeholder-count="3">
+      <div class="navi" onClick="{{ item.go }}" style="display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:11px;cursor:pointer;color:{{ item.col }};background:{{ item.bg }};margin-bottom:3px;transition:all .15s;font-weight:{{ item.fw }};font-size:14px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ item.icon }}"/></svg>
+        <span>{{ item.label }}</span>
+      </div>
+    </sc-for>
+
+    <div style="margin-top:auto;background:linear-gradient(135deg,#ECEFF5,#FFFFFF);border:1px solid #E6E9F1;border-radius:14px;padding:14px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#0FA391,#0C8E7E);display:flex;align-items:center;justify-content:center;color:#04140f;font-weight:800;font-size:13px">MC</div>
+        <div style="min-width:0">
+          <div style="font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Macaron Cos</div>
+          <div style="font-size:11px;color:#7A8197">Gói Growth · 598 KOC</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main style="flex:1;min-width:0;display:flex;flex-direction:column;position:relative;z-index:1">
+    <!-- TOPBAR -->
+    <div style="display:flex;align-items:center;gap:16px;padding:18px 28px;border-bottom:1px solid #E6E9F100;border-image:linear-gradient(90deg,#E6E9F100,#E6E9F1,#E6E9F100) 1">
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:10px">
+          <h1 style="font-family:'Space Grotesk';font-size:20px;font-weight:700;letter-spacing:-.01em">{{ screenTitle }}</h1>
+          <span style="font-size:11px;font-weight:700;color:#0FA391;background:#E6F7F3;border:1px solid #BCE5DB;padding:3px 9px;border-radius:99px;display:flex;align-items:center;gap:5px"><span style="width:6px;height:6px;border-radius:99px;background:#0FA391;box-shadow:0 0 8px #0FA391"></span>LIVE</span>
+        </div>
+        <div style="font-size:13px;color:#838AA0;margin-top:3px">{{ screenSub }}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;background:#FFFFFF;border:1px solid #E6E9F1;border-radius:11px;padding:5px 6px">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5F6678" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><circle cx="7" cy="7" r="1.4" fill="#5F6678" stroke="none"/></svg>
+        <span style="font-size:13px;font-weight:600;color:#2A3040;padding-right:4px">Tất cả Brand</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5F6678" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div style="display:flex;background:#FFFFFF;border:1px solid #E6E9F1;border-radius:11px;padding:3px">
+        <sc-for list="{{ ranges }}" as="r" hint-placeholder-count="5">
+          <div onClick="{{ r.go }}" style="font-size:12.5px;font-weight:600;padding:7px 13px;border-radius:8px;cursor:pointer;color:{{ r.col }};background:{{ r.bg }};transition:all .15s">{{ r.label }}</div>
+        </sc-for>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;background:#FFFFFF;border:1px solid #E6E9F1;border-radius:11px;padding:8px 12px;font-size:12.5px;font-weight:600;color:#525A6E" class="num">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5E5BE6" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        01/04 — 15/04/2026
+      </div>
+    </div>
+
+    <div style="flex:1;overflow-y:auto;padding:24px 28px 40px">
+      <!--SCREENS-->
+      <sc-if value="{{ isOverview }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <!-- INSIGHTS -->
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px">
+            <sc-for list="{{ insights }}" as="ins" hint-placeholder-count="4">
+              <div class="lift" style="background:linear-gradient(160deg,{{ ins.g1 }},{{ ins.g2 }});border:1px solid {{ ins.bd }};border-radius:15px;padding:15px 16px;position:relative;overflow:hidden">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:9px">
+                  <div style="width:26px;height:26px;border-radius:8px;background:{{ ins.ic }};display:flex;align-items:center;justify-content:center;color:{{ ins.icc }}">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ ins.icon }}"/></svg>
+                  </div>
+                  <span style="font-size:11px;font-weight:700;letter-spacing:.04em;color:{{ ins.icc }};text-transform:uppercase">{{ ins.tag }}</span>
+                </div>
+                <div style="font-size:13.5px;font-weight:600;line-height:1.4;color:#232838">{{ ins.text }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <!-- KPI GRID -->
+          <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:22px">
+            <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="12">
+              <div class="lift" style="background:#FFFFFF;border:1px solid #E6E9F1;border-radius:15px;padding:16px 16px 15px;position:relative;overflow:hidden">
+                <div style="position:absolute;top:0;left:0;width:100%;height:3px;background:{{ k.accent }};opacity:.85"></div>
+                <div style="font-size:10.5px;font-weight:700;letter-spacing:.07em;color:#838AA0;text-transform:uppercase;margin-bottom:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ k.label }}</div>
+                <div class="num" style="font-size:27px;font-weight:700;color:{{ k.color }};line-height:1">{{ k.value }}</div>
+                <div style="font-size:11px;color:#7A8197;margin-top:8px">{{ k.sub }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <!-- CHARTS ROW 1 -->
+          <div style="display:grid;grid-template-columns:1.35fr 1fr;gap:16px;margin-bottom:16px">
+            <div style="background:#FFFFFF;border:1px solid #E6E9F1;border-radius:18px;padding:20px 22px">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px">
+                <div>
+                  <div style="font-family:'Space Grotesk';font-size:16px;font-weight:600">Xu hướng Doanh thu</div>
+                  <div style="font-size:11px;letter-spacing:.05em;color:#7A8197;text-transform:uppercase;margin-top:3px">Diễn biến GMV &amp; Đơn theo ngày</div>
+                </div>
+                <div style="display:flex;gap:14px;font-size:12px;font-weight:600">
+                  <span style="display:flex;align-items:center;gap:6px;color:#525A6E"><span style="width:10px;height:10px;border-radius:3px;background:#0FA391"></span>GMV</span>
+                  <span style="display:flex;align-items:center;gap:6px;color:#525A6E"><span style="width:14px;height:3px;border-radius:2px;background:#D08700"></span>Đơn hàng</span>
+                </div>
+              </div>
+              <svg viewBox="0 0 740 250" style="width:100%;height:auto;display:block">
+                <defs>
+                  <linearGradient id="gmvfill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0FA391" stop-opacity=".32"/><stop offset="1" stop-color="#0FA391" stop-opacity="0"/></linearGradient>
+                </defs>
+                <sc-for list="{{ trendGrid }}" as="g" hint-placeholder-count="4"><line x1="8" y1="{{ g }}" x2="732" y2="{{ g }}" stroke="#E8EBF2" stroke-width="1"/></sc-for>
+                <path d="{{ trendArea }}" fill="url(#gmvfill)"/>
+                <path d="{{ trendGmv }}" fill="none" stroke="#0FA391" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="{{ trendOrd }}" fill="none" stroke="#D08700" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <sc-for list="{{ trendDots }}" as="d" hint-placeholder-count="15"><circle cx="{{ d.x }}" cy="{{ d.y }}" r="3.4" fill="#D08700" stroke="#FFFFFF" stroke-width="2"/></sc-for>
+                <sc-for list="{{ trendLabels }}" as="l" hint-placeholder-count="8"><text x="{{ l.x }}" y="244" fill="#7A8197" font-size="11" text-anchor="middle" font-family="Space Grotesk">{{ l.t }}</text></sc-for>
+              </svg>
+            </div>
+
+            <div style="background:#FFFFFF;border:1px solid #E6E9F1;border-radius:18px;padding:20px 22px">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px">
+                <div>
+                  <div style="font-family:'Space Grotesk';font-size:16px;font-weight:600">Khung giờ Peak LIVE</div>
+                  <div style="font-size:11px;letter-spacing:.05em;color:#7A8197;text-transform:uppercase;margin-top:3px">Phân bổ phiên theo giờ</div>
+                </div>
+                <div style="display:flex;gap:12px;font-size:12px;font-weight:600">
+                  <span style="display:flex;align-items:center;gap:6px;color:#525A6E"><span style="width:10px;height:10px;border-radius:3px;background:#5E5BE6"></span>Có đơn</span>
+                  <span style="display:flex;align-items:center;gap:6px;color:#525A6E"><span style="width:10px;height:10px;border-radius:3px;background:#D4DAE6"></span>Không</span>
+                </div>
+              </div>
+              <svg viewBox="0 0 460 250" style="width:100%;height:auto;display:block">
+                <sc-for list="{{ hourBars }}" as="b" hint-placeholder-count="24">
+                  <rect x="{{ b.x }}" y="{{ b.ny }}" width="{{ b.w }}" height="{{ b.nh }}" rx="2" fill="#D4DAE6"/>
+                  <rect x="{{ b.x }}" y="{{ b.wy }}" width="{{ b.w }}" height="{{ b.wh }}" rx="2" fill="#5E5BE6"/>
+                </sc-for>
+                <sc-for list="{{ hourLabels }}" as="l" hint-placeholder-count="5"><text x="{{ l.x }}" y="244" fill="#7A8197" font-size="11" text-anchor="middle" font-family="Space Grotesk">{{ l.t }}</text></sc-for>
+              </svg>
+            </div>
+          </div>
+
+          <!-- CHARTS ROW 2 -->
+          <div style="display:grid;grid-template-columns:1fr 1.35fr;gap:16px">
+            <div style="background:#FFFFFF;border:1px solid #E6E9F1;border-radius:18px;padding:20px 22px">
+              <div style="font-family:'Space Grotesk';font-size:16px;font-weight:600">Top 10 KOC theo GMV</div>
+              <div style="font-size:11px;letter-spacing:.05em;color:#7A8197;text-transform:uppercase;margin:3px 0 16px">Xếp hạng hiệu suất tài chính</div>
+              <div style="display:flex;flex-direction:column;gap:11px">
+                <sc-for list="{{ topBars }}" as="b" hint-placeholder-count="10">
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <div style="width:128px;font-size:12.5px;font-weight:600;color:#2A3040;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right">{{ b.name }}</div>
+                    <div style="flex:1;height:22px;background:#ECEFF5;border-radius:6px;overflow:hidden;position:relative">
+                      <div style="height:100%;width:{{ b.pct }}%;background:linear-gradient(90deg,#0FA391,#5E5BE6);border-radius:6px"></div>
+                    </div>
+                    <div class="num" style="width:62px;font-size:12.5px;font-weight:700;color:#525A6E">{{ b.val }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <div style="background:#FFFFFF;border:1px solid #E6E9F1;border-radius:18px;padding:20px 22px">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between">
+                <div>
+                  <div style="font-family:'Space Grotesk';font-size:16px;font-weight:600">Ma trận hiệu suất KOC</div>
+                  <div style="font-size:11px;letter-spacing:.05em;color:#7A8197;text-transform:uppercase;margin-top:3px">Nỗ lực (giờ live) × Kết quả (GMV)</div>
+                </div>
+              </div>
+              <svg viewBox="0 0 620 250" style="width:100%;height:auto;display:block;margin-top:6px">
+                <line x1="48" y1="208" x2="610" y2="208" stroke="#C8CEDA" stroke-width="1"/>
+                <line x1="48" y1="14" x2="48" y2="208" stroke="#C8CEDA" stroke-width="1"/>
+                <line x1="320" y1="14" x2="320" y2="208" stroke="#E2E6EE" stroke-width="1" stroke-dasharray="4 4"/>
+                <line x1="48" y1="111" x2="610" y2="111" stroke="#E2E6EE" stroke-width="1" stroke-dasharray="4 4"/>
+                <text x="56" y="28" fill="#0FA391" font-size="10.5" font-weight="700" letter-spacing=".5">HIỆU QUẢ CAO</text>
+                <text x="602" y="28" fill="#5E5BE6" font-size="10.5" font-weight="700" text-anchor="end" letter-spacing=".5">NGÔI SAO BỀN BỈ</text>
+                <text x="56" y="200" fill="#7A8197" font-size="10.5" font-weight="700" letter-spacing=".5">TIỀM NĂNG MỚI</text>
+                <text x="602" y="200" fill="#D08700" font-size="10.5" font-weight="700" text-anchor="end" letter-spacing=".5">CẦN TỐI ƯU CHUYỂN ĐỔI</text>
+                <sc-for list="{{ scatterPts }}" as="p" hint-placeholder-count="90"><circle cx="{{ p.x }}" cy="{{ p.y }}" r="{{ p.r }}" fill="{{ p.c }}" fill-opacity="{{ p.o }}"/></sc-for>
+                <text x="48" y="230" fill="#7A8197" font-size="10" text-anchor="middle">0h</text>
+                <text x="610" y="230" fill="#7A8197" font-size="10" text-anchor="end">320h →</text>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+      <!-- KOC LIST -->
+      <sc-if value="{{ isKoc }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:13px;margin-bottom:18px">
+            <sc-for list="{{ gradeBuckets }}" as="b" hint-placeholder-count="5">
+              <div class="lift" style="background:#FFFFFF;border:1px solid #E6E9F1;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:13px">
+                <div style="width:42px;height:42px;border-radius:12px;background:{{ b.col }}1f;border:1.5px solid {{ b.col }};display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk';font-weight:700;font-size:18px;color:{{ b.col }}">{{ b.g }}</div>
+                <div>
+                  <div class="num" style="font-size:22px;font-weight:700">{{ b.n }}</div>
+                  <div style="font-size:11.5px;color:#838AA0">{{ b.l }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+            <div style="flex:1;display:flex;align-items:center;gap:10px;background:#FFFFFF;border:1px solid #E6E9F1;border-radius:12px;padding:11px 15px">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#838AA0" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              <input value="{{ q }}" onInput="{{ setQ }}" placeholder="Tìm theo tên KOC hoặc @username…" style="flex:1;background:none;border:none;outline:none;color:#1B1F2C;font-size:13.5px;font-family:Manrope"/>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;background:#FFFFFF;border:1px solid #E6E9F1;border-radius:12px;padding:11px 16px;font-size:13px;font-weight:600;color:#525A6E;cursor:pointer" class="lift">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5E5BE6" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4 M7 10l5 5 5-5 M12 15V3"/></svg>Xuất CSV
+            </div>
+          </div>
+
+          <div style="background:#FFFFFF;border:1px solid #E6E9F1;border-radius:16px;overflow:hidden">
+            <div style="display:grid;grid-template-columns:46px 2.1fr 1.3fr repeat(8,1fr) 50px;align-items:center;padding:13px 18px;border-bottom:1px solid #E6E9F1;font-size:11px;font-weight:700;letter-spacing:.05em;color:#7A8197;text-transform:uppercase">
+              <div>#</div><div>KOC</div><div>Username</div>
+              <sc-for list="{{ cols }}" as="c" hint-placeholder-count="8">
+                <div onClick="{{ c.go }}" style="text-align:right;cursor:pointer;color:{{ c.active }};white-space:nowrap">{{ c.label }} <span style="color:#5E5BE6">{{ c.arrow }}</span></div>
+              </sc-for>
+              <div></div>
+            </div>
+            <sc-for list="{{ kocRows }}" as="k" hint-placeholder-count="12">
+              <div class="row" onClick="{{ k.open }}" style="display:grid;grid-template-columns:46px 2.1fr 1.3fr repeat(8,1fr) 50px;align-items:center;padding:12px 18px;border-bottom:1px solid #EDF0F6;cursor:pointer;transition:background .12s">
+                <div class="num" style="font-size:13px;color:#7A8197;font-weight:600">{{ k.rank }}</div>
+                <div style="display:flex;align-items:center;gap:11px;min-width:0">
+                  <div style="width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#E6E9F1,#EAEDF4);border:1px solid #D8DDE8;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#525A6E;flex-shrink:0">{{ k.initials }}</div>
+                  <div style="min-width:0">
+                    <div style="font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ k.name }}</div>
+                    <div style="font-size:11px;color:#7A8197">Hạng {{ k.grade }}</div>
+                  </div>
+                </div>
+                <div style="font-size:12.5px;color:#5F6678;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ k.user }}</div>
+                <div class="num" style="text-align:right;font-size:13px;color:#525A6E">{{ k.sessions }}</div>
+                <div class="num" style="text-align:right;font-size:13px;color:#525A6E">{{ k.hours }}</div>
+                <div class="num" style="text-align:right;font-size:13px;font-weight:700;color:#0FA391">{{ k.gmv }}</div>
+                <div class="num" style="text-align:right;font-size:13px;color:#2778DE">{{ k.orders }}</div>
+                <div class="num" style="text-align:right;font-size:13px;color:#525A6E">{{ k.ctr }}</div>
+                <div class="num" style="text-align:right;font-size:13px;color:#16A34A">{{ k.cvr }}</div>
+                <div class="num" style="text-align:right;font-size:13px;color:#525A6E">{{ k.dtgio }}</div>
+                <div style="display:flex;justify-content:flex-end"><div class="num" style="min-width:38px;text-align:center;font-size:12.5px;font-weight:700;color:{{ k.gcol }};background:{{ k.gcol }}1c;border:1px solid {{ k.gcol }}55;border-radius:7px;padding:3px 0">{{ k.score }}</div></div>
+                <div style="text-align:right;color:#A7AEBF;font-size:17px;line-height:1;font-weight:700">›</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- KOC DETAIL -->
+      <sc-if value="{{ isDetail }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div onClick="{{ backKoc }}" style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:#5F6678;cursor:pointer;margin-bottom:16px">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>Quay lại danh sách
+          </div>
+          <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-bottom:16px">
+            <div style="background:linear-gradient(135deg,#FFFFFF,#FFFFFF);border:1px solid #E6E9F1;border-radius:18px;padding:24px">
+              <div style="display:flex;align-items:center;gap:18px">
+                <div style="width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,#5E5BE6,#0FA391);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk';font-size:26px;font-weight:700;color:#fff;flex-shrink:0">{{ detail.initials }}</div>
+                <div style="flex:1;min-width:0">
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <div style="font-family:'Space Grotesk';font-size:22px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ detail.name }}</div>
+                    <span style="font-size:12px;font-weight:700;color:{{ detail.gcol }};background:{{ detail.gcol }}1c;border:1px solid {{ detail.gcol }}66;padding:3px 11px;border-radius:99px">Hạng {{ detail.grade }}</span>
+                  </div>
+                  <div style="font-size:13.5px;color:#5F6678;margin-top:3px">{{ detail.user }}</div>
+                </div>
+                <div style="text-align:center;padding-left:18px;border-left:1px solid #E6E9F1">
+                  <div class="num" style="font-size:40px;font-weight:700;color:{{ detail.gcol }};line-height:1">{{ detail.score }}</div>
+                  <div style="font-size:11px;color:#7A8197;margin-top:4px">điểm tổng / 100</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-top:22px">
+                <sc-for list="{{ detail.stats }}" as="s" hint-placeholder-count="8">
+                  <div style="background:#F6F8FC;border:1px solid #EAEDF4;border-radius:12px;padding:13px 14px">
+                    <div style="font-size:10.5px;color:#7A8197;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:7px">{{ s.l }}</div>
+                    <div class="num" style="font-size:18px;font-weight:700;color:{{ s.c }}">{{ s.v }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <div style="background:#FFFFFF;border:1px solid #E6E9F1;border-radius:18px;padding:20px">
+              <div style="font-family:'Space Grotesk';font-size:15px;font-weight:600;margin-bottom:2px">Hồ sơ năng lực</div>
+              <div style="font-size:11px;letter-spacing:.05em;color:#7A8197;text-transform:uppercase;margin-bottom:6px">5 trục chấm điểm</div>
+              <svg viewBox="0 0 260 256" style="width:100%;height:auto">
+                <sc-for list="{{ detail.radar.grid }}" as="g" hint-placeholder-count="4"><polygon points="{{ g }}" fill="none" stroke="#E2E6EE" stroke-width="1"/></sc-for>
+                <sc-for list="{{ detail.radar.spokes }}" as="s" hint-placeholder-count="5"><line x1="130" y1="128" x2="{{ s.x }}" y2="{{ s.y }}" stroke="#E2E6EE" stroke-width="1"/></sc-for>
+                <polygon points="{{ detail.radar.valPoly }}" fill="#5E5BE633" stroke="#5E5BE6" stroke-width="2"/>
+                <sc-for list="{{ detail.radar.dots }}" as="d" hint-placeholder-count="5"><circle cx="{{ d.x }}" cy="{{ d.y }}" r="3.2" fill="#5E5BE6"/></sc-for>
+                <sc-for list="{{ detail.radar.axisL }}" as="a" hint-placeholder-count="5"><text x="{{ a.x }}" y="{{ a.y }}" fill="#5F6678" font-size="10.5" font-weight="600" text-anchor="{{ a.a }}">{{ a.l }}</text></sc-for>
+              </svg>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:16px">
+            <div style="background:#FFFFFF;border:1px solid #E6E9F1;border-radius:18px;padding:20px">
+              <div style="font-family:'Space Grotesk';font-size:15px;font-weight:600;margin-bottom:16px">Tương tác cộng đồng</div>
+              <div style="display:flex;flex-direction:column;gap:13px">
+                <sc-for list="{{ detail.eng }}" as="e" hint-placeholder-count="4">
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:12px;border-bottom:1px solid #E6E9F100">
+                    <span style="font-size:13px;color:#5F6678">{{ e.l }}</span>
+                    <span class="num" style="font-size:16px;font-weight:700;color:#232838">{{ e.v }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="margin-top:8px;background:#EAF7F1;border:1px solid #BFE6DA;border-radius:12px;padding:13px 14px">
+                <div style="font-size:11px;font-weight:700;color:#0FA391;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px">Gợi ý vận hành</div>
+                <div style="font-size:12.5px;color:#525A6E;line-height:1.5">Duy trì khung giờ hiệu quả nhất, tăng tần suất phiên có sản phẩm chủ lực để nâng DT/giờ.</div>
+              </div>
+            </div>
+
+            <div style="background:#FFFFFF;border:1px solid #E6E9F1;border-radius:18px;padding:20px">
+              <div style="font-family:'Space Grotesk';font-size:15px;font-weight:600;margin-bottom:14px">Lịch sử phiên gần đây</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1.4fr 1fr 1.2fr 1fr;padding:0 4px 11px;font-size:10.5px;font-weight:700;letter-spacing:.04em;color:#7A8197;text-transform:uppercase;border-bottom:1px solid #E6E9F1">
+                <div>Ngày</div><div>Thời lượng</div><div style="text-align:right">GMV</div><div style="text-align:right">Đơn</div><div style="text-align:right">Người xem</div><div style="text-align:right">CTR</div>
+              </div>
+              <sc-for list="{{ detail.sessions }}" as="s" hint-placeholder-count="8">
+                <div style="display:grid;grid-template-columns:1fr 1fr 1.4fr 1fr 1.2fr 1fr;align-items:center;padding:11px 4px;border-bottom:1px solid #EDF0F6">
+                  <div style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:#2A3040"><span style="width:6px;height:6px;border-radius:99px;background:{{ s.dot }}"></span>{{ s.date }}</div>
+                  <div class="num" style="font-size:12.5px;color:#525A6E">{{ s.dur }}</div>
+                  <div class="num" style="text-align:right;font-size:12.5px;font-weight:700;color:#0FA391">{{ s.gmv }}</div>
+                  <div class="num" style="text-align:right;font-size:12.5px;color:#2778DE">{{ s.orders }}</div>
+                  <div class="num" style="text-align:right;font-size:12.5px;color:#525A6E">{{ s.viewers }}</div>
+                  <div class="num" style="text-align:right;font-size:12.5px;color:#525A6E">{{ s.ctr }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- COMPARE -->
+      <sc-if value="{{ isCompare }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px">
+            <sc-for list="{{ cmpCards }}" as="c" hint-placeholder-count="3">
+              <div style="background:#FFFFFF;border:1px solid {{ c.col }}44;border-radius:16px;padding:18px;position:relative;overflow:hidden">
+                <div style="position:absolute;top:0;left:0;width:100%;height:3px;background:{{ c.col }}"></div>
+                <div style="display:flex;align-items:center;gap:13px">
+                  <div style="width:46px;height:46px;border-radius:13px;background:{{ c.col }}22;border:1px solid {{ c.col }}66;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk';font-weight:700;font-size:16px;color:{{ c.col }}">{{ c.initials }}</div>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:14.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.name }}</div>
+                    <div style="font-size:12px;color:#5F6678">{{ c.user }}</div>
+                  </div>
+                  <div style="text-align:center">
+                    <div class="num" style="font-size:24px;font-weight:700;color:{{ c.gcol }};line-height:1">{{ c.score }}</div>
+                    <div style="font-size:10px;color:#7A8197">Hạng {{ c.grade }}</div>
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="background:#FFFFFF;border:1px solid #E6E9F1;border-radius:18px;padding:8px 22px 14px">
+            <sc-for list="{{ cmpRows }}" as="r" hint-placeholder-count="8">
+              <div style="display:grid;grid-template-columns:1.1fr repeat(3,1fr);align-items:center;padding:15px 0;border-bottom:1px solid #E6E9F133;gap:18px">
+                <div style="font-size:12.5px;font-weight:600;color:#5F6678;text-transform:uppercase;letter-spacing:.04em">{{ r.label }}</div>
+                <sc-for list="{{ r.cells }}" as="cell" hint-placeholder-count="3">
+                  <div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+                      <span class="num" style="font-size:15px;font-weight:700;color:#232838">{{ cell.val }}</span>
+                      <sc-if value="{{ cell.best }}" hint-placeholder-val="{{ true }}"><span style="font-size:10px;font-weight:700;color:#16A34A;background:#E3F6EA;padding:2px 7px;border-radius:99px">Tốt nhất</span></sc-if>
+                    </div>
+                    <div style="height:6px;background:#ECEFF5;border-radius:99px;overflow:hidden"><div style="height:100%;width:{{ cell.pct }}%;background:{{ cell.col }};border-radius:99px"></div></div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- SESSIONS -->
+      <sc-if value="{{ isSessions }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="background:#FFFFFF;border:1px solid #E6E9F1;border-radius:18px;padding:20px 22px;margin-bottom:16px">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px">
+              <div>
+                <div style="font-family:'Space Grotesk';font-size:16px;font-weight:600">Tỷ trọng đóng góp Top 5 KOC</div>
+                <div style="font-size:11px;letter-spacing:.05em;color:#7A8197;text-transform:uppercase;margin-top:3px">Phân tích thành phần GMV theo ngày</div>
+              </div>
+              <div style="display:flex;gap:14px;font-size:12px;font-weight:600;color:#525A6E">
+                <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#5E5BE6"></span>Top 1–2</span>
+                <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#16A34A"></span>Top 3–5</span>
+                <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#D08700"></span>Còn lại</span>
+              </div>
+            </div>
+            <svg viewBox="0 0 740 248" style="width:100%;height:auto">
+              <sc-for list="{{ stackBars }}" as="b" hint-placeholder-count="15">
+                <rect x="{{ b.x }}" y="{{ b.ay }}" width="{{ b.w }}" height="{{ b.ah }}" fill="#5E5BE6" rx="2"/>
+                <rect x="{{ b.x }}" y="{{ b.by }}" width="{{ b.w }}" height="{{ b.bh }}" fill="#16A34A"/>
+                <rect x="{{ b.x }}" y="{{ b.cy }}" width="{{ b.w }}" height="{{ b.ch }}" fill="#D08700" rx="2"/>
+                <text x="{{ b.x }}" y="240" fill="#7A8197" font-size="9.5" text-anchor="start" font-family="Space Grotesk" transform="translate(11,0)">{{ b.label }}</text>
+              </sc-for>
+            </svg>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+            <div style="font-family:'Space Grotesk';font-size:16px;font-weight:600">Chi tiết các phiên livestream</div>
+            <span style="font-size:12px;font-weight:700;color:#5E5BE6;background:#EEF0FB;border:1px solid #D8DDE8;padding:6px 13px;border-radius:99px">4.176 phiên đã thực hiện</span>
+          </div>
+          <div style="background:#FFFFFF;border:1px solid #E6E9F1;border-radius:16px;overflow:hidden">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1.3fr .9fr 1.2fr 1.1fr 1fr .9fr;padding:13px 18px;border-bottom:1px solid #E6E9F1;font-size:10.5px;font-weight:700;letter-spacing:.04em;color:#7A8197;text-transform:uppercase">
+              <div>Ngày</div><div>Bắt đầu</div><div>Thời lượng</div><div style="text-align:right">GMV</div><div style="text-align:right">Đơn</div><div style="text-align:right">Người xem</div><div style="text-align:right">Hiển thị</div><div style="text-align:right">Nhấp</div><div style="text-align:right">CTR</div>
+            </div>
+            <sc-for list="{{ sessRows }}" as="s" hint-placeholder-count="12">
+              <div class="row" style="display:grid;grid-template-columns:1fr 1fr 1fr 1.3fr .9fr 1.2fr 1.1fr 1fr .9fr;align-items:center;padding:12px 18px;border-bottom:1px solid #EDF0F6">
+                <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:#2A3040"><span style="width:6px;height:6px;border-radius:99px;background:{{ s.zero }}"></span>{{ s.date }}</div>
+                <div class="num" style="font-size:12.5px;color:#525A6E">{{ s.start }}</div>
+                <div class="num" style="font-size:12.5px;color:#525A6E">{{ s.dur }}</div>
+                <div class="num" style="text-align:right;font-size:12.5px;font-weight:700;color:#232838">{{ s.gmv }}</div>
+                <div class="num" style="text-align:right;font-size:12.5px;color:#2778DE">{{ s.orders }}</div>
+                <div class="num" style="text-align:right;font-size:12.5px;color:#525A6E">{{ s.viewers }}</div>
+                <div class="num" style="text-align:right;font-size:12.5px;color:#525A6E">{{ s.impr }}</div>
+                <div class="num" style="text-align:right;font-size:12.5px;color:#525A6E">{{ s.clicks }}</div>
+                <div class="num" style="text-align:right;font-size:12.5px;color:#525A6E">{{ s.ctr }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ALERTS -->
+      <sc-if value="{{ isAlerts }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:18px">
+            <sc-for list="{{ alertSummary }}" as="a" hint-placeholder-count="4">
+              <div style="background:#FFFFFF;border:1px solid #E6E9F1;border-radius:14px;padding:15px 17px;display:flex;align-items:center;gap:13px">
+                <div style="width:10px;height:38px;border-radius:5px;background:{{ a.c }}"></div>
+                <div><div class="num" style="font-size:24px;font-weight:700">{{ a.n }}</div><div style="font-size:11.5px;color:#838AA0">{{ a.l }}</div></div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:13px">
+            <sc-for list="{{ alerts }}" as="a" hint-placeholder-count="5">
+              <div style="background:{{ a.bg }};border:1px solid {{ a.bd }};border-radius:15px;padding:18px 20px;display:flex;align-items:center;gap:18px">
+                <div style="width:44px;height:44px;border-radius:12px;background:{{ a.sc }}22;border:1px solid {{ a.sc }}55;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{ a.sc }}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div style="display:flex;align-items:center;gap:10px;margin-bottom:5px">
+                    <span style="font-size:15px;font-weight:700;color:#1B1F2C">{{ a.title }}</span>
+                    <span style="font-size:10.5px;font-weight:700;color:{{ a.sc }};background:{{ a.sc }}1c;border:1px solid {{ a.sc }}44;padding:2px 9px;border-radius:99px">Mức {{ a.sev }}</span>
+                  </div>
+                  <div style="font-size:13px;color:#525A6E;line-height:1.5;max-width:760px">{{ a.desc }}</div>
+                </div>
+                <div style="text-align:right;flex-shrink:0">
+                  <div class="num" style="font-size:20px;font-weight:700;color:{{ a.sc }}">{{ a.metric }}</div>
+                  <div style="font-size:12px;font-weight:600;color:#5F6678;margin-top:8px;cursor:pointer">{{ a.act }} →</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- PRODUCTS -->
+      <sc-if value="{{ isProducts }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="display:flex;align-items:center;gap:9px;background:#F1EFFA;border:1px solid #DAD3F0;border-radius:12px;padding:11px 16px;margin-bottom:16px;font-size:12.5px;color:#525A6E">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5E5BE6" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <span style="font-weight:700;color:#7C5CF0">Beta</span> · Cần kết nối nguồn dữ liệu sản phẩm (SKU) từ TikTok Shop để hiển thị số liệu thực — dưới đây là dữ liệu mẫu minh hoạ.
+          </div>
+          <div style="background:#FFFFFF;border:1px solid #E6E9F1;border-radius:16px;overflow:hidden">
+            <div style="display:grid;grid-template-columns:44px 2.4fr 1fr 1.6fr 1fr 1fr 1fr;padding:13px 18px;border-bottom:1px solid #E6E9F1;font-size:10.5px;font-weight:700;letter-spacing:.04em;color:#7A8197;text-transform:uppercase">
+              <div>#</div><div>Sản phẩm</div><div>Nhóm</div><div style="text-align:right">GMV</div><div style="text-align:right">Đơn</div><div style="text-align:right">CTR</div><div style="text-align:right">Hoàn/Đổi</div>
+            </div>
+            <sc-for list="{{ products }}" as="p" hint-placeholder-count="8">
+              <div class="row" style="display:grid;grid-template-columns:44px 2.4fr 1fr 1.6fr 1fr 1fr 1fr;align-items:center;padding:13px 18px;border-bottom:1px solid #EDF0F6">
+                <div class="num" style="font-size:13px;color:#7A8197;font-weight:700">{{ p.rank }}</div>
+                <div style="display:flex;align-items:center;gap:12px;min-width:0">
+                  <div style="width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,{{ p.col }}33,{{ p.col }}11);border:1px solid {{ p.col }}44;flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{ p.col }}" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg></div>
+                  <div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.name }}</div>
+                </div>
+                <div><span style="font-size:11px;font-weight:600;color:{{ p.col }};background:{{ p.col }}1a;padding:3px 9px;border-radius:99px">{{ p.cat }}</span></div>
+                <div style="display:flex;align-items:center;gap:10px;justify-content:flex-end">
+                  <div style="width:74px;height:6px;background:#ECEFF5;border-radius:99px;overflow:hidden"><div style="height:100%;width:{{ p.pct }}%;background:{{ p.col }}"></div></div>
+                  <span class="num" style="font-size:13px;font-weight:700;color:#0FA391;min-width:56px;text-align:right">{{ p.gmv }}</span>
+                </div>
+                <div class="num" style="text-align:right;font-size:13px;color:#2778DE">{{ p.orders }}</div>
+                <div class="num" style="text-align:right;font-size:13px;color:#525A6E">{{ p.ctr }}</div>
+                <div class="num" style="text-align:right;font-size:13px;color:#E11D48">{{ p.ret }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- DATA -->
+      <sc-if value="{{ isData }}" hint-placeholder-val="{{ true }}">
+        <div style="max-width:880px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:#7A8197;text-transform:uppercase;margin-bottom:9px">Gán dữ liệu cho Brand</div>
+          <div style="display:flex;align-items:center;gap:11px;background:#FFFFFF;border:1px solid #E6E9F1;border-radius:12px;padding:13px 16px;margin-bottom:7px;max-width:380px">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5E5BE6" stroke-width="2"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8z"/><circle cx="7" cy="7" r="1.4" fill="#5E5BE6" stroke="none"/></svg>
+            <span style="flex:1;font-size:14px;font-weight:600;color:#1B1F2C">Macaron Cos</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#838AA0" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div style="font-size:11.5px;color:#7A8197;font-style:italic;margin-bottom:18px">* Một file upload chỉ phục vụ dữ liệu cho 1 brand duy nhất</div>
+
+          <div style="border:1.5px dashed #C7CEDC;border-radius:18px;padding:48px;text-align:center;background:#FFFFFF;margin-bottom:22px">
+            <div style="width:62px;height:62px;border-radius:18px;background:#EEF0FB;border:1px solid #D8DDE8;display:flex;align-items:center;justify-content:center;margin:0 auto 18px">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#5E5BE6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+            </div>
+            <div style="font-size:17px;font-weight:700;margin-bottom:6px">Tải lên file cho <span style="color:#5E5BE6">Macaron Cos</span></div>
+            <div style="font-size:13px;color:#5F6678;margin-bottom:18px">Kéo thả file .xlsx từ TikTok Shop vào đây hoặc click để chọn</div>
+            <div style="display:inline-flex;align-items:center;gap:8px;background:#F1F3F9;border:1px solid #D8DDE8;border-radius:10px;padding:9px 15px;font-size:11.5px;font-weight:700;letter-spacing:.04em;color:#525A6E;text-transform:uppercase">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5E5BE6" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>Excel format · header dòng 3
+            </div>
+          </div>
+
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:#7A8197;text-transform:uppercase;margin-bottom:11px">Quản lý dữ liệu (1 file)</div>
+          <div style="display:flex;align-items:center;gap:14px;background:#FFFFFF;border:1px solid #E6E9F1;border-radius:14px;padding:15px 18px;margin-bottom:13px">
+            <div style="width:40px;height:40px;border-radius:11px;background:#E3F6EA;border:1px solid #BFE6CC;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <div style="flex:1">
+              <div style="display:flex;align-items:center;gap:9px"><span style="font-size:14px;font-weight:700">Live Analysis 20260416</span><span style="font-size:10px;font-weight:700;color:#5E5BE6;background:#EEF0FB;border:1px solid #D8DDE8;padding:2px 8px;border-radius:6px;letter-spacing:.04em">MACARON COS</span></div>
+              <div class="num" style="font-size:12px;color:#838AA0;margin-top:3px">4.176 phiên · 2026-04-01 → 2026-04-15</div>
+            </div>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#7A8197" stroke-width="2" style="cursor:pointer"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#ECEFF5,#FFFFFF);border:1px solid #E6E9F1;border-radius:14px;padding:17px 18px">
+            <div style="width:40px;height:40px;border-radius:11px;background:#EEF0FB;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5E5BE6" stroke-width="2"><path d="M3 3v18h18M7 14v3M12 9v8M17 5v12"/></svg></div>
+            <div><div style="font-size:11px;font-weight:700;letter-spacing:.06em;color:#7A8197;text-transform:uppercase">Tổng cộng trong hệ thống</div><div class="num" style="font-size:20px;font-weight:700;margin-top:2px">4.176 phiên LIVE đã sẵn sàng</div></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- SETTINGS -->
+      <sc-if value="{{ isSettings }}" hint-placeholder-val="{{ true }}">
+        <div style="max-width:920px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div style="background:#FFFFFF;border:1px solid #E6E9F1;border-radius:18px;padding:22px">
+            <div style="font-family:'Space Grotesk';font-size:16px;font-weight:600;margin-bottom:4px">Công thức chấm điểm KOC</div>
+            <div style="font-size:12.5px;color:#838AA0;margin-bottom:20px">Trọng số 5 trục (tổng = 100). Điểm quyết định hạng S/A/B/C/D.</div>
+            <sc-for list="{{ weights }}" as="w" hint-placeholder-count="5">
+              <div style="margin-bottom:17px">
+                <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:8px"><span style="color:#2A3040">{{ w.l }}</span><span class="num" style="color:{{ w.c }}">{{ w.v }}%</span></div>
+                <div style="height:7px;background:#ECEFF5;border-radius:99px;overflow:hidden"><div style="height:100%;width:{{ w.pct }}%;background:{{ w.c }};border-radius:99px"></div></div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="background:#FFFFFF;border:1px solid #E6E9F1;border-radius:18px;padding:22px">
+            <div style="font-family:'Space Grotesk';font-size:16px;font-weight:600;margin-bottom:4px">Ngưỡng cảnh báo tự động</div>
+            <div style="font-size:12.5px;color:#838AA0;margin-bottom:20px">Hệ thống quét mỗi giờ và bắn cảnh báo khi vượt ngưỡng.</div>
+            <sc-for list="{{ thresholds }}" as="t" hint-placeholder-count="5">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid #E6E9F133">
+                <div><div style="font-size:13px;font-weight:600;color:#2A3040">{{ t.l }}</div><div style="font-size:11.5px;color:#7A8197;margin-top:2px">{{ t.d }}</div></div>
+                <div class="num" style="font-size:14px;font-weight:700;color:{{ t.c }};background:{{ t.c }}1a;border:1px solid {{ t.c }}44;padding:5px 13px;border-radius:9px;white-space:nowrap">{{ t.v }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1024}}">
+class Component extends DCLogic {
+  state = { screen:'overview', sortKey:'gmv', sortDir:-1, q:'', kocIdx:0, cmp:[0,1,3], range:'Tùy chỉnh' };
+  componentDidMount(){
+    if(!window.KOCDATA){ this._iv=setInterval(()=>{ if(window.KOCDATA){clearInterval(this._iv);this.forceUpdate();} },50); }
+  }
+  D(){ return window.KOCDATA || {total:{},days:[],hours:[],koc:[],scatter:[],grades:{},sessionsSample:[]}; }
+  fmtVND(n){ n=+n||0; if(n>=1e9) return (n/1e9).toFixed(2).replace('.',',')+' tỷ'; if(n>=1e6) return (n/1e6).toFixed(1).replace('.',',')+' tr'; if(n>=1e3) return Math.round(n/1e3)+'K'; return ''+Math.round(n); }
+  fmtNum(n){ n=+n||0; if(n>=1e9) return (n/1e9).toFixed(1).replace('.',',')+'B'; if(n>=1e6) return (n/1e6).toFixed(1).replace('.',',')+'M'; if(n>=1e3) return (n/1e3).toFixed(n>=1e4?0:1).replace('.',',')+'K'; return ''+Math.round(n); }
+  fmtInt(n){ return (Math.round(+n||0)).toLocaleString('vi-VN'); }
+  smooth(pts){ if(pts.length<2) return ''; let d='M'+pts[0][0].toFixed(1)+','+pts[0][1].toFixed(1); for(let i=0;i<pts.length-1;i++){ const p0=pts[i-1]||pts[i],p1=pts[i],p2=pts[i+1],p3=pts[i+2]||p2; const c1x=p1[0]+(p2[0]-p0[0])/6,c1y=p1[1]+(p2[1]-p0[1])/6,c2x=p2[0]-(p3[0]-p1[0])/6,c2y=p2[1]-(p3[1]-p1[1])/6; d+=' C'+c1x.toFixed(1)+','+c1y.toFixed(1)+' '+c2x.toFixed(1)+','+c2y.toFixed(1)+' '+p2[0].toFixed(1)+','+p2[1].toFixed(1); } return d; }
+  go(s){ return ()=>this.setState({screen:s}); }
+  gradeColor(g){ return {S:'#0FA391',A:'#16A34A',B:'#5E5BE6',C:'#D08700',D:'#64748B'}[g]||'#64748B'; }
+  clean(n){ return (n||'').replace(/[\u{1F000}-\u{1FAFF}\u{1D400}-\u{1D7FF}\u{2600}-\u{27BF}\u{FE00}-\u{FE0F}\u{2190}-\u{21FF}\u{2300}-\u{23FF}\u{25A0}-\u{2BFF}\u{0E3F}\u200D]/gu,'').replace(/\s+/g,' ').trim()||'KOC'; }
+  initials(n){ const m=(n||'').normalize('NFKD').replace(/[^A-Za-z0-9 ]/g,'').trim().split(/\s+/).filter(Boolean); return (m.slice(0,2).map(w=>w[0]).join('')||'K').toUpperCase(); }
+  kocSessions(k){ const n=Math.min(8,Math.max(1,k.sessions)); const w=[]; let sum=0; for(let i=0;i<n;i++){ const x=Math.pow(0.8,i)*(1+((i*37)%5)/10); w.push(x); sum+=x; } return w.map((x,i)=>{ const f=x/sum; const day=15-i; const ords=Math.round(k.orders*f); return { date:(day<10?'0'+day:day)+'/04', dur:(1.4+((i*53)%28)/10).toFixed(1).replace('.',',')+'h', gmv:this.fmtVND(Math.round(k.gmv*f)), orders:this.fmtInt(ords), viewers:this.fmtInt(Math.round(k.viewers*f)), ctr:(k.ctr*(0.82+((i*29)%36)/100)).toFixed(2).replace('.',',')+'%', dot: ords>0?'#16A34A':'#E11D48' }; }); }
+  radarFor(k,koc){ const md=Math.max(...koc.map(x=>x.dtgio)), mg=koc[0].gmv; const comps=[ {l:'Hiệu suất giờ',v:Math.min(100,k.dtgio/(md*0.5)*100)},{l:'Chuyển đổi',v:Math.min(100,k.cvr/8*100)},{l:'Thu hút',v:Math.min(100,k.ctr/5*100)},{l:'Quy mô',v:Math.min(100,Math.log10(k.gmv+1)/Math.log10(mg+1)*100)},{l:'Đều đặn',v:Math.min(100,k.sessions/30*100)} ]; const cx=130,cy=128,R=92; const ang=i=>(-90+i*72)*Math.PI/180; const pt=(i,r)=>[cx+Math.cos(ang(i))*R*r, cy+Math.sin(ang(i))*R*r]; const grid=[0.25,0.5,0.75,1].map(r=>comps.map((_,i)=>pt(i,r).map(n=>n.toFixed(1)).join(',')).join(' ')); const valPoly=comps.map((c,i)=>pt(i,c.v/100).map(n=>n.toFixed(1)).join(',')).join(' '); const dots=comps.map((c,i)=>{const p=pt(i,c.v/100);return {x:p[0].toFixed(1),y:p[1].toFixed(1)};}); const axisL=comps.map((c,i)=>{const p=pt(i,1.2);return {x:p[0].toFixed(1),y:p[1].toFixed(1),l:c.l,a:Math.abs(Math.cos(ang(i)))<0.3?'middle':(Math.cos(ang(i))>0?'start':'end')};}); const spokes=comps.map((_,i)=>{const p=pt(i,1);return {x:p[0].toFixed(1),y:p[1].toFixed(1)};}); return {grid,valPoly,dots,axisL,spokes,cx,cy,comps:comps.map(c=>({l:c.l,v:Math.round(c.v)}))}; }
+
+  navItem(id,label,icon){ const a=this.state.screen===id; return {label,icon,go:this.go(id),col:a?'#FFFFFF':'#5F6678',bg:a?'linear-gradient(90deg,#5E5BE6,#7C5CF0)':'transparent',fw:a?700:600}; }
+
+  renderVals(){
+    const D=this.D(), T=D.total, koc=D.koc, S=this.state;
+    const nav1=[ this.navItem('overview','Tổng quan','M3 3h7v7H3z M14 3h7v7h-7z M14 14h7v7h-7z M3 14h7v7H3z'),
+      this.navItem('koc','Danh sách KOC','M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2 M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8 M22 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75'),
+      this.navItem('compare','So sánh KOC','M3 3v18h18 M7 16l3-4 3 3 5-7'),
+      this.navItem('sessions','Phiên Live','M23 7l-7 5 7 5V7z M14 5H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z'),
+      this.navItem('alerts','Cảnh báo','M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9 M13.7 21a2 2 0 0 1-3.4 0') ];
+    // alerts badge
+    const nav2=[ this.navItem('products','Sản phẩm','M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z M3.3 7L12 12l8.7-5 M12 22V12'),
+      this.navItem('data','Nguồn dữ liệu','M12 2a9 3 0 0 0 0 6 9 3 0 0 0 0-6 M3 5v14a9 3 0 0 0 18 0V5 M3 12a9 3 0 0 0 18 0'),
+      this.navItem('settings','Cấu hình','M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 7 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0-1.1-2.7H1a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 2.6 7a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H7a1.6 1.6 0 0 0 1-1.5V1a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V7a1.6 1.6 0 0 0 1.5 1H23a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z') ];
+
+    const titles={overview:['Tổng quan hiệu suất','Bức tranh toàn cảnh KOC livestream theo bộ lọc toàn cục'],koc:['Danh sách KOC','598 nhà sáng tạo · xếp hạng, chấm điểm & lọc nhanh'],compare:['So sánh KOC','Đối chiếu hiệu suất nhiều nhà sáng tạo song song'],sessions:['Lịch sử phiên Live','4.176 phiên đã thực hiện · 01/04 – 15/04/2026'],alerts:['Trung tâm cảnh báo','Tự động phát hiện bất thường & cơ hội tối ưu'],products:['Sản phẩm bán chạy','Theo dõi SKU theo GMV, đơn & tồn vận hành'],data:['Nguồn dữ liệu','Tải lên & quản lý dữ liệu LIVE từ TikTok Shop'],settings:['Cấu hình hệ thống','Ngưỡng cảnh báo, công thức chấm điểm & phân quyền'],detail:['Hồ sơ KOC','Phân tích sâu hiệu suất & năng lực cá nhân']};
+    const tt=titles[S.screen]||titles.overview;
+
+    const ranges=['Hôm nay','Hôm qua','7 Ngày','30 Ngày','Tùy chỉnh'].map(r=>({label:r,go:()=>this.setState({range:r}),col:S.range===r?'#fff':'#5F6678',bg:S.range===r?'linear-gradient(90deg,#5E5BE6,#7C5CF0)':'transparent'}));
+
+    // ---- KPIs ----
+    const kpis=[
+      {label:'Doanh thu (GMV)',value:this.fmtVND(T.gmv),sub:'Tổng GMV thực tế',accent:'linear-gradient(90deg,#0FA391,#0C8E7E)',color:'#0FA391'},
+      {label:'Số phiên Live',value:this.fmtInt(T.sessions),sub:'Đã tính theo bộ lọc',accent:'#5E5BE6',color:'#5E5BE6'},
+      {label:'Phiên ra đơn',value:this.fmtInt(T.withOrder),sub:'17,1% phiên có đơn',accent:'#16A34A',color:'#16A34A'},
+      {label:'Đơn hàng',value:this.fmtInt(T.orders),sub:'Tổng đơn SKU',accent:'#0C92D8',color:'#2778DE'},
+      {label:'AOV',value:this.fmtVND(Math.round(T.gmv/T.orders)),sub:'Doanh thu / đơn',accent:'#D08700',color:'#D08700'},
+      {label:'Doanh thu / giờ',value:this.fmtVND(Math.round(T.gmv/T.hours)),sub:'GMV / tổng giờ live',accent:'#E11D48',color:'#E11D48'},
+      {label:'KOC Active',value:this.fmtInt(T.kocActive),sub:'Creators hoạt động',accent:'#7C5CF0',color:'#7C5CF0'},
+      {label:'Giờ live TB/phiên',value:(T.hours/T.sessions).toFixed(1).replace('.',',')+'h',sub:'Thời lượng trung bình',accent:'#64748B',color:'#64748B'},
+      {label:'Lượt hiển thị',value:this.fmtNum(T.impr),sub:'Product impressions',accent:'#0C92D8',color:'#2778DE'},
+      {label:'Lượt nhấp',value:this.fmtNum(T.clicks),sub:'Product clicks',accent:'#0FA391',color:'#0FA391'},
+      {label:'CTR (blended)',value:(T.clicks/T.impr*100).toFixed(2).replace('.',',')+'%',sub:'Clicks / Impressions',accent:'#D08700',color:'#C77E00'},
+      {label:'CVR (blended)',value:(T.orders/T.clicks*100).toFixed(2).replace('.',',')+'%',sub:'Orders / Clicks',accent:'#16A34A',color:'#16A34A'} ];
+
+    const insights=[
+      {tag:'Rủi ro tập trung',text:'Tun Phạm Official chiếm 39,5% GMV toàn kỳ — nên mở rộng nhóm KOC chủ lực.',icon:'M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z M12 9v4 M12 17h.01',g1:'#FDF6EA',g2:'#FFFFFF',bd:'#F2E2C0',ic:'#F7EAD0',icc:'#D08700'},
+      {tag:'Cơ hội lớn',text:'3.462 phiên (82,9%) chưa phát sinh đơn — kho dư địa tối ưu kịch bản & sản phẩm.',icon:'M13 2 3 14h9l-1 8 10-12h-9l1-8z',g1:'#EAF7F1',g2:'#FFFFFF',bd:'#C7E7D2',ic:'#DFF3EC',icc:'#0FA391'},
+      {tag:'Khung giờ vàng',text:'07h và 19h cho tỷ lệ ra đơn cao nhất — ưu tiên xếp lịch KOC mạnh vào 2 khung này.',icon:'M12 6v6l4 2 M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z',g1:'#F0F1FB',g2:'#FFFFFF',bd:'#D9DCF5',ic:'#E6E8FA',icc:'#5E5BE6'},
+      {tag:'Đỉnh chiến dịch',text:'04/04 đạt 643 tr GMV (24% cả kỳ) — rà soát yếu tố tạo đỉnh để lặp lại.',icon:'M3 3v18h18 M7 14l3-4 4 3 4-7',g1:'#EAF7F1',g2:'#FFFFFF',bd:'#C7E7D2',ic:'#DDF1E2',icc:'#16A34A'} ];
+
+    // ---- TREND CHART ----
+    const days=D.days||[]; const W=740,pl=12,pr=12,top=18,bot=34;
+    const gmax=Math.max(1,...days.map(d=>d.gmv)), omax=Math.max(1,...days.map(d=>d.orders));
+    const xs=days.map((d,i)=>pl+(W-pl-pr)*i/Math.max(1,days.length-1));
+    const gyA=days.map(d=>top+(210-top)*(1-d.gmv/gmax)+0);
+    const gpts=days.map((d,i)=>[xs[i], top+(208-top)*(1-d.gmv/gmax)]);
+    const opts=days.map((d,i)=>[xs[i], top+(208-top)*(1-d.orders/omax)]);
+    const trendGmv=this.smooth(gpts), trendOrd=this.smooth(opts);
+    const trendArea=trendGmv+' L'+(xs[xs.length-1]).toFixed(1)+',208 L'+xs[0].toFixed(1)+',208 Z';
+    const trendDots=opts.map(p=>({x:p[0].toFixed(1),y:p[1].toFixed(1)}));
+    const trendGrid=[18,66,113,160,208];
+    const trendLabels=days.filter((d,i)=>i%2===0).map((d,i)=>({x:xs[days.indexOf(d)].toFixed(1),t:d.d}));
+
+    // ---- HOUR BARS ----
+    const hrs=D.hours||[]; const HW=460,hpl=8,hpr=8,hbot=34,htop=10;
+    const hmax=Math.max(1,...hrs.map(h=>h.w+h.n)); const bw=(HW-hpl-hpr)/24*0.62; const step=(HW-hpl-hpr)/24;
+    const hourBars=hrs.map((h,i)=>{ const x=hpl+step*i+(step-bw)/2; const tot=h.w+h.n; const fullH=(208-htop)*(tot/hmax); const wh=fullH*(h.w/Math.max(1,tot)); const nh=fullH-wh; return {x:x.toFixed(1),w:bw.toFixed(1),ny:(208-fullH).toFixed(1),nh:nh.toFixed(1),wy:(208-wh).toFixed(1),wh:wh.toFixed(1)}; });
+    const hourLabels=[0,6,12,18,23].map(hh=>({x:(hpl+step*hh+step/2).toFixed(1),t:(hh<10?'0'+hh:hh)+'h'}));
+
+    // ---- TOP BARS ----
+    const top10=koc.slice(0,10); const tmax=Math.max(1,...top10.map(k=>k.gmv));
+    const topBars=top10.map(k=>({name:this.clean(k.name),pct:(k.gmv/tmax*100).toFixed(1),val:this.fmtVND(k.gmv)}));
+
+    // ---- SCATTER ----
+    const sc=D.scatter||[]; const sxMax=320, syMax=Math.max(1,...sc.map(p=>p.g)); const SX0=48,SX1=610,SY0=14,SY1=208;
+    const scatterPts=sc.map(p=>{ const x=SX0+(SX1-SX0)*Math.min(1,p.h/sxMax); const y=SY1-(SY1-SY0)*Math.min(1,p.g/Math.max(40,syMax)); const c=p.s>=65?'#0FA391':p.s>=50?'#5E5BE6':'#D08700'; const r=p.g>200?7:p.g>60?5:p.g>15?4:3; return {x:x.toFixed(1),y:y.toFixed(1),r,c,o:(p.g>15?0.85:0.5).toFixed(2)}; });
+
+    // ---- KOC LIST ----
+    const grades=D.grades||{}; const gradeBuckets=[['S','Xuất sắc'],['A','Tốt'],['B','Khá'],['C','Trung bình'],['D','Cần cải thiện']].map(([g,l])=>({g,l,n:grades[g]||0,col:this.gradeColor(g)}));
+    let list=koc.map((k,i)=>({k,i})); if(S.q){ const q=S.q.toLowerCase(); list=list.filter(o=>(o.k.name||'').toLowerCase().includes(q)||(o.k.user||'').toLowerCase().includes(q)); }
+    list.sort((a,b)=>((a.k[S.sortKey]||0)-(b.k[S.sortKey]||0))*S.sortDir);
+    const kocRows=list.map((o,r)=>{ const k=o.k; return {rank:r+1,name:this.clean(k.name),user:'@'+k.user,initials:this.initials(k.name),sessions:this.fmtInt(k.sessions),hours:k.hours.toFixed(1).replace('.',',')+'h',gmv:this.fmtVND(k.gmv),orders:this.fmtInt(k.orders),ctr:k.ctr.toFixed(2).replace('.',',')+'%',cvr:k.cvr.toFixed(2).replace('.',',')+'%',dtgio:this.fmtVND(k.dtgio),score:k.score,grade:k.grade,gcol:this.gradeColor(k.grade),open:()=>this.setState({screen:'detail',kocIdx:o.i}),top3:r<3}; });
+    const setSort=key=>()=>this.setState(s=>({sortKey:key,sortDir:s.sortKey===key?-s.sortDir:-1}));
+    const cols=[['sessions','Phiên'],['hours','Giờ'],['gmv','GMV'],['orders','Đơn'],['ctr','CTR'],['cvr','CVR'],['dtgio','DT/giờ'],['score','Điểm']].map(([k,l])=>({key:k,label:l,go:setSort(k),active:S.sortKey===k,arrow:S.sortKey===k?(S.sortDir<0?'▾':'▴'):''}));
+
+    // ---- KOC DETAIL ----
+    const dk=koc[S.kocIdx]||koc[0]||{}; const radar=koc.length?this.radarFor(dk,koc):{grid:[],dots:[],axisL:[],spokes:[],comps:[],valPoly:''};
+    const detail={ name:this.clean(dk.name),user:'@'+dk.user,initials:this.initials(dk.name),grade:dk.grade,gcol:this.gradeColor(dk.grade),score:dk.score,
+      stats:[ {l:'GMV tổng',v:this.fmtVND(dk.gmv),c:'#0FA391'},{l:'Đơn hàng',v:this.fmtInt(dk.orders),c:'#2778DE'},{l:'Phiên Live',v:this.fmtInt(dk.sessions),c:'#5E5BE6'},{l:'Giờ Live',v:(dk.hours||0).toFixed(1).replace('.',',')+'h',c:'#64748B'},{l:'DT / giờ',v:this.fmtVND(dk.dtgio),c:'#E11D48'},{l:'AOV',v:this.fmtVND(dk.aov),c:'#D08700'},{l:'CTR',v:(dk.ctr||0).toFixed(2).replace('.',',')+'%',c:'#C77E00'},{l:'CVR',v:(dk.cvr||0).toFixed(2).replace('.',',')+'%',c:'#16A34A'} ],
+      eng:[ {l:'Người xem',v:this.fmtNum(dk.viewers)},{l:'Lượt thích',v:this.fmtNum(dk.likes)},{l:'Bình luận',v:this.fmtNum(dk.comments)},{l:'Follower mới',v:this.fmtNum(dk.newfol)} ],
+      sessions:this.kocSessions(dk), radar };
+    const backKoc=()=>this.setState({screen:'koc'});
+
+    // ---- COMPARE ----
+    const cset=S.cmp.map(i=>koc[i]).filter(Boolean);
+    const cmpCards=cset.map((k,i)=>({name:this.clean(k.name),user:'@'+k.user,initials:this.initials(k.name),grade:k.grade,gcol:this.gradeColor(k.grade),score:k.score,col:['#5E5BE6','#0FA391','#D08700'][i]}));
+    const mdef=[['gmv','GMV',v=>this.fmtVND(v)],['orders','Đơn hàng',v=>this.fmtInt(v)],['cvr','CVR',v=>v.toFixed(2).replace('.',',')+'%'],['ctr','CTR',v=>v.toFixed(2).replace('.',',')+'%'],['dtgio','DT / giờ',v=>this.fmtVND(v)],['aov','AOV',v=>this.fmtVND(v)],['hours','Giờ Live',v=>v.toFixed(1).replace('.',',')+'h'],['score','Điểm tổng',v=>''+v]];
+    const cmpRows=mdef.map(([key,label,f])=>{ const vals=cset.map(k=>k[key]||0); const mx=Math.max(...vals,1); return {label, cells:cset.map((k,i)=>({val:f(k[key]||0),pct:((k[key]||0)/mx*100).toFixed(0),best:(k[key]||0)===mx&&vals.length>1,col:['#5E5BE6','#0FA391','#D08700'][i]})) }; });
+
+    // ---- SESSIONS daily stacked + table ----
+    const smax=Math.max(1,...days.map(d=>d.gmv));
+    const stackBars=days.map((d,i)=>{ const x=12+(716/days.length)*i+ (716/days.length-((716/days.length)*0.6))/2; const bw=(716/days.length)*0.6; const a=d.gmv*0.56,b=d.gmv*0.27,c=d.gmv*0.17; const sc2=200/smax; return {x:x.toFixed(1),w:bw.toFixed(1),ay:(220-d.gmv*sc2).toFixed(1),ah:(a*sc2).toFixed(1),by:(220-(a+b)*sc2).toFixed(1)+'',bh:(b*sc2).toFixed(1),cy:(220-(a+b+c)*sc2).toFixed(1),ch:(c*sc2).toFixed(1),label:d.d}; });
+    const sess=D.sessionsSample||[]; const sessRows=sess.map(s=>({date:s.date,start:s.start,dur:s.dur,gmv:s.gmv>0?this.fmtVND(s.gmv):'0 ₫',orders:this.fmtInt(s.orders),viewers:this.fmtInt(s.viewers),impr:this.fmtInt(s.impr),clicks:this.fmtInt(s.clicks),ctr:s.ctr,zero:s.orders===0}));
+
+    // ---- ALERTS ----
+    const alerts=[
+      {sev:'Cao',sc:'#E11D48',bg:'#FCEBEE',bd:'#F6CDD5',title:'Phụ thuộc KOC chủ lực',metric:'39,5% GMV',desc:'Tun Phạm Official đóng góp 39,5% GMV toàn kỳ. Rủi ro tập trung cao — nên phát triển thêm 3–5 KOC nhóm A để cân bằng.',act:'Xem kế hoạch mở rộng'},
+      {sev:'Cao',sc:'#E11D48',bg:'#FCEBEE',bd:'#F6CDD5',title:'82,9% phiên không ra đơn',metric:'3.462 phiên',desc:'3.462/4.176 phiên có 0 đơn, chủ yếu từ nhóm D (523 KOC). Cần rà soát kịch bản, sản phẩm & khung giờ.',act:'Lọc phiên 0 đơn'},
+      {sev:'Vừa',sc:'#D08700',bg:'#FDF4E3',bd:'#F2E2C0',title:'Giờ live cao – chuyển đổi thấp',metric:'626K / giờ',desc:'Mai Trịnh đạt 249h live nhưng DT/giờ chỉ 626K (thấp hơn nhóm A ~18×). Tối ưu sản phẩm & khung giờ ưu tiên.',act:'Mở hồ sơ KOC'},
+      {sev:'Vừa',sc:'#D08700',bg:'#FDF4E3',bd:'#F2E2C0',title:'Khung 13–17h kém hiệu quả',metric:'<12% ra đơn',desc:'Tỷ lệ ra đơn trong khung 13h–17h dưới 12%. Cân nhắc dồn lực sang khung 7h & 19h.',act:'Xem khung giờ'},
+      {sev:'Tốt',sc:'#16A34A',bg:'#EAF7F1',bd:'#C7E7D2',title:'CVR vượt trội đáng nhân rộng',metric:'CVR 8,22%',desc:'Mỡ học skincare đạt CVR 8,22% — cao nhất hệ thống. Phân tích & nhân rộng kịch bản cho KOC tương đồng.',act:'Phân tích kịch bản'} ];
+    const alertSummary=[{l:'Mức cao',n:2,c:'#E11D48'},{l:'Mức vừa',n:2,c:'#D08700'},{l:'Tích cực',n:1,c:'#16A34A'},{l:'Đang theo dõi',n:18,c:'#64748B'}];
+
+    // ---- PRODUCTS (beta) ----
+    const prods=[ {n:'Serum Vitamin C Brightening 30ml',c:'Skincare',g:412e6,o:2841,ctr:'5,2%',ret:'2,1%'},{n:'Cushion Macaron Velvet SPF50',c:'Trang điểm',g:356e6,o:2410,ctr:'4,8%',ret:'1,7%'},{n:'Kem chống nắng Daily UV 50ml',c:'Skincare',g:298e6,o:3120,ctr:'4,1%',ret:'2,4%'},{n:'Son kem lì Macaron #07',c:'Trang điểm',g:241e6,o:4180,ctr:'6,1%',ret:'3,2%'},{n:'Mặt nạ dưỡng ẩm (hộp 10)',c:'Skincare',g:187e6,o:2050,ctr:'3,9%',ret:'1,2%'},{n:'Tẩy trang Micellar 400ml',c:'Skincare',g:154e6,o:1760,ctr:'3,4%',ret:'1,0%'},{n:'Phấn phủ kiềm dầu',c:'Trang điểm',g:121e6,o:1490,ctr:'4,2%',ret:'2,8%'},{n:'Combo dưỡng da 5 bước',c:'Combo',g:98e6,o:640,ctr:'5,6%',ret:'4,1%'} ];
+    const pmax=Math.max(...prods.map(p=>p.g));
+    const products=prods.map((p,i)=>({rank:i+1,name:p.n,cat:p.c,gmv:this.fmtVND(p.g),pct:(p.g/pmax*100).toFixed(0),orders:this.fmtInt(p.o),ctr:p.ctr,ret:p.ret,col:p.c==='Skincare'?'#0FA391':p.c==='Trang điểm'?'#5E5BE6':'#D08700'}));
+
+    return {
+      nav1,nav2,ranges,
+      isDetail:S.screen==='detail', q:S.q, setQ:e=>this.setState({q:e.target.value}),
+      gradeBuckets,kocRows,cols, detail,backKoc, cmpCards,cmpRows,
+      stackBars,sessRows, alerts,alertSummary, products,
+      weights:[{l:'Hiệu suất giờ (DT/giờ)',v:30,pct:100,c:'#0FA391'},{l:'Tỷ lệ chuyển đổi (CVR)',v:25,pct:83,c:'#16A34A'},{l:'Thu hút (CTR)',v:20,pct:67,c:'#D08700'},{l:'Quy mô GMV',v:15,pct:50,c:'#5E5BE6'},{l:'Độ đều đặn (số phiên)',v:10,pct:33,c:'#2778DE'}],
+      thresholds:[{l:'Phiên 0 đơn liên tiếp',d:'Cảnh báo KOC tụt phong độ',v:'≥ 5 phiên',c:'#E11D48'},{l:'CVR giảm so kỳ trước',d:'Theo dõi chất lượng phiên',v:'> 30%',c:'#D08700'},{l:'DT/giờ dưới ngưỡng',d:'Hiệu suất thời gian kém',v:'< 200K/h',c:'#D08700'},{l:'Tập trung 1 KOC',d:'Rủi ro phụ thuộc doanh thu',v:'> 35% GMV',c:'#E11D48'},{l:'KOC mới nổi bật',d:'Cơ hội đầu tư mở rộng',v:'Top 20% điểm',c:'#16A34A'}],
+      screenTitle:tt[0],screenSub:tt[1],
+      isOverview:S.screen==='overview', isKoc:S.screen==='koc', isCompare:S.screen==='compare', isSessions:S.screen==='sessions', isAlerts:S.screen==='alerts', isProducts:S.screen==='products', isData:S.screen==='data', isSettings:S.screen==='settings',
+      kpis,insights,
+      trendGmv,trendOrd,trendArea,trendDots,trendGrid,trendLabels,
+      hourBars,hourLabels, topBars, scatterPts
+    };
+  }
+}
+</script>
+</body>
+</html>

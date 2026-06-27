@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LiveScope · KOC Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:#F1EBDE;font-family:'Manrope',sans-serif;-webkit-font-smoothing:antialiased;color:#211A0E}
+    ::-webkit-scrollbar{width:9px;height:9px}
+    ::-webkit-scrollbar-thumb{background:#CDBE9F;border-radius:6px}
+    ::-webkit-scrollbar-track{background:transparent}
+    @keyframes flo{0%,100%{opacity:.5}50%{opacity:.9}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .num{font-family:'Space Grotesk',sans-serif;font-feature-settings:'tnum';letter-spacing:-.02em}
+    .navi:hover{background:#EDE3D1!important}
+    .row:hover{background:#FBF7EF!important}
+    .lift{transition:transform .18s ease,border-color .18s ease,background .18s ease}
+    .lift:hover{transform:translateY(-2px);border-color:#D7C8AC!important}
+    input::placeholder{color:#A89B80}
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+</html>

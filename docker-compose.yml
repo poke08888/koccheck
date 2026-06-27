@@ -1,0 +1,38 @@
+# LiveScope with PostgreSQL (multi-user / production).
+#   docker compose up -d --build
+#   open http://localhost:4000   (admin / the ADMIN_PASSWORD below)
+#
+# For a quick SQLite-only run (no Postgres) instead:
+#   docker build -t livescope .
+#   docker run -p 4000:4000 -v livescope_data:/app/server/data livescope
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: kocuser
+      POSTGRES_PASSWORD: ${PG_PASSWORD:-kocpass}
+      POSTGRES_DB: koc
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kocuser -d koc"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://kocuser:${PG_PASSWORD:-kocpass}@db:5432/koc
+      AUTH_SECRET: ${AUTH_SECRET:-change-me-in-production}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin123}
+      PORT: 4000
+    ports:
+      - "4000:4000"
+
+volumes:
+  pgdata:

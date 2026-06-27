@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="koc-data.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#F1EBDE;font-family:'Manrope',sans-serif;-webkit-font-smoothing:antialiased}
+  ::-webkit-scrollbar{width:9px;height:9px}
+  ::-webkit-scrollbar-thumb{background:#473D2D;border-radius:6px}
+  ::-webkit-scrollbar-track{background:transparent}
+  @keyframes flo{0%,100%{opacity:.5}50%{opacity:.9}}
+  @keyframes dash{to{stroke-dashoffset:0}}
+  .num{font-family:'Space Grotesk',sans-serif;font-feature-settings:'tnum';letter-spacing:-.02em}
+  .navi:hover{background:#E7DDCA0F!important;color:#FBF7EF!important}
+  .row:hover{background:#211A0E!important}
+  .lift{transition:transform .18s ease,border-color .18s ease,background .18s ease}
+  .lift:hover{transform:translateY(-2px);border-color:#473D2D!important}
+</style>
+</helmet>
+<div style="display:flex;min-height:1024px;width:1440px;background:#F1EBDE;color:#211A0E;position:relative;overflow:hidden">
+
+  <div style="position:absolute;top:-180px;left:180px;width:680px;height:520px;background:radial-gradient(circle,rgba(226,100,28,.12),transparent 70%);pointer-events:none;animation:flo 9s ease-in-out infinite"></div>
+  <div style="position:absolute;top:-120px;right:60px;width:520px;height:460px;background:radial-gradient(circle,rgba(190,138,20,.10),transparent 70%);pointer-events:none"></div>
+
+  <!-- SIDEBAR -->
+  <aside style="width:248px;flex-shrink:0;background:#F1EBDE;border-right:1px solid #FFFFFF00;border-image:linear-gradient(180deg,#E7DDCA,#FBF7EF) 1;display:flex;flex-direction:column;padding:24px 16px;position:relative;z-index:2">
+    <div style="display:flex;align-items:center;gap:12px;padding:6px 8px 22px">
+      <div style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#F47B27,#F47B27);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(226,100,28,.32)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+      </div>
+      <div>
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:16px;letter-spacing:-.01em;line-height:1">LiveScope</div>
+        <div style="font-size:11px;color:#9C8F75;margin-top:2px">KOC Intelligence</div>
+      </div>
+    </div>
+
+    <div style="font-size:10.5px;font-weight:700;letter-spacing:.12em;color:#D1C3A6;padding:8px 10px 8px">PHÂN TÍCH</div>
+    <sc-for list="{{ nav1 }}" as="item" hint-placeholder-count="4">
+      <div class="navi" onClick="{{ item.go }}" style="display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:11px;cursor:pointer;color:{{ item.col }};background:{{ item.bg }};margin-bottom:3px;transition:all .15s;font-weight:{{ item.fw }};font-size:14px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ item.icon }}"/></svg>
+        <span>{{ item.label }}</span>
+      </div>
+    </sc-for>
+
+    <div style="font-size:10.5px;font-weight:700;letter-spacing:.12em;color:#D1C3A6;padding:18px 10px 8px">QUẢN LÝ</div>
+    <sc-for list="{{ nav2 }}" as="item" hint-placeholder-count="3">
+      <div class="navi" onClick="{{ item.go }}" style="display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:11px;cursor:pointer;color:{{ item.col }};background:{{ item.bg }};margin-bottom:3px;transition:all .15s;font-weight:{{ item.fw }};font-size:14px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ item.icon }}"/></svg>
+        <span>{{ item.label }}</span>
+      </div>
+    </sc-for>
+
+    <div style="margin-top:auto;background:linear-gradient(135deg,#ECE3D2,#FBF7EF);border:1px solid #E1D6C0;border-radius:14px;padding:14px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#F47B27,#BE8A14);display:flex;align-items:center;justify-content:center;color:#FBF0DA;font-weight:800;font-size:13px">NL</div>
+        <div style="min-width:0">
+          <div style="font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Nonelab</div>
+          <div style="font-size:11px;color:#9C8F75">Gói Growth · 598 KOC</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main style="flex:1;min-width:0;display:flex;flex-direction:column;position:relative;z-index:1">
+    <!-- TOPBAR -->
+    <div style="display:flex;align-items:center;gap:16px;padding:18px 28px;border-bottom:1px solid #FFFFFF00;border-image:linear-gradient(90deg,#FFFFFF00,#E9DFCC,#FFFFFF00) 1">
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:10px">
+          <h1 style="font-family:'Space Grotesk';font-size:20px;font-weight:700;letter-spacing:-.01em">{{ screenTitle }}</h1>
+          <span style="font-size:11px;font-weight:700;color:#BE8A14;background:#F4ECDB;border:1px solid #E0D1AE;padding:3px 9px;border-radius:99px;display:flex;align-items:center;gap:5px"><span style="width:6px;height:6px;border-radius:99px;background:#BE8A14;box-shadow:0 0 8px #BE8A14"></span>LIVE</span>
+        </div>
+        <div style="font-size:13px;color:#897B5F;margin-top:3px">{{ screenSub }}</div>
+      </div>
+      <div style="position:relative">
+        <div onClick="{{ toggleBrand }}" style="display:flex;align-items:center;gap:8px;background:#FBF7EF;border:1px solid #E7DDCA;border-radius:11px;padding:5px 6px 5px 12px;cursor:pointer">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F47B27" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><circle cx="7" cy="7" r="1.4" fill="#F47B27" stroke="none"/></svg>
+          <span style="font-size:13px;font-weight:600;color:#473D2D;padding-right:4px">{{ brand }}</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#85775D" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <sc-if value="{{ brandOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;top:46px;left:0;width:208px;background:#FBF7EF;border:1px solid #DBCEB5;border-radius:13px;padding:6px;z-index:30;box-shadow:0 18px 40px rgba(40,30,16,.35)">
+            <sc-for list="{{ brandMenu }}" as="b" hint-placeholder-count="4">
+              <div class="navi" onClick="{{ b.go }}" style="display:flex;align-items:center;justify-content:space-between;padding:9px 11px;border-radius:9px;cursor:pointer;font-size:13px;font-weight:600;color:{{ b.col }}">
+                <span>{{ b.label }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+      <div style="display:flex;background:#FBF7EF;border:1px solid #E7DDCA;border-radius:11px;padding:3px">
+        <sc-for list="{{ ranges }}" as="r" hint-placeholder-count="5">
+          <div onClick="{{ r.go }}" style="font-size:12.5px;font-weight:600;padding:7px 13px;border-radius:8px;cursor:pointer;color:{{ r.col }};background:{{ r.bg }};transition:all .15s">{{ r.label }}</div>
+        </sc-for>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;background:#FBF7EF;border:1px solid #E7DDCA;border-radius:11px;padding:8px 12px;font-size:12.5px;font-weight:600;color:#6C5E45" class="num">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F47B27" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        01/04 — 15/04/2026
+      </div>
+    </div>
+
+    <div style="flex:1;overflow-y:auto;padding:24px 28px 40px">
+      <!--SCREENS-->
+      <sc-if value="{{ isOverview }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <!-- INSIGHTS -->
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px">
+            <sc-for list="{{ insights }}" as="ins" hint-placeholder-count="4">
+              <div class="lift" style="background:linear-gradient(160deg,{{ ins.g1 }},{{ ins.g2 }});border:1px solid {{ ins.bd }};border-radius:15px;padding:15px 16px;position:relative;overflow:hidden">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:9px">
+                  <div style="width:26px;height:26px;border-radius:8px;background:{{ ins.ic }};display:flex;align-items:center;justify-content:center;color:{{ ins.icc }}">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ ins.icon }}"/></svg>
+                  </div>
+                  <span style="font-size:11px;font-weight:700;letter-spacing:.04em;color:{{ ins.icc }};text-transform:uppercase">{{ ins.tag }}</span>
+                </div>
+                <div style="font-size:13.5px;font-weight:600;line-height:1.4;color:#2C2417">{{ ins.text }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <!-- KPI GRID -->
+          <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:22px">
+            <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="12">
+              <div class="lift" style="background:#FBF7EF;border:1px solid #E7DDCA;border-radius:15px;padding:16px 16px 15px;position:relative;overflow:hidden">
+                <div style="position:absolute;top:0;left:0;width:100%;height:3px;background:{{ k.accent }};opacity:.85"></div>
+                <div style="font-size:10.5px;font-weight:700;letter-spacing:.07em;color:#897B5F;text-transform:uppercase;margin-bottom:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ k.label }}</div>
+                <div class="num" style="font-size:27px;font-weight:700;color:{{ k.color }};line-height:1">{{ k.value }}</div>
+                <div style="font-size:11px;color:#9C8F75;margin-top:8px">{{ k.sub }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <!-- CHARTS ROW 1 -->
+          <div style="display:grid;grid-template-columns:1.35fr 1fr;gap:16px;margin-bottom:16px">
+            <div style="background:#FFFFFF;border:1px solid #E7DDCA;border-radius:18px;padding:20px 22px">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px">
+                <div>
+                  <div style="font-family:'Space Grotesk';font-size:16px;font-weight:600">Xu hướng Doanh thu</div>
+                  <div style="font-size:11px;letter-spacing:.05em;color:#9C8F75;text-transform:uppercase;margin-top:3px">Diễn biến GMV &amp; Đơn theo ngày</div>
+                </div>
+                <div style="display:flex;gap:14px;font-size:12px;font-weight:600">
+                  <span style="display:flex;align-items:center;gap:6px;color:#6C5E45"><span style="width:14px;height:3px;border-radius:2px;background:#BE8A14"></span>GMV</span>
+                  <span style="display:flex;align-items:center;gap:6px;color:#6C5E45"><span style="width:14px;height:3px;border-radius:2px;background:#F47B27"></span>Đơn hàng</span>
+                </div>
+              </div>
+              <div style="position:relative">
+              <svg viewBox="0 0 740 250" style="width:100%;height:auto;display:block">
+                <defs>
+                  <linearGradient id="gmvfill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#BE8A14" stop-opacity=".30"/><stop offset="1" stop-color="#BE8A14" stop-opacity="0"/></linearGradient>
+                </defs>
+                <sc-for list="{{ trendGrid }}" as="g" hint-placeholder-count="4"><line x1="8" y1="{{ g }}" x2="732" y2="{{ g }}" stroke="#E9DFCC" stroke-width="1"/></sc-for>
+                <path d="{{ trendArea }}" fill="url(#gmvfill)"/>
+                <path d="{{ trendGmv }}" fill="none" stroke="#BE8A14" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="{{ trendOrd }}" fill="none" stroke="#F47B27" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4"/>
+                <sc-for list="{{ trendDots }}" as="d" hint-placeholder-count="15"><circle cx="{{ d.x }}" cy="{{ d.y }}" r="3.2" fill="#F47B27" stroke="#FFFFFF" stroke-width="2"/></sc-for>
+                <sc-if value="{{ hover }}" hint-placeholder-val="{{ false }}">
+                  <line x1="{{ hover.x }}" y1="14" x2="{{ hover.x }}" y2="208" stroke="#F47B27" stroke-width="1" stroke-opacity=".5"/>
+                  <circle cx="{{ hover.x }}" cy="{{ hover.gy }}" r="5" fill="#BE8A14" stroke="#FFFFFF" stroke-width="2.5"/>
+                  <circle cx="{{ hover.x }}" cy="{{ hover.oy }}" r="5" fill="#F47B27" stroke="#FFFFFF" stroke-width="2.5"/>
+                </sc-if>
+                <sc-for list="{{ trendLabels }}" as="l" hint-placeholder-count="8"><text x="{{ l.x }}" y="244" fill="#9C8F75" font-size="11" text-anchor="middle" font-family="Space Grotesk">{{ l.t }}</text></sc-for>
+                <sc-for list="{{ trendHit }}" as="h" hint-placeholder-count="15"><rect x="{{ h.x }}" y="0" width="{{ h.w }}" height="212" fill="transparent" onMouseEnter="{{ h.enter }}"/></sc-for>
+              </svg>
+              <sc-if value="{{ hover }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;top:6px;left:calc({{ hover.tipX }} / 740 * 100%);background:#F4ECDB;border:1px solid #D7C8AC;border-radius:11px;padding:10px 13px;pointer-events:none;box-shadow:0 10px 28px rgba(40,30,16,.35);min-width:132px">
+                  <div style="font-size:11px;font-weight:700;color:#473D2D;margin-bottom:7px">Ngày {{ hover.day }}</div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:4px"><span style="font-size:11px;color:#85775D">GMV</span><span class="num" style="font-size:12.5px;font-weight:700;color:#BE8A14">{{ hover.gmv }}</span></div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:4px"><span style="font-size:11px;color:#85775D">Đơn</span><span class="num" style="font-size:12.5px;font-weight:700;color:#F47B27">{{ hover.orders }}</span></div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:14px"><span style="font-size:11px;color:#85775D">Phiên</span><span class="num" style="font-size:12.5px;font-weight:700;color:#473D2D">{{ hover.sessions }}</span></div>
+                </div>
+              </sc-if>
+              </div>
+            </div>
+
+            <div style="background:#FFFFFF;border:1px solid #E7DDCA;border-radius:18px;padding:20px 22px">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px">
+                <div>
+                  <div style="font-family:'Space Grotesk';font-size:16px;font-weight:600">Khung giờ Peak LIVE</div>
+                  <div style="font-size:11px;letter-spacing:.05em;color:#9C8F75;text-transform:uppercase;margin-top:3px">Phân bổ phiên theo giờ</div>
+                </div>
+                <div style="display:flex;gap:12px;font-size:12px;font-weight:600">
+                  <span style="display:flex;align-items:center;gap:6px;color:#6C5E45"><span style="width:10px;height:10px;border-radius:3px;background:#F47B27"></span>Có đơn</span>
+                  <span style="display:flex;align-items:center;gap:6px;color:#6C5E45"><span style="width:10px;height:10px;border-radius:3px;background:#DBCEB5"></span>Không</span>
+                </div>
+              </div>
+              <svg viewBox="0 0 460 250" style="width:100%;height:auto;display:block">
+                <sc-for list="{{ hourGrid }}" as="g" hint-placeholder-count="4">
+                  <line x1="30" y1="{{ g.y }}" x2="452" y2="{{ g.y }}" stroke="#EFE7D8"/>
+                  <text x="25" y="{{ g.y }}" dy="3.5" fill="#A89B80" font-size="9.5" text-anchor="end" font-family="Space Grotesk">{{ g.v }}</text>
+                </sc-for>
+                <sc-for list="{{ hourBars }}" as="b" hint-placeholder-count="24">
+                  <rect x="{{ b.x }}" y="{{ b.ny }}" width="{{ b.w }}" height="{{ b.nh }}" rx="2" fill="#DBCEB5"/>
+                  <rect x="{{ b.x }}" y="{{ b.wy }}" width="{{ b.w }}" height="{{ b.wh }}" rx="2" fill="#F47B27"/>
+                  <rect x="{{ b.x }}" y="{{ b.topY }}" width="{{ b.w }}" height="4" fill="#211A0E" fill-opacity="{{ b.active }}" rx="2"/>
+                  <rect x="{{ b.x }}" y="14" width="{{ b.w }}" height="192" fill="transparent" style="cursor:pointer" onMouseEnter="{{ b.hover }}" onMouseLeave="{{ b.leave }}"></rect>
+                </sc-for>
+                <line x1="30" y1="206" x2="452" y2="206" stroke="#D8CBB2" stroke-width="1.5"/>
+                <sc-for list="{{ hourLabels }}" as="l" hint-placeholder-count="7"><text x="{{ l.x }}" y="222" fill="{{ l.gold }}" font-size="10.5" text-anchor="middle" font-family="Space Grotesk">{{ l.t }}</text></sc-for>
+              </svg>
+              <sc-if value="{{ hourTip }}" hint-placeholder-val="{{ false }}">
+                <div style="position:relative;height:0">
+                  <div style="position:absolute;left:{{ hourTip.x }}px;top:-150px;width:172px;background:#FFFFFF;border:1px solid #E7DDCA;border-radius:12px;padding:11px 13px;box-shadow:0 14px 36px rgba(40,30,16,.16);pointer-events:none;z-index:5">
+                    <div style="display:flex;align-items:center;gap:7px;margin-bottom:9px">
+                      <span style="font-family:'Space Grotesk';font-size:13px;font-weight:700;color:#211A0E">{{ hourTip.hr }}</span>
+                      <sc-if value="{{ hourTip.gold }}" hint-placeholder-val="{{ false }}"><span style="font-size:9.5px;font-weight:700;color:#F47B27;background:#FBF0DA;border:1px solid #F6E5C2;padding:1px 6px;border-radius:99px">Giờ vàng</span></sc-if>
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px"><span style="font-size:12px;color:#6C5E45">Tổng phiên</span><span class="num" style="font-size:12.5px;font-weight:700;color:#2C2417">{{ hourTip.tot }}</span></div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px"><span style="font-size:12px;color:#6C5E45;display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:2px;background:#F47B27"></span>Có đơn</span><span class="num" style="font-size:12.5px;font-weight:700;color:#F47B27">{{ hourTip.withO }}</span></div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;padding-top:6px;border-top:1px solid #EFE7D8"><span style="font-size:12px;color:#6C5E45">Tỷ lệ ra đơn</span><span class="num" style="font-size:12.5px;font-weight:700;color:#2E9C46">{{ hourTip.rate }}</span></div>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+
+          <!-- CHARTS ROW 2 -->
+          <div style="display:grid;grid-template-columns:1fr 1.35fr;gap:16px">
+            <div style="background:#FFFFFF;border:1px solid #E7DDCA;border-radius:18px;padding:20px 22px">
+              <div style="font-family:'Space Grotesk';font-size:16px;font-weight:600">Top 10 KOC theo GMV</div>
+              <div style="font-size:11px;letter-spacing:.05em;color:#9C8F75;text-transform:uppercase;margin:3px 0 16px">Xếp hạng hiệu suất tài chính</div>
+              <div style="display:flex;flex-direction:column;gap:5px">
+                <sc-for list="{{ topBars }}" as="b" hint-placeholder-count="10">
+                  <div onMouseEnter="{{ b.hover }}" onMouseLeave="{{ b.leave }}" onClick="{{ b.open }}" style="display:flex;flex-direction:column;gap:5px;padding:6px 8px;margin:0 -8px;border-radius:9px;cursor:pointer;background:{{ b.bg }};transition:background .14s">
+                    <div style="display:flex;align-items:center;gap:10px">
+                      <div style="width:120px;font-size:12.5px;font-weight:600;color:#473D2D;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right">{{ b.name }}</div>
+                      <div style="flex:1;height:22px;background:#ECE3D2;border-radius:6px;overflow:hidden;position:relative">
+                        <div style="height:100%;width:{{ b.pct }}%;background:linear-gradient(90deg,#BE8A14,#F47B27);border-radius:6px"></div>
+                      </div>
+                      <div class="num" style="width:62px;font-size:12.5px;font-weight:700;color:#6C5E45">{{ b.val }}</div>
+                    </div>
+                    <sc-if value="{{ b.active }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;align-items:center;gap:14px;padding-left:130px;font-size:11px;color:#85775D">
+                        <span>Hạng <b style="color:#211A0E">{{ b.grade }}</b></span>
+                        <span>{{ b.sessions }} phiên</span>
+                        <span>CVR <b style="color:#2E9C46">{{ b.cvr }}</b></span>
+                        <span>DT/giờ <b style="color:#211A0E">{{ b.dtgio }}</b></span>
+                        <span>{{ b.share }} GMV kỳ</span>
+                      </div>
+                    </sc-if>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <div style="background:#FFFFFF;border:1px solid #E7DDCA;border-radius:18px;padding:20px 22px">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between">
+                <div>
+                  <div style="font-family:'Space Grotesk';font-size:16px;font-weight:600">Ma trận hiệu suất KOC</div>
+                  <div style="font-size:11px;letter-spacing:.05em;color:#9C8F75;text-transform:uppercase;margin-top:3px">Nỗ lực (giờ live) × Kết quả (GMV)</div>
+                </div>
+              </div>
+              <svg viewBox="0 0 620 250" style="width:100%;height:auto;display:block;margin-top:6px">
+                <sc-for list="{{ yTicks }}" as="t" hint-placeholder-count="3">
+                  <line x1="52" y1="{{ t.y }}" x2="600" y2="{{ t.y }}" stroke="#F3ECDF"/>
+                  <text x="48" y="{{ t.y }}" dy="3" fill="#A89B80" font-size="9" text-anchor="end" font-family="Space Grotesk">{{ t.t }}</text>
+                </sc-for>
+                <line x1="52" y1="196" x2="600" y2="196" stroke="#D7C8AC" stroke-width="1.2"/>
+                <line x1="52" y1="24" x2="52" y2="196" stroke="#D7C8AC" stroke-width="1.2"/>
+                <line x1="{{ scatterMX }}" y1="24" x2="{{ scatterMX }}" y2="196" stroke="#D8CBB2" stroke-width="1" stroke-dasharray="4 4"/>
+                <line x1="52" y1="{{ scatterMY }}" x2="600" y2="{{ scatterMY }}" stroke="#D8CBB2" stroke-width="1" stroke-dasharray="4 4"/>
+                <text x="60" y="38" fill="#F47B27" font-size="10" font-weight="700" letter-spacing=".3">HIỆU QUẢ CAO</text>
+                <text x="592" y="38" fill="#F47B27" font-size="10" font-weight="700" text-anchor="end" letter-spacing=".3">NGÔI SAO BỀN BỈ</text>
+                <text x="60" y="189" fill="#A89B80" font-size="10" font-weight="700" letter-spacing=".3">TIỀM NĂNG / ÍT GIỜ</text>
+                <text x="592" y="189" fill="#BE8A14" font-size="10" font-weight="700" text-anchor="end" letter-spacing=".3">CẦN TỐI ƯU CHUYỂN ĐỔI</text>
+                <sc-for list="{{ bgScatter }}" as="p" hint-placeholder-count="90"><circle cx="{{ p.x }}" cy="{{ p.y }}" r="2.5" fill="#C9BCA3" fill-opacity=".4"/></sc-for>
+                <sc-for list="{{ scatterPts }}" as="p" hint-placeholder-count="40">
+                  <circle cx="{{ p.x }}" cy="{{ p.y }}" r="{{ p.r }}" fill="{{ p.c }}" fill-opacity=".85" stroke="#FFFFFF" stroke-width="1"/>
+                  <circle cx="{{ p.x }}" cy="{{ p.y }}" r="13" fill="transparent" style="cursor:pointer" onMouseEnter="{{ p.hover }}" onMouseLeave="{{ p.leave }}"></circle>
+                </sc-for>
+                <sc-for list="{{ xTicks }}" as="t" hint-placeholder-count="5"><text x="{{ t.x }}" y="212" fill="#9C8F75" font-size="9.5" text-anchor="middle" font-family="Space Grotesk">{{ t.t }}</text></sc-for>
+                <text x="600" y="230" fill="#A89B80" font-size="9.5" text-anchor="end" font-style="italic">Trục ngang: giờ live · Trục dọc: GMV (thang log)</text>
+              </svg>
+              <sc-if value="{{ scTip }}" hint-placeholder-val="{{ false }}">
+                <div style="position:relative;height:0">
+                  <div style="position:absolute;left:{{ scTip.x }}px;top:{{ scTip.y }}px;width:188px;background:#FFFFFF;border:1px solid #E7DDCA;border-radius:12px;padding:11px 13px;box-shadow:0 14px 36px rgba(40,30,16,.18);pointer-events:none;z-index:5">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:9px">
+                      <span style="font-size:13px;font-weight:700;color:#211A0E;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ scTip.name }}</span>
+                      <span style="font-size:10.5px;font-weight:700;color:{{ scTip.gcol }};background:{{ scTip.gcol }}1c;border:1px solid {{ scTip.gcol }}55;border-radius:6px;padding:2px 7px">{{ scTip.grade }}</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:12px;color:#6C5E45">GMV</span><span class="num" style="font-size:12.5px;font-weight:700;color:#F47B27">{{ scTip.gmv }}</span></div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:12px;color:#6C5E45">Giờ live</span><span class="num" style="font-size:12.5px;font-weight:700;color:#2C2417">{{ scTip.hours }}</span></div>
+                    <div style="display:flex;justify-content:space-between;padding-top:6px;border-top:1px solid #EFE7D8"><span style="font-size:12px;color:#6C5E45">DT / giờ</span><span class="num" style="font-size:12.5px;font-weight:700;color:#2E9C46">{{ scTip.dtgio }}</span></div>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+
+          <!-- CHARTS ROW 3: funnel + grade donut -->
+          <div style="display:grid;grid-template-columns:1.45fr 1fr;gap:16px;margin-top:16px">
+            <div style="background:#FFFFFF;border:1px solid #E7DDCA;border-radius:18px;padding:20px 22px">
+              <div style="font-family:'Space Grotesk';font-size:16px;font-weight:600">Phễu chuyển đổi toàn kỳ</div>
+              <div style="font-size:11px;letter-spacing:.05em;color:#9C8F75;text-transform:uppercase;margin:3px 0 18px">Hiển thị → Nhấp → Đơn hàng</div>
+              <div style="display:flex;flex-direction:column;gap:10px;position:relative">
+                <sc-for list="{{ funnel }}" as="f" hint-placeholder-count="3">
+                  <div onMouseEnter="{{ f.hover }}" onMouseLeave="{{ f.leave }}" style="display:flex;align-items:center;gap:14px;cursor:pointer;opacity:{{ f.op }};transition:opacity .14s">
+                    <div style="width:96px;font-size:12.5px;font-weight:600;color:#473D2D">{{ f.l }}</div>
+                    <div style="flex:1;height:34px;background:#ECE3D2;border-radius:8px;overflow:hidden;position:relative">
+                      <div style="height:100%;width:{{ f.pct }}%;background:linear-gradient(90deg,{{ f.c }},{{ f.c }}cc);border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding-right:12px;min-width:62px">
+                        <span class="num" style="font-size:13px;font-weight:700;color:#FFFFFF">{{ f.v }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </sc-for>
+                <sc-if value="{{ funnelTip }}" hint-placeholder-val="{{ false }}">
+                  <div style="position:absolute;left:110px;top:{{ funnelTip.top }}px;background:#211A0E;border-radius:9px;padding:8px 12px;box-shadow:0 10px 26px rgba(40,30,16,.28);pointer-events:none;z-index:6;display:flex;gap:16px;align-items:center">
+                    <div><div style="font-size:9.5px;color:#C9BCA3;text-transform:uppercase;letter-spacing:.04em">% trên hiển thị</div><div class="num" style="font-size:14px;font-weight:700;color:#FFB070">{{ funnelTip.ofTop }}</div></div>
+                    <div><div style="font-size:9.5px;color:#C9BCA3;text-transform:uppercase;letter-spacing:.04em">Từ bước trước</div><div class="num" style="font-size:14px;font-weight:700;color:#5CC771">{{ funnelTip.fromPrev }}</div></div>
+                    <sc-if value="{{ funnelTip.drop }}" hint-placeholder-val="{{ false }}"><div><div style="font-size:9.5px;color:#C9BCA3;text-transform:uppercase;letter-spacing:.04em">Rớt lại</div><div class="num" style="font-size:14px;font-weight:700;color:#FF8A3D">{{ funnelTip.drop }}</div></div></sc-if>
+                  </div>
+                </sc-if>
+              </div>
+              <div style="display:flex;gap:12px;margin-top:18px">
+                <sc-for list="{{ funnelSteps }}" as="s" hint-placeholder-count="2">
+                  <div style="flex:1;background:#FBF7EF;border:1px solid #E7DDCA;border-radius:11px;padding:12px 14px">
+                    <div style="font-size:11px;color:#85775D;font-weight:600;margin-bottom:6px">{{ s.l }}</div>
+                    <div class="num" style="font-size:19px;font-weight:700;color:#F47B27">{{ s.v }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <div style="background:#FFFFFF;border:1px solid #E7DDCA;border-radius:18px;padding:20px 22px">
+              <div style="font-family:'Space Grotesk';font-size:16px;font-weight:600">Phân bổ hạng KOC</div>
+              <div style="font-size:11px;letter-spacing:.05em;color:#9C8F75;text-transform:uppercase;margin:3px 0 6px">598 nhà sáng tạo theo điểm</div>
+              <div style="display:flex;align-items:center;gap:18px">
+                <svg viewBox="0 0 180 180" style="width:148px;height:148px;flex-shrink:0">
+                  <sc-for list="{{ donut }}" as="d" hint-placeholder-count="5"><path d="{{ d.d }}" fill="{{ d.c }}" fill-opacity="{{ d.op }}" style="cursor:pointer;transition:fill-opacity .14s" onMouseEnter="{{ d.hover }}" onMouseLeave="{{ d.leave }}"></path></sc-for>
+                  <text x="90" y="84" fill="#211A0E" font-size="26" font-weight="700" text-anchor="middle" font-family="Space Grotesk">{{ donutBig }}</text>
+                  <text x="90" y="104" fill="#85775D" font-size="11" text-anchor="middle">{{ donutSmall }}</text>
+                </svg>
+                <div style="flex:1;display:flex;flex-direction:column;gap:4px">
+                  <sc-for list="{{ donut }}" as="d" hint-placeholder-count="5">
+                    <div onMouseEnter="{{ d.hover }}" onMouseLeave="{{ d.leave }}" style="display:flex;align-items:center;gap:9px;padding:5px 7px;margin:0 -7px;border-radius:8px;cursor:pointer;background:{{ d.rowBg }};transition:background .14s">
+                      <span style="width:10px;height:10px;border-radius:3px;background:{{ d.c }};flex-shrink:0"></span>
+                      <span style="font-size:12.5px;font-weight:700;color:#473D2D;width:16px">{{ d.g }}</span>
+                      <div style="flex:1;height:6px;background:#ECE3D2;border-radius:99px;overflow:hidden"><div style="height:100%;width:{{ d.pct }}%;background:{{ d.c }}"></div></div>
+                      <span class="num" style="font-size:12px;color:#6C5E45;width:30px;text-align:right">{{ d.n }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+      <!-- KOC LIST -->
+      <sc-if value="{{ isKoc }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:13px;margin-bottom:18px">
+            <sc-for list="{{ gradeBuckets }}" as="b" hint-placeholder-count="5">
+              <div class="lift" style="background:#FBF7EF;border:1px solid #E7DDCA;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:13px">
+                <div style="width:42px;height:42px;border-radius:12px;background:{{ b.col }}1f;border:1.5px solid {{ b.col }};display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk';font-weight:700;font-size:18px;color:{{ b.col }}">{{ b.g }}</div>
+                <div>
+                  <div class="num" style="font-size:22px;font-weight:700">{{ b.n }}</div>
+                  <div style="font-size:11.5px;color:#897B5F">{{ b.l }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+            <div style="flex:1;display:flex;align-items:center;gap:10px;background:#FBF7EF;border:1px solid #E7DDCA;border-radius:12px;padding:11px 15px">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#897B5F" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              <input value="{{ q }}" onInput="{{ setQ }}" placeholder="Tìm theo tên KOC hoặc @username…" style="flex:1;background:none;border:none;outline:none;color:#211A0E;font-size:13.5px;font-family:Manrope"/>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;background:#FBF7EF;border:1px solid #E7DDCA;border-radius:12px;padding:11px 16px;font-size:13px;font-weight:600;color:#6C5E45;cursor:pointer" class="lift">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F47B27" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4 M7 10l5 5 5-5 M12 15V3"/></svg>Xuất CSV
+            </div>
+          </div>
+
+          <div style="background:#FFFFFF;border:1px solid #E7DDCA;border-radius:16px;overflow:hidden">
+            <div style="display:grid;grid-template-columns:46px 2.1fr 1.3fr repeat(8,1fr) 50px;align-items:center;padding:13px 18px;border-bottom:1px solid #E7DDCA;font-size:11px;font-weight:700;letter-spacing:.05em;color:#9C8F75;text-transform:uppercase">
+              <div>#</div><div>KOC</div><div>Username</div>
+              <sc-for list="{{ cols }}" as="c" hint-placeholder-count="8">
+                <div onClick="{{ c.go }}" style="text-align:right;cursor:pointer;color:{{ c.active }};white-space:nowrap">{{ c.label }} <span style="color:#F47B27">{{ c.arrow }}</span></div>
+              </sc-for>
+              <div></div>
+            </div>
+            <sc-for list="{{ kocRows }}" as="k" hint-placeholder-count="12">
+              <div class="row" onClick="{{ k.open }}" style="display:grid;grid-template-columns:46px 2.1fr 1.3fr repeat(8,1fr) 50px;align-items:center;padding:12px 18px;border-bottom:1px solid #ECE3D2;cursor:pointer;transition:background .12s">
+                <div class="num" style="font-size:13px;color:#9C8F75;font-weight:600">{{ k.rank }}</div>
+                <div style="display:flex;align-items:center;gap:11px;min-width:0">
+                  <div style="width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#E7DDCA,#EFE6D5);border:1px solid #DCCFB6;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#6C5E45;flex-shrink:0">{{ k.initials }}</div>
+                  <div style="min-width:0">
+                    <div style="font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ k.name }}</div>
+                    <div style="font-size:11px;color:#9C8F75">Hạng {{ k.grade }}</div>
+                  </div>
+                </div>
+                <div style="font-size:12.5px;color:#85775D;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ k.user }}</div>
+                <div class="num" style="text-align:right;font-size:13px;color:#6C5E45">{{ k.sessions }}</div>
+                <div class="num" style="text-align:right;font-size:13px;color:#6C5E45">{{ k.hours }}</div>
+                <div class="num" style="text-align:right;font-size:13px;font-weight:700;color:#BE8A14">{{ k.gmv }}</div>
+                <div class="num" style="text-align:right;font-size:13px;color:#BE8A14">{{ k.orders }}</div>
+                <div class="num" style="text-align:right;font-size:13px;color:#6C5E45">{{ k.ctr }}</div>
+                <div class="num" style="text-align:right;font-size:13px;color:#2E9C46">{{ k.cvr }}</div>
+                <div class="num" style="text-align:right;font-size:13px;color:#6C5E45">{{ k.dtgio }}</div>
+                <div style="display:flex;justify-content:flex-end"><div class="num" style="min-width:38px;text-align:center;font-size:12.5px;font-weight:700;color:{{ k.gcol }};background:{{ k.gcol }}1c;border:1px solid {{ k.gcol }}55;border-radius:7px;padding:3px 0">{{ k.score }}</div></div>
+                <div style="text-align:right;color:#D1C3A6;font-size:17px;line-height:1;font-weight:700">›</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- KOC DETAIL -->
+      <sc-if value="{{ isDetail }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div onClick="{{ backKoc }}" style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:#85775D;cursor:pointer;margin-bottom:16px">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>Quay lại danh sách
+          </div>
+          <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-bottom:16px">
+            <div style="background:linear-gradient(135deg,#FBF7EF,#FFFFFF);border:1px solid #E7DDCA;border-radius:18px;padding:24px">
+              <div style="display:flex;align-items:center;gap:18px">
+                <div style="width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,#F47B27,#BE8A14);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk';font-size:26px;font-weight:700;color:#fff;flex-shrink:0">{{ detail.initials }}</div>
+                <div style="flex:1;min-width:0">
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <div style="font-family:'Space Grotesk';font-size:22px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ detail.name }}</div>
+                    <span style="font-size:12px;font-weight:700;color:{{ detail.gcol }};background:{{ detail.gcol }}1c;border:1px solid {{ detail.gcol }}66;padding:3px 11px;border-radius:99px">Hạng {{ detail.grade }}</span>
+                  </div>
+                  <div style="font-size:13.5px;color:#85775D;margin-top:3px">{{ detail.user }}</div>
+                </div>
+                <div style="text-align:center;padding-left:18px;border-left:1px solid #E7DDCA">
+                  <div class="num" style="font-size:40px;font-weight:700;color:{{ detail.gcol }};line-height:1">{{ detail.score }}</div>
+                  <div style="font-size:11px;color:#9C8F75;margin-top:4px">điểm tổng / 100</div>
+                </div>
+                <div style="text-align:center;padding-left:18px;border-left:1px solid #E7DDCA">
+                  <div class="num" style="font-size:40px;font-weight:700;color:#F47B27;line-height:1">#{{ detailMeta.rank }}</div>
+                  <div style="font-size:11px;color:#9C8F75;margin-top:4px">/ {{ detailMeta.total }} KOC · Top {{ detailMeta.pctile }}%</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:11px;margin-top:22px">
+                <sc-for list="{{ detail.stats }}" as="s" hint-placeholder-count="10">
+                  <div style="background:#F7F2E8;border:1px solid #E9DFCC;border-radius:12px;padding:13px 14px">
+                    <div style="font-size:10.5px;color:#9C8F75;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:7px">{{ s.l }}</div>
+                    <div class="num" style="font-size:18px;font-weight:700;color:{{ s.c }}">{{ s.v }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <div style="background:#FFFFFF;border:1px solid #E7DDCA;border-radius:18px;padding:20px">
+              <div style="font-family:'Space Grotesk';font-size:15px;font-weight:600;margin-bottom:2px">Hồ sơ năng lực</div>
+              <div style="font-size:11px;letter-spacing:.05em;color:#9C8F75;text-transform:uppercase;margin-bottom:6px">5 trục chấm điểm</div>
+              <svg viewBox="0 0 260 256" style="width:100%;height:auto">
+                <sc-for list="{{ detail.radar.grid }}" as="g" hint-placeholder-count="4"><polygon points="{{ g }}" fill="none" stroke="#E9DFCC" stroke-width="1"/></sc-for>
+                <sc-for list="{{ detail.radar.spokes }}" as="s" hint-placeholder-count="5"><line x1="130" y1="128" x2="{{ s.x }}" y2="{{ s.y }}" stroke="#E9DFCC" stroke-width="1"/></sc-for>
+                <polygon points="{{ detail.radar.valPoly }}" fill="#F47B2722" stroke="#F47B27" stroke-width="2"/>
+                <sc-for list="{{ detail.radar.dots }}" as="d" hint-placeholder-count="5"><circle cx="{{ d.x }}" cy="{{ d.y }}" r="3.2" fill="#F47B27"/></sc-for>
+                <sc-for list="{{ detail.radar.axisL }}" as="a" hint-placeholder-count="5"><text x="{{ a.x }}" y="{{ a.y }}" fill="#85775D" font-size="10.5" font-weight="600" text-anchor="{{ a.a }}">{{ a.l }}</text></sc-for>
+              </svg>
+            </div>
+          </div>
+
+          <!-- BENCHMARK vs trung bình + GMV theo phiên -->
+          <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:16px;margin-bottom:16px">
+            <div style="background:#FFFFFF;border:1px solid #E7DDCA;border-radius:18px;padding:20px">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px">
+                <div>
+                  <div style="font-family:'Space Grotesk';font-size:15px;font-weight:600">Đối chuẩn với trung bình hệ thống</div>
+                  <div style="font-size:11px;letter-spacing:.05em;color:#9C8F75;text-transform:uppercase;margin-top:3px">KOC này so với 598 nhà sáng tạo</div>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:16px">
+                <sc-for list="{{ detailMeta.bench }}" as="b" hint-placeholder-count="3">
+                  <div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+                      <span style="font-size:13px;font-weight:600;color:#473D2D">{{ b.l }}</span>
+                      <span style="font-size:12px;font-weight:700;color:{{ b.badgeCol }};background:{{ b.badgeBg }};border:1px solid {{ b.badgeBd }};padding:2px 9px;border-radius:99px">{{ b.mult }}× TB</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:9px;margin-bottom:5px">
+                      <span style="font-size:10.5px;color:#85775D;width:34px">KOC</span>
+                      <div style="flex:1;height:9px;background:#ECE3D2;border-radius:99px;overflow:hidden"><div style="height:100%;width:{{ b.pctSelf }}%;background:linear-gradient(90deg,#F47B27,#BE8A14);border-radius:99px"></div></div>
+                      <span class="num" style="font-size:11.5px;font-weight:700;color:#BE8A14;width:64px;text-align:right">{{ b.selfV }}</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:9px">
+                      <span style="font-size:10.5px;color:#85775D;width:34px">TB</span>
+                      <div style="flex:1;height:9px;background:#ECE3D2;border-radius:99px;overflow:hidden"><div style="height:100%;width:{{ b.pctAvg }}%;background:#CFBFA0;border-radius:99px"></div></div>
+                      <span class="num" style="font-size:11.5px;font-weight:600;color:#85775D;width:64px;text-align:right">{{ b.avgV }}</span>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <div style="background:#FFFFFF;border:1px solid #E7DDCA;border-radius:18px;padding:20px">
+              <div style="font-family:'Space Grotesk';font-size:15px;font-weight:600">GMV theo phiên gần đây</div>
+              <div style="font-size:11px;letter-spacing:.05em;color:#9C8F75;text-transform:uppercase;margin:3px 0 6px">Diễn biến doanh thu từng buổi live</div>
+              <svg viewBox="0 0 572 132" style="width:100%;height:auto;display:block;margin-top:8px">
+                <line x1="0" y1="110" x2="572" y2="110" stroke="#E7DDCA" stroke-width="1"/>
+                <sc-for list="{{ dBars }}" as="b" hint-placeholder-count="8">
+                  <rect x="{{ b.x }}" y="{{ b.y }}" width="{{ b.w }}" height="{{ b.h }}" rx="3" fill="url(#dbar)"/>
+                </sc-for>
+                <defs><linearGradient id="dbar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F47B27"/><stop offset="1" stop-color="#BE8A14"/></linearGradient></defs>
+              </svg>
+              <div style="display:flex;gap:9px;margin-top:14px">
+                <div style="flex:1;background:#EEF3DF;border:1px solid #D4E2B8;border-radius:11px;padding:11px 13px">
+                  <div style="font-size:10.5px;color:#85775D;font-weight:600;margin-bottom:5px">ĐIỂM MẠNH</div>
+                  <div style="font-size:12.5px;font-weight:700;color:#2E9C46">{{ strengths }}</div>
+                </div>
+                <div style="flex:1;background:#FBF0DA;border:1px solid #E6D2A4;border-radius:11px;padding:11px 13px">
+                  <div style="font-size:10.5px;color:#85775D;font-weight:600;margin-bottom:5px">CẦN CẢI THIỆN</div>
+                  <div style="font-size:12.5px;font-weight:700;color:#BE8A14">{{ weaks }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:16px">
+            <div style="background:#FFFFFF;border:1px solid #E7DDCA;border-radius:18px;padding:20px">
+              <div style="font-family:'Space Grotesk';font-size:15px;font-weight:600;margin-bottom:16px">Tương tác cộng đồng</div>
+              <div style="display:flex;flex-direction:column;gap:13px">
+                <sc-for list="{{ detail.eng }}" as="e" hint-placeholder-count="4">
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:12px;border-bottom:1px solid #FFFFFF00">
+                    <span style="font-size:13px;color:#85775D">{{ e.l }}</span>
+                    <span class="num" style="font-size:16px;font-weight:700;color:#2C2417">{{ e.v }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="margin-top:8px;background:#EEF3DF;border:1px solid #E0D1AE;border-radius:12px;padding:13px 14px">
+                <div style="font-size:11px;font-weight:700;color:#BE8A14;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px">Gợi ý vận hành</div>
+                <div style="font-size:12.5px;color:#6C5E45;line-height:1.5">Duy trì khung giờ hiệu quả nhất, tăng tần suất phiên có sản phẩm chủ lực để nâng DT/giờ.</div>
+              </div>
+            </div>
+
+            <div style="background:#FFFFFF;border:1px solid #E7DDCA;border-radius:18px;padding:20px">
+              <div style="font-family:'Space Grotesk';font-size:15px;font-weight:600;margin-bottom:14px">Lịch sử phiên gần đây</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1.4fr 1fr 1.2fr 1fr;padding:0 4px 11px;font-size:10.5px;font-weight:700;letter-spacing:.04em;color:#9C8F75;text-transform:uppercase;border-bottom:1px solid #E7DDCA">
+                <div>Ngày</div><div>Thời lượng</div><div style="text-align:right">GMV</div><div style="text-align:right">Đơn</div><div style="text-align:right">Người xem</div><div style="text-align:right">CTR</div>
+              </div>
+              <sc-for list="{{ detail.sessions }}" as="s" hint-placeholder-count="8">
+                <div style="display:grid;grid-template-columns:1fr 1fr 1.4fr 1fr 1.2fr 1fr;align-items:center;padding:11px 4px;border-bottom:1px solid #ECE3D2">
+                  <div style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:#473D2D"><span style="width:6px;height:6px;border-radius:99px;background:{{ s.dot }}"></span>{{ s.date }}</div>
+                  <div class="num" style="font-size:12.5px;color:#6C5E45">{{ s.dur }}</div>
+                  <div class="num" style="text-align:right;font-size:12.5px;font-weight:700;color:#BE8A14">{{ s.gmv }}</div>
+                  <div class="num" style="text-align:right;font-size:12.5px;color:#BE8A14">{{ s.orders }}</div>
+                  <div class="num" style="text-align:right;font-size:12.5px;color:#6C5E45">{{ s.viewers }}</div>
+                  <div class="num" style="text-align:right;font-size:12.5px;color:#6C5E45">{{ s.ctr }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- COMPARE -->
+      <sc-if value="{{ isCompare }}" hint-placeholder-val="{{ true }}">
+        <div style="position:relative">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px">
+            <sc-for list="{{ cmpCards }}" as="c" hint-placeholder-count="3">
+              <div style="background:#FFFFFF;border:1px solid {{ c.col }}44;border-radius:16px;padding:18px;position:relative;overflow:hidden">
+                <div style="position:absolute;top:0;left:0;width:100%;height:3px;background:{{ c.col }}"></div>
+                <div onClick="{{ c.remove }}" class="lift" style="position:absolute;top:12px;right:12px;width:24px;height:24px;border-radius:7px;background:#ECE3D2;border:1px solid #DBCEB5;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#85775D" style-hover="background:#F8D8CD;color:#E2502F">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </div>
+                <div style="display:flex;align-items:center;gap:13px">
+                  <div style="width:46px;height:46px;border-radius:13px;background:{{ c.col }}22;border:1px solid {{ c.col }}66;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk';font-weight:700;font-size:16px;color:{{ c.col }}">{{ c.initials }}</div>
+                  <div style="flex:1;min-width:0;padding-right:20px">
+                    <div style="font-size:14.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.name }}</div>
+                    <div style="font-size:12px;color:#85775D">{{ c.user }}</div>
+                  </div>
+                  <div style="text-align:center">
+                    <div class="num" style="font-size:24px;font-weight:700;color:{{ c.gcol }};line-height:1">{{ c.score }}</div>
+                    <div style="font-size:10px;color:#9C8F75">Hạng {{ c.grade }}</div>
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ canAdd }}" hint-placeholder-val="{{ true }}">
+              <div onClick="{{ openPick }}" class="lift" style="border:1.5px dashed #DBCEB5;border-radius:16px;padding:18px;display:flex;align-items:center;justify-content:center;gap:11px;cursor:pointer;color:#85775D;min-height:84px" style-hover="border-color:#F47B27;color:#F47B27">
+                <div style="width:38px;height:38px;border-radius:11px;background:#FBF7EF;border:1px solid #DBCEB5;display:flex;align-items:center;justify-content:center">
+                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+                </div>
+                <span style="font-size:13.5px;font-weight:600">Thêm KOC để so sánh</span>
+              </div>
+            </sc-if>
+          </div>
+          <div style="background:#FFFFFF;border:1px solid #E7DDCA;border-radius:18px;padding:8px 22px 14px">
+            <sc-for list="{{ cmpRows }}" as="r" hint-placeholder-count="8">
+              <div style="display:grid;grid-template-columns:1.1fr repeat(3,1fr);align-items:center;padding:15px 0;border-bottom:1px solid #E7DDCA14;gap:18px">
+                <div style="font-size:12.5px;font-weight:600;color:#85775D;text-transform:uppercase;letter-spacing:.04em">{{ r.label }}</div>
+                <sc-for list="{{ r.cells }}" as="cell" hint-placeholder-count="3">
+                  <div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+                      <span class="num" style="font-size:15px;font-weight:700;color:#2C2417">{{ cell.val }}</span>
+                      <sc-if value="{{ cell.best }}" hint-placeholder-val="{{ true }}"><span style="font-size:10px;font-weight:700;color:#2E9C46;background:#E6F0D6;padding:2px 7px;border-radius:99px">Tốt nhất</span></sc-if>
+                    </div>
+                    <div style="height:6px;background:#ECE3D2;border-radius:99px;overflow:hidden"><div style="height:100%;width:{{ cell.pct }}%;background:{{ cell.col }};border-radius:99px"></div></div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ pickOpen }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ closePick }}" style="position:absolute;inset:-24px -28px;background:rgba(40,30,16,.45);z-index:40;display:flex;align-items:flex-start;justify-content:center;padding-top:60px">
+              <div onClick="{{ stop }}" style="width:480px;background:#FBF7EF;border:1px solid #DBCEB5;border-radius:18px;padding:20px;box-shadow:0 28px 70px rgba(40,30,16,.40)">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+                  <div style="font-family:'Space Grotesk';font-size:16px;font-weight:600">Thêm KOC vào so sánh</div>
+                  <div onClick="{{ closePick }}" style="width:28px;height:28px;border-radius:8px;background:#ECE3D2;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#85775D"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;background:#F7F2E8;border:1px solid #E7DDCA;border-radius:11px;padding:10px 14px;margin-bottom:12px">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#85775D" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                  <input value="{{ pickQ }}" onInput="{{ setPickQ }}" placeholder="Tìm KOC…" style="flex:1;background:none;border:none;outline:none;color:#211A0E;font-size:13.5px;font-family:Manrope"/>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:6px;max-height:340px;overflow-y:auto">
+                  <sc-for list="{{ pickList }}" as="p" hint-placeholder-count="8">
+                    <div onClick="{{ p.add }}" class="navi" style="display:flex;align-items:center;gap:12px;padding:9px 11px;border-radius:11px;cursor:pointer">
+                      <div style="width:36px;height:36px;border-radius:10px;background:#ECE3D2;border:1px solid #DBCEB5;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#6C5E45;flex-shrink:0">{{ p.initials }}</div>
+                      <div style="flex:1;min-width:0">
+                        <div style="font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.name }}</div>
+                        <div style="font-size:11.5px;color:#85775D">{{ p.user }}</div>
+                      </div>
+                      <div class="num" style="font-size:12.5px;font-weight:700;color:#BE8A14">{{ p.gmv }}</div>
+                      <div style="font-size:11px;font-weight:700;color:{{ p.gcol }};background:{{ p.gcol }}1c;border:1px solid {{ p.gcol }}55;border-radius:6px;padding:2px 7px">{{ p.grade }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- SESSIONS -->
+      <sc-if value="{{ isSessions }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="background:#FFFFFF;border:1px solid #E7DDCA;border-radius:18px;padding:20px 22px;margin-bottom:16px">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px">
+              <div>
+                <div style="font-family:'Space Grotesk';font-size:16px;font-weight:600">Tỷ trọng đóng góp Top 5 KOC</div>
+                <div style="font-size:11px;letter-spacing:.05em;color:#9C8F75;text-transform:uppercase;margin-top:3px">Phân tích thành phần GMV theo ngày</div>
+              </div>
+              <div style="display:flex;gap:14px;font-size:12px;font-weight:600;color:#6C5E45">
+                <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#F47B27"></span>Top 1–2</span>
+                <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#2E9C46"></span>Top 3–5</span>
+                <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#BE8A14"></span>Còn lại</span>
+              </div>
+            </div>
+            <svg viewBox="0 0 740 252" style="width:100%;height:auto">
+              <sc-for list="{{ stackGrid }}" as="g" hint-placeholder-count="5">
+                <line x1="46" y1="{{ g.y }}" x2="726" y2="{{ g.y }}" stroke="#EFE7D8"/>
+                <text x="40" y="{{ g.y }}" dy="3.5" fill="#A89B80" font-size="10" text-anchor="end" font-family="Space Grotesk">{{ g.v }}</text>
+              </sc-for>
+              <sc-for list="{{ stackBars }}" as="b" hint-placeholder-count="15">
+                <rect x="{{ b.x }}" y="{{ b.cy }}" width="{{ b.w }}" height="{{ b.ch }}" fill="#BE8A14" rx="2"/>
+                <rect x="{{ b.x }}" y="{{ b.by }}" width="{{ b.w }}" height="{{ b.bh }}" fill="#2E9C46"/>
+                <rect x="{{ b.x }}" y="{{ b.ay }}" width="{{ b.w }}" height="{{ b.ah }}" fill="#F47B27" rx="2"/>
+                <rect x="{{ b.x }}" y="{{ b.topY }}" width="{{ b.w }}" height="6" fill="#211A0E" fill-opacity="{{ b.active }}" rx="2"/>
+                <text x="{{ b.cx }}" y="226" fill="#9C8F75" font-size="10" text-anchor="middle" font-family="Space Grotesk">{{ b.label }}</text>
+                <rect x="{{ b.x }}" y="14" width="{{ b.w }}" height="198" fill="transparent" style="cursor:pointer" onMouseEnter="{{ b.hover }}" onMouseLeave="{{ b.leave }}"></rect>
+              </sc-for>
+              <line x1="46" y1="212" x2="726" y2="212" stroke="#D8CBB2" stroke-width="1.5"/>
+            </svg>
+            <sc-if value="{{ stackTip }}" hint-placeholder-val="{{ false }}">
+              <div style="position:relative;height:0">
+                <div style="position:absolute;left:{{ stackTip.x }}px;top:-228px;width:188px;background:#FFFFFF;border:1px solid #E7DDCA;border-radius:12px;padding:12px 14px;box-shadow:0 14px 36px rgba(40,30,16,.16);pointer-events:none;z-index:5">
+                  <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:9px">
+                    <span style="font-family:'Space Grotesk';font-size:13px;font-weight:700;color:#211A0E">{{ stackTip.d }}</span>
+                    <span class="num" style="font-size:13px;font-weight:700;color:#F47B27">{{ stackTip.tot }}</span>
+                  </div>
+                  <sc-for list="{{ stackTip.rows }}" as="r" hint-placeholder-count="3">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+                      <span style="width:9px;height:9px;border-radius:2px;background:{{ r.c }};flex-shrink:0"></span>
+                      <span style="font-size:12px;color:#6C5E45;flex:1">{{ r.l }}</span>
+                      <span class="num" style="font-size:12px;font-weight:700;color:#2C2417">{{ r.v }}</span>
+                      <span class="num" style="font-size:11px;color:#A89B80;width:30px;text-align:right">{{ r.p }}%</span>
+                    </div>
+                  </sc-for>
+                  <div style="margin-top:7px;padding-top:7px;border-top:1px solid #EFE7D8;font-size:11px;color:#A89B80">{{ stackTip.nkoc }} KOC livestream trong ngày</div>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+            <div style="font-family:'Space Grotesk';font-size:16px;font-weight:600">Chi tiết các phiên livestream</div>
+            <span style="font-size:12px;font-weight:700;color:#F47B27;background:#F4ECDB;border:1px solid #DBCEB5;padding:6px 13px;border-radius:99px">4.176 phiên đã thực hiện</span>
+          </div>
+          <div style="background:#FFFFFF;border:1px solid #E7DDCA;border-radius:16px;overflow:hidden">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1.3fr .9fr 1.2fr 1.1fr 1fr .9fr;padding:13px 18px;border-bottom:1px solid #E7DDCA;font-size:10.5px;font-weight:700;letter-spacing:.04em;color:#9C8F75;text-transform:uppercase">
+              <div>Ngày</div><div>Bắt đầu</div><div>Thời lượng</div><div style="text-align:right">GMV</div><div style="text-align:right">Đơn</div><div style="text-align:right">Người xem</div><div style="text-align:right">Hiển thị</div><div style="text-align:right">Nhấp</div><div style="text-align:right">CTR</div>
+            </div>
+            <sc-for list="{{ sessRows }}" as="s" hint-placeholder-count="12">
+              <div class="row" style="display:grid;grid-template-columns:1fr 1fr 1fr 1.3fr .9fr 1.2fr 1.1fr 1fr .9fr;align-items:center;padding:12px 18px;border-bottom:1px solid #ECE3D2">
+                <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:#473D2D"><span style="width:6px;height:6px;border-radius:99px;background:{{ s.zero }}"></span>{{ s.date }}</div>
+                <div class="num" style="font-size:12.5px;color:#6C5E45">{{ s.start }}</div>
+                <div class="num" style="font-size:12.5px;color:#6C5E45">{{ s.dur }}</div>
+                <div class="num" style="text-align:right;font-size:12.5px;font-weight:700;color:#2C2417">{{ s.gmv }}</div>
+                <div class="num" style="text-align:right;font-size:12.5px;color:#BE8A14">{{ s.orders }}</div>
+                <div class="num" style="text-align:right;font-size:12.5px;color:#6C5E45">{{ s.viewers }}</div>
+                <div class="num" style="text-align:right;font-size:12.5px;color:#6C5E45">{{ s.impr }}</div>
+                <div class="num" style="text-align:right;font-size:12.5px;color:#6C5E45">{{ s.clicks }}</div>
+                <div class="num" style="text-align:right;font-size:12.5px;color:#6C5E45">{{ s.ctr }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ALERTS -->
+      <sc-if value="{{ isAlerts }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr) 1.3fr;gap:13px;margin-bottom:18px">
+            <sc-for list="{{ alertSummary }}" as="a" hint-placeholder-count="4">
+              <div style="background:#FBF7EF;border:1px solid #E7DDCA;border-radius:14px;padding:15px 17px;display:flex;align-items:center;gap:13px">
+                <div style="width:10px;height:38px;border-radius:5px;background:{{ a.c }}"></div>
+                <div><div class="num" style="font-size:24px;font-weight:700">{{ a.n }}</div><div style="font-size:11.5px;color:#897B5F">{{ a.l }}</div></div>
+              </div>
+            </sc-for>
+            <div style="background:#FBF7EF;border:1px solid #E7DDCA;border-radius:14px;padding:12px 16px">
+              <div style="font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#9C8F75;text-transform:uppercase;margin-bottom:6px">Cảnh báo / ngày · 15 ngày</div>
+              <svg viewBox="0 0 300 64" style="width:100%;height:42px;display:block">
+                <sc-for list="{{ alertMiniBars }}" as="b" hint-placeholder-count="15"><rect x="{{ b.x }}" y="{{ b.y }}" width="{{ b.w }}" height="{{ b.h }}" rx="2" fill="{{ b.c }}"/></sc-for>
+              </svg>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+            <sc-for list="{{ alertTabs }}" as="t" hint-placeholder-count="5">
+              <div onClick="{{ t.go }}" class="lift" style="display:flex;align-items:center;gap:7px;padding:8px 15px;border-radius:99px;cursor:pointer;font-size:13px;font-weight:600;background:{{ t.activeBg }};border:1px solid {{ t.activeBd }};color:{{ t.activeCol }}">
+                {{ t.l }}<span class="num" style="font-size:11px;font-weight:700;background:{{ t.countBg }};color:{{ t.countCol }};padding:1px 7px;border-radius:99px">{{ t.n }}</span>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:13px">
+            <sc-for list="{{ alerts }}" as="a" hint-placeholder-count="5">
+              <div style="background:{{ a.bg }};border:1px solid {{ a.bd }};border-radius:15px;overflow:hidden">
+                <div onClick="{{ a.toggle }}" style="padding:18px 20px;display:flex;align-items:center;gap:18px;cursor:pointer">
+                  <div style="width:44px;height:44px;border-radius:12px;background:{{ a.sc }}22;border:1px solid {{ a.sc }}55;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{ a.sc }}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+                  </div>
+                  <div style="flex:1;min-width:0">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:5px">
+                      <span style="font-size:15px;font-weight:700;color:#211A0E">{{ a.title }}</span>
+                      <span style="font-size:10.5px;font-weight:700;color:{{ a.sc }};background:{{ a.sc }}1c;border:1px solid {{ a.sc }}44;padding:2px 9px;border-radius:99px">Mức {{ a.sev }}</span>
+                      <span style="font-size:11px;color:#9C8F75">· {{ a.time }}</span>
+                    </div>
+                    <div style="font-size:13px;color:#6C5E45;line-height:1.5;max-width:760px">{{ a.desc }}</div>
+                  </div>
+                  <div style="text-align:right;flex-shrink:0">
+                    <div class="num" style="font-size:20px;font-weight:700;color:{{ a.sc }}">{{ a.metric }}</div>
+                    <div style="font-size:12px;font-weight:600;color:#85775D;margin-top:8px">{{ a.chevLabel }}</div>
+                  </div>
+                </div>
+                <sc-if value="{{ a.expanded }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:0 20px 18px 82px">
+                    <div style="border-top:1px solid {{ a.bd }};padding-top:15px;display:flex;gap:24px">
+                      <div style="flex:1">
+                        <div style="font-size:11px;font-weight:700;color:#85775D;text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px">Hành động đề xuất</div>
+                        <sc-for list="{{ a.steps }}" as="st" hint-placeholder-count="3">
+                          <div style="display:flex;align-items:flex-start;gap:9px;margin-bottom:8px">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="{{ a.sc }}" stroke-width="2.4" style="margin-top:1px;flex-shrink:0"><path d="M20 6L9 17l-5-5"/></svg>
+                            <span style="font-size:13px;color:#473D2D;line-height:1.45">{{ st }}</span>
+                          </div>
+                        </sc-for>
+                      </div>
+                      <div style="width:200px;flex-shrink:0">
+                        <div style="font-size:11px;font-weight:700;color:#85775D;text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px">Phụ trách</div>
+                        <div style="background:#F7F2E8;border:1px solid #E7DDCA;border-radius:11px;padding:12px 14px;margin-bottom:10px">
+                          <div style="font-size:13.5px;font-weight:700;color:#211A0E">{{ a.owner }}</div>
+                        </div>
+                        <div style="display:flex;align-items:center;justify-content:center;gap:7px;background:{{ a.sc }};border-radius:10px;padding:10px;font-size:13px;font-weight:700;color:#FFFFFF;cursor:pointer">
+                          {{ a.act }}
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- PRODUCTS -->
+      <sc-if value="{{ isProducts }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="display:flex;align-items:center;gap:9px;background:#F7F2E8;border:1px solid #DCCFB6;border-radius:12px;padding:11px 16px;margin-bottom:16px;font-size:12.5px;color:#6C5E45">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F47B27" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <span style="font-weight:700;color:#F47B27">Beta</span> · Cần kết nối nguồn dữ liệu sản phẩm (SKU) từ TikTok Shop để hiển thị số liệu thực — dưới đây là dữ liệu mẫu minh hoạ.
+          </div>
+          <div style="background:#FFFFFF;border:1px solid #E7DDCA;border-radius:16px;overflow:hidden">
+            <div style="display:grid;grid-template-columns:44px 2.4fr 1fr 1.6fr 1fr 1fr 1fr;padding:13px 18px;border-bottom:1px solid #E7DDCA;font-size:10.5px;font-weight:700;letter-spacing:.04em;color:#9C8F75;text-transform:uppercase">
+              <div>#</div><div>Sản phẩm</div><div>Nhóm</div><div style="text-align:right">GMV</div><div style="text-align:right">Đơn</div><div style="text-align:right">CTR</div><div style="text-align:right">Hoàn/Đổi</div>
+            </div>
+            <sc-for list="{{ products }}" as="p" hint-placeholder-count="8">
+              <div class="row" style="display:grid;grid-template-columns:44px 2.4fr 1fr 1.6fr 1fr 1fr 1fr;align-items:center;padding:13px 18px;border-bottom:1px solid #ECE3D2">
+                <div class="num" style="font-size:13px;color:#9C8F75;font-weight:700">{{ p.rank }}</div>
+                <div style="display:flex;align-items:center;gap:12px;min-width:0">
+                  <div style="width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,{{ p.col }}33,{{ p.col }}11);border:1px solid {{ p.col }}44;flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{ p.col }}" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg></div>
+                  <div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.name }}</div>
+                </div>
+                <div><span style="font-size:11px;font-weight:600;color:{{ p.col }};background:{{ p.col }}1a;padding:3px 9px;border-radius:99px">{{ p.cat }}</span></div>
+                <div style="display:flex;align-items:center;gap:10px;justify-content:flex-end">
+                  <div style="width:74px;height:6px;background:#ECE3D2;border-radius:99px;overflow:hidden"><div style="height:100%;width:{{ p.pct }}%;background:{{ p.col }}"></div></div>
+                  <span class="num" style="font-size:13px;font-weight:700;color:#BE8A14;min-width:56px;text-align:right">{{ p.gmv }}</span>
+                </div>
+                <div class="num" style="text-align:right;font-size:13px;color:#BE8A14">{{ p.orders }}</div>
+                <div class="num" style="text-align:right;font-size:13px;color:#6C5E45">{{ p.ctr }}</div>
+                <div class="num" style="text-align:right;font-size:13px;color:#E2502F">{{ p.ret }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- DATA -->
+      <sc-if value="{{ isData }}" hint-placeholder-val="{{ true }}">
+        <div style="max-width:880px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:#9C8F75;text-transform:uppercase;margin-bottom:9px">Gán dữ liệu cho Brand</div>
+          <div style="display:flex;align-items:center;gap:11px;background:#FBF7EF;border:1px solid #E7DDCA;border-radius:12px;padding:13px 16px;margin-bottom:7px;max-width:380px">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#F47B27" stroke-width="2"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8z"/><circle cx="7" cy="7" r="1.4" fill="#F47B27" stroke="none"/></svg>
+            <span style="flex:1;font-size:14px;font-weight:600;color:#211A0E">Macaron Cos</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#897B5F" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div style="font-size:11.5px;color:#9C8F75;font-style:italic;margin-bottom:18px">* Một file upload chỉ phục vụ dữ liệu cho 1 brand duy nhất</div>
+
+          <div style="border:1.5px dashed #DBCEB5;border-radius:18px;padding:48px;text-align:center;background:#FFFFFF;margin-bottom:22px">
+            <div style="width:62px;height:62px;border-radius:18px;background:#F4ECDB;border:1px solid #DBCEB5;display:flex;align-items:center;justify-content:center;margin:0 auto 18px">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F47B27" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+            </div>
+            <div style="font-size:17px;font-weight:700;margin-bottom:6px">Tải lên file cho <span style="color:#F47B27">Macaron Cos</span></div>
+            <div style="font-size:13px;color:#85775D;margin-bottom:18px">Kéo thả file .xlsx từ TikTok Shop vào đây hoặc click để chọn</div>
+            <div style="display:inline-flex;align-items:center;gap:8px;background:#ECE3D2;border:1px solid #DBCEB5;border-radius:10px;padding:9px 15px;font-size:11.5px;font-weight:700;letter-spacing:.04em;color:#6C5E45;text-transform:uppercase">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F47B27" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>Excel format · header dòng 3
+            </div>
+          </div>
+
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:#9C8F75;text-transform:uppercase;margin-bottom:11px">Quản lý dữ liệu (1 file)</div>
+          <div style="display:flex;align-items:center;gap:14px;background:#FBF7EF;border:1px solid #E7DDCA;border-radius:14px;padding:15px 18px;margin-bottom:13px">
+            <div style="width:40px;height:40px;border-radius:11px;background:#E6F0D6;border:1px solid #CFE0AE;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E9C46" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <div style="flex:1">
+              <div style="display:flex;align-items:center;gap:9px"><span style="font-size:14px;font-weight:700">Live Analysis 20260416</span><span style="font-size:10px;font-weight:700;color:#F47B27;background:#F4ECDB;border:1px solid #DBCEB5;padding:2px 8px;border-radius:6px;letter-spacing:.04em">MACARON COS</span></div>
+              <div class="num" style="font-size:12px;color:#897B5F;margin-top:3px">4.176 phiên · 2026-04-01 → 2026-04-15</div>
+            </div>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9C8F75" stroke-width="2" style="cursor:pointer"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#ECE3D2,#FBF7EF);border:1px solid #E1D6C0;border-radius:14px;padding:17px 18px">
+            <div style="width:40px;height:40px;border-radius:11px;background:#F4ECDB;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F47B27" stroke-width="2"><path d="M3 3v18h18M7 14v3M12 9v8M17 5v12"/></svg></div>
+            <div><div style="font-size:11px;font-weight:700;letter-spacing:.06em;color:#9C8F75;text-transform:uppercase">Tổng cộng trong hệ thống</div><div class="num" style="font-size:20px;font-weight:700;margin-top:2px">4.176 phiên LIVE đã sẵn sàng</div></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- SETTINGS -->
+      <sc-if value="{{ isSettings }}" hint-placeholder-val="{{ true }}">
+        <div style="max-width:920px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div style="background:#FFFFFF;border:1px solid #E7DDCA;border-radius:18px;padding:22px">
+            <div style="font-family:'Space Grotesk';font-size:16px;font-weight:600;margin-bottom:4px">Công thức chấm điểm KOC</div>
+            <div style="font-size:12.5px;color:#897B5F;margin-bottom:20px">Trọng số 5 trục (tổng = 100). Điểm quyết định hạng S/A/B/C/D.</div>
+            <sc-for list="{{ weights }}" as="w" hint-placeholder-count="5">
+              <div style="margin-bottom:17px">
+                <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:8px"><span style="color:#473D2D">{{ w.l }}</span><span class="num" style="color:{{ w.c }}">{{ w.v }}%</span></div>
+                <div style="height:7px;background:#ECE3D2;border-radius:99px;overflow:hidden"><div style="height:100%;width:{{ w.pct }}%;background:{{ w.c }};border-radius:99px"></div></div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="background:#FFFFFF;border:1px solid #E7DDCA;border-radius:18px;padding:22px">
+            <div style="font-family:'Space Grotesk';font-size:16px;font-weight:600;margin-bottom:4px">Ngưỡng cảnh báo tự động</div>
+            <div style="font-size:12.5px;color:#897B5F;margin-bottom:20px">Hệ thống quét mỗi giờ và bắn cảnh báo khi vượt ngưỡng.</div>
+            <sc-for list="{{ thresholds }}" as="t" hint-placeholder-count="5">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid #E7DDCA14">
+                <div><div style="font-size:13px;font-weight:600;color:#473D2D">{{ t.l }}</div><div style="font-size:11.5px;color:#9C8F75;margin-top:2px">{{ t.d }}</div></div>
+                <div class="num" style="font-size:14px;font-weight:700;color:{{ t.c }};background:{{ t.c }}1a;border:1px solid {{ t.c }}44;padding:5px 13px;border-radius:9px;white-space:nowrap">{{ t.v }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1024}}">
+class Component extends DCLogic {
+  state = { screen:'overview', sortKey:'gmv', sortDir:-1, q:'', kocIdx:0, cmp:[0,1,3], range:'Tùy chỉnh', brandOpen:false, brand:'Tất cả Brand', alertFilter:'all', alertOpen:0, stackHover:-1, hourHover:-1, scHover:-1, barHover:-1, funnelHover:-1, donutHover:null, hoverDay:null, pickOpen:false, pickQ:'' };
+  brands = ['Tất cả Brand','Macaron Cos','Nonelab Beauty','Selective Labels'];
+  toggleCmp(i){ this.setState(s=>{ const has=s.cmp.includes(i); if(has) return {cmp:s.cmp.filter(x=>x!==i)}; if(s.cmp.length>=3) return {}; return {cmp:[...s.cmp,i]}; }); }
+  componentDidMount(){
+    if(!window.KOCDATA){ this._iv=setInterval(()=>{ if(window.KOCDATA){clearInterval(this._iv);this.forceUpdate();} },50); }
+  }
+  D(){ return window.KOCDATA || {total:{},days:[],hours:[],koc:[],scatter:[],grades:{},sessionsSample:[]}; }
+  fmtVND(n){ n=+n||0; if(n>=1e9) return (n/1e9).toFixed(2).replace('.',',')+' tỷ'; if(n>=1e6) return (n/1e6).toFixed(1).replace('.',',')+' tr'; if(n>=1e3) return Math.round(n/1e3)+'K'; return ''+Math.round(n); }
+  fmtNum(n){ n=+n||0; if(n>=1e9) return (n/1e9).toFixed(1).replace('.',',')+'B'; if(n>=1e6) return (n/1e6).toFixed(1).replace('.',',')+'M'; if(n>=1e3) return (n/1e3).toFixed(n>=1e4?0:1).replace('.',',')+'K'; return ''+Math.round(n); }
+  fmtInt(n){ return (Math.round(+n||0)).toLocaleString('vi-VN'); }
+  pct(a,b){ b=+b||0; if(!b) return '0%'; return (a/b*100).toFixed(1).replace('.',',')+'%'; }
+  fmtSec(s){ s=Math.round(+s||0); const m=Math.floor(s/60), r=s%60; return m>0?(m+'m '+(r<10?'0'+r:r)+'s'):(s+'s'); }
+  smooth(pts){ if(pts.length<2) return ''; let d='M'+pts[0][0].toFixed(1)+','+pts[0][1].toFixed(1); for(let i=0;i<pts.length-1;i++){ const p0=pts[i-1]||pts[i],p1=pts[i],p2=pts[i+1],p3=pts[i+2]||p2; const c1x=p1[0]+(p2[0]-p0[0])/6,c1y=p1[1]+(p2[1]-p0[1])/6,c2x=p2[0]-(p3[0]-p1[0])/6,c2y=p2[1]-(p3[1]-p1[1])/6; d+=' C'+c1x.toFixed(1)+','+c1y.toFixed(1)+' '+c2x.toFixed(1)+','+c2y.toFixed(1)+' '+p2[0].toFixed(1)+','+p2[1].toFixed(1); } return d; }
+  go(s){ return ()=>this.setState({screen:s}); }
+  gradeColor(g){ return {S:'#F47B27',A:'#BE8A14',B:'#2E9C46',C:'#C2801A',D:'#9C8F75'}[g]||'#9C8F75'; }
+  clean(n){ return (n||'').replace(/[\u{1F000}-\u{1FAFF}\u{1D400}-\u{1D7FF}\u{2600}-\u{27BF}\u{FE00}-\u{FE0F}\u{2190}-\u{21FF}\u{2300}-\u{23FF}\u{25A0}-\u{2BFF}\u{0E3F}\u200D]/gu,'').replace(/\s+/g,' ').trim()||'KOC'; }
+  initials(n){ const m=(n||'').normalize('NFKD').replace(/[^A-Za-z0-9 ]/g,'').trim().split(/\s+/).filter(Boolean); return (m.slice(0,2).map(w=>w[0]).join('')||'K').toUpperCase(); }
+  kocSessions(k){ const n=Math.min(8,Math.max(1,k.sessions)); const w=[]; let sum=0; for(let i=0;i<n;i++){ const x=Math.pow(0.8,i)*(1+((i*37)%5)/10); w.push(x); sum+=x; } return w.map((x,i)=>{ const f=x/sum; const day=15-i; const ords=Math.round(k.orders*f); return { date:(day<10?'0'+day:day)+'/04', dur:(1.4+((i*53)%28)/10).toFixed(1).replace('.',',')+'h', gmv:this.fmtVND(Math.round(k.gmv*f)), orders:this.fmtInt(ords), viewers:this.fmtInt(Math.round(k.viewers*f)), ctr:(k.ctr*(0.82+((i*29)%36)/100)).toFixed(2).replace('.',',')+'%', dot: ords>0?'#2E9C46':'#E2502F' }; }); }
+  radarFor(k,koc){ const md=Math.max(...koc.map(x=>x.dtgio)), mg=koc[0].gmv; const comps=[ {l:'Hiệu suất giờ',v:Math.min(100,k.dtgio/(md*0.5)*100)},{l:'Chuyển đổi',v:Math.min(100,k.cvr/8*100)},{l:'Thu hút',v:Math.min(100,k.ctr/5*100)},{l:'Quy mô',v:Math.min(100,Math.log10(k.gmv+1)/Math.log10(mg+1)*100)},{l:'Đều đặn',v:Math.min(100,k.sessions/30*100)} ]; const cx=130,cy=128,R=92; const ang=i=>(-90+i*72)*Math.PI/180; const pt=(i,r)=>[cx+Math.cos(ang(i))*R*r, cy+Math.sin(ang(i))*R*r]; const grid=[0.25,0.5,0.75,1].map(r=>comps.map((_,i)=>pt(i,r).map(n=>n.toFixed(1)).join(',')).join(' ')); const valPoly=comps.map((c,i)=>pt(i,c.v/100).map(n=>n.toFixed(1)).join(',')).join(' '); const dots=comps.map((c,i)=>{const p=pt(i,c.v/100);return {x:p[0].toFixed(1),y:p[1].toFixed(1)};}); const axisL=comps.map((c,i)=>{const p=pt(i,1.2);return {x:p[0].toFixed(1),y:p[1].toFixed(1),l:c.l,a:Math.abs(Math.cos(ang(i)))<0.3?'middle':(Math.cos(ang(i))>0?'start':'end')};}); const spokes=comps.map((_,i)=>{const p=pt(i,1);return {x:p[0].toFixed(1),y:p[1].toFixed(1)};}); return {grid,valPoly,dots,axisL,spokes,cx,cy,comps:comps.map(c=>({l:c.l,v:Math.round(c.v)}))}; }
+
+  navItem(id,label,icon){ const a=this.state.screen===id; return {label,icon,go:this.go(id),col:a?'#FFFFFF':'#897B5F',bg:a?'linear-gradient(95deg,#F47B27,#F47B27)':'transparent',fw:a?700:600}; }
+
+  renderVals(){
+    const D=this.D(), T=D.total, koc=D.koc, S=this.state;
+    const nav1=[ this.navItem('overview','Tổng quan','M3 3h7v7H3z M14 3h7v7h-7z M14 14h7v7h-7z M3 14h7v7H3z'),
+      this.navItem('koc','Danh sách KOC','M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2 M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8 M22 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75'),
+      this.navItem('compare','So sánh KOC','M3 3v18h18 M7 16l3-4 3 3 5-7'),
+      this.navItem('sessions','Phiên Live','M23 7l-7 5 7 5V7z M14 5H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z'),
+      this.navItem('alerts','Cảnh báo','M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9 M13.7 21a2 2 0 0 1-3.4 0') ];
+    // alerts badge
+    const nav2=[ this.navItem('products','Sản phẩm','M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z M3.3 7L12 12l8.7-5 M12 22V12'),
+      this.navItem('data','Nguồn dữ liệu','M12 2a9 3 0 0 0 0 6 9 3 0 0 0 0-6 M3 5v14a9 3 0 0 0 18 0V5 M3 12a9 3 0 0 0 18 0'),
+      this.navItem('settings','Cấu hình','M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 7 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0-1.1-2.7H1a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 2.6 7a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H7a1.6 1.6 0 0 0 1-1.5V1a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V7a1.6 1.6 0 0 0 1.5 1H23a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z') ];
+
+    const titles={overview:['Tổng quan hiệu suất','Bức tranh toàn cảnh KOC livestream theo bộ lọc toàn cục'],koc:['Danh sách KOC','598 nhà sáng tạo · xếp hạng, chấm điểm & lọc nhanh'],compare:['So sánh KOC','Đối chiếu hiệu suất nhiều nhà sáng tạo song song'],sessions:['Lịch sử phiên Live','4.176 phiên đã thực hiện · 01/04 – 15/04/2026'],alerts:['Trung tâm cảnh báo','Tự động phát hiện bất thường & cơ hội tối ưu'],products:['Sản phẩm bán chạy','Theo dõi SKU theo GMV, đơn & tồn vận hành'],data:['Nguồn dữ liệu','Tải lên & quản lý dữ liệu LIVE từ TikTok Shop'],settings:['Cấu hình hệ thống','Ngưỡng cảnh báo, công thức chấm điểm & phân quyền'],detail:['Hồ sơ KOC','Phân tích sâu hiệu suất & năng lực cá nhân']};
+    const tt=titles[S.screen]||titles.overview;
+
+    const ranges=['Hôm nay','Hôm qua','7 Ngày','30 Ngày','Tùy chỉnh'].map(r=>({label:r,go:()=>this.setState({range:r}),col:S.range===r?'#fff':'#85775D',bg:S.range===r?'linear-gradient(95deg,#F47B27,#F47B27)':'transparent'}));
+
+    // ---- KPIs ----
+    const kpis=[
+      {label:'Doanh thu (GMV)',value:this.fmtVND(T.gmv),sub:'Tổng GMV thực tế',accent:'linear-gradient(90deg,#BE8A14,#A9790F)',color:'#BE8A14'},
+      {label:'Số phiên Live',value:this.fmtInt(T.sessions),sub:'Đã tính theo bộ lọc',accent:'#F47B27',color:'#F47B27'},
+      {label:'Phiên ra đơn',value:this.fmtInt(T.withOrder),sub:'17,1% phiên có đơn',accent:'#2E9C46',color:'#2E9C46'},
+      {label:'Đơn hàng',value:this.fmtInt(T.orders),sub:'Tổng đơn SKU',accent:'#C2801A',color:'#BE8A14'},
+      {label:'AOV',value:this.fmtVND(Math.round(T.gmv/T.orders)),sub:'Doanh thu / đơn',accent:'#BE8A14',color:'#BE8A14'},
+      {label:'Doanh thu / giờ',value:this.fmtVND(Math.round(T.gmv/T.hours)),sub:'GMV / tổng giờ live',accent:'#E2502F',color:'#E2502F'},
+      {label:'KOC Active',value:this.fmtInt(T.kocActive),sub:'Creators hoạt động',accent:'#F47B27',color:'#F47B27'},
+      {label:'Giờ live TB/phiên',value:(T.hours/T.sessions).toFixed(1).replace('.',',')+'h',sub:'Thời lượng trung bình',accent:'#85775D',color:'#574C39'},
+      {label:'Lượt hiển thị',value:this.fmtNum(T.impr),sub:'Product impressions',accent:'#C2801A',color:'#BE8A14'},
+      {label:'Lượt nhấp',value:this.fmtNum(T.clicks),sub:'Product clicks',accent:'#BE8A14',color:'#BE8A14'},
+      {label:'CTR (blended)',value:(T.clicks/T.impr*100).toFixed(2).replace('.',',')+'%',sub:'Clicks / Impressions',accent:'#BE8A14',color:'#BE8A14'},
+      {label:'CVR (blended)',value:(T.orders/T.clicks*100).toFixed(2).replace('.',',')+'%',sub:'Orders / Clicks',accent:'#2E9C46',color:'#2E9C46'},
+      {label:'GMV từ LIVE',value:this.fmtVND(T.gmvLive),sub:this.pct(T.gmvLive,T.gmv)+' do LIVE tạo ra',accent:'linear-gradient(90deg,#F47B27,#E2502F)',color:'#F47B27'},
+      {label:'Đơn từ LIVE',value:this.fmtInt(T.ordersLive),sub:this.pct(T.ordersLive,T.orders)+' đơn từ LIVE',accent:'#F47B27',color:'#F47B27'},
+      {label:'Lượt xem LIVE',value:this.fmtNum(T.views),sub:'Tổng view (khác người xem)',accent:'#C2801A',color:'#BE8A14'},
+      {label:'Xem TB / người',value:this.fmtSec(T.watchAvg),sub:'Thời lượng giữ chân',accent:'#F47B27',color:'#F47B27'},
+      {label:'Lượt chia sẻ',value:this.fmtNum(T.shares),sub:'Lan toả phiên LIVE',accent:'#BE8A14',color:'#BE8A14'},
+      {label:'SKU đã bán',value:this.fmtInt(T.distinctSold),sub:'Số sản phẩm khác nhau',accent:'#2E9C46',color:'#2E9C46'} ];
+
+    const insights=[
+      {tag:'Rủi ro tập trung',text:'Tun Phạm Official chiếm 39,5% GMV toàn kỳ — nên mở rộng nhóm KOC chủ lực.',icon:'M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z M12 9v4 M12 17h.01',g1:'#FBF0DA',g2:'#FFFFFF',bd:'#E6D2A4',ic:'#F6E5C2',icc:'#BE8A14'},
+      {tag:'Cơ hội lớn',text:'3.462 phiên (82,9%) chưa phát sinh đơn — kho dư địa tối ưu kịch bản & sản phẩm.',icon:'M13 2 3 14h9l-1 8 10-12h-9l1-8z',g1:'#EEF3DF',g2:'#FFFFFF',bd:'#E0D1AE',ic:'#EEF3DF',icc:'#BE8A14'},
+      {tag:'Khung giờ vàng',text:'07h và 19h cho tỷ lệ ra đơn cao nhất — ưu tiên xếp lịch KOC mạnh vào 2 khung này.',icon:'M12 6v6l4 2 M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z',g1:'#FAF2E4',g2:'#FFFFFF',bd:'#E0D1AE',ic:'#F4ECDB',icc:'#F47B27'},
+      {tag:'Đỉnh chiến dịch',text:'04/04 đạt 643 tr GMV (24% cả kỳ) — rà soát yếu tố tạo đỉnh để lặp lại.',icon:'M3 3v18h18 M7 14l3-4 4 3 4-7',g1:'#EEF3DF',g2:'#FFFFFF',bd:'#D4E2B8',ic:'#E6F0D6',icc:'#2E9C46'} ];
+
+    // ---- TREND CHART ----
+    const days=D.days||[]; const W=740,pl=12,pr=12,top=18,bot=34;
+    const gmax=Math.max(1,...days.map(d=>d.gmv)), omax=Math.max(1,...days.map(d=>d.orders));
+    const xs=days.map((d,i)=>pl+(W-pl-pr)*i/Math.max(1,days.length-1));
+    const gyA=days.map(d=>top+(210-top)*(1-d.gmv/gmax)+0);
+    const gpts=days.map((d,i)=>[xs[i], top+(208-top)*(1-d.gmv/gmax)]);
+    const opts=days.map((d,i)=>[xs[i], top+(208-top)*(1-d.orders/omax)]);
+    const trendGmv=this.smooth(gpts), trendOrd=this.smooth(opts);
+    const trendArea=trendGmv+' L'+(xs[xs.length-1]).toFixed(1)+',208 L'+xs[0].toFixed(1)+',208 Z';
+    const trendDots=opts.map(p=>({x:p[0].toFixed(1),y:p[1].toFixed(1)}));
+    const trendGrid=[18,66,113,160,208];
+    const trendLabels=days.filter((d,i)=>i%2===0).map((d,i)=>({x:xs[days.indexOf(d)].toFixed(1),t:d.d}));
+
+    // ---- HOUR BARS ----
+    // ---- HOUR BARS (axis + grid + hover) ----
+    const hrs=D.hours||[]; const HW=460, hPL=30, hPR=8, hBASE=206, hTOP=14;
+    const hInner=HW-hPL-hPR;
+    const hmax=Math.max(1,...hrs.map(h=>h.w+h.n)); const hNice=Math.ceil(hmax/100)*100||hmax;
+    const hStep=hInner/24; const bw=Math.min(13,hStep*0.66); const hScale=(hBASE-hTOP)/hNice;
+    const goldHours=[7,19];
+    const hourBars=hrs.map((h,i)=>{ const cx=hPL+hStep*i+hStep/2; const x=cx-bw/2; const tot=h.w+h.n;
+      const fullH=tot*hScale; const wh=(h.w)*hScale; const nh=fullH-wh;
+      return {x:x.toFixed(1),cx:cx.toFixed(1),w:bw.toFixed(1),
+        ny:(hBASE-fullH).toFixed(1),nh:nh.toFixed(1),
+        wy:(hBASE-wh).toFixed(1),wh:wh.toFixed(1),
+        topY:(hBASE-fullH-4).toFixed(1), gold:goldHours.includes(i),
+        hover:()=>this.setState({hourHover:i}), leave:()=>this.setState({hourHover:-1}),
+        active:S.hourHover===i?1:0 }; });
+    const hourLabels=[0,4,8,12,16,20,23].map(hh=>({x:(hPL+hStep*hh+hStep/2).toFixed(1),t:(hh<10?'0'+hh:hh)+'h',gold:goldHours.includes(hh)?'#F47B27':'#9C8F75'}));
+    const hGridN=3; const hourGrid=[]; for(let g=0;g<=hGridN;g++){ const val=Math.round(hNice*g/hGridN); hourGrid.push({y:(hBASE-val*hScale).toFixed(1), v:val}); }
+    const hh=S.hourHover>=0?hrs[S.hourHover]:null; const hhBar=S.hourHover>=0?hourBars[S.hourHover]:null;
+    const hourTip=hh?{ x:Math.min(300,Math.max(0,+hhBar.cx-72)), hr:(S.hourHover<10?'0'+S.hourHover:S.hourHover)+':00 – '+(S.hourHover<9?'0'+(S.hourHover+1):(S.hourHover+1))+':00',
+      tot:this.fmtInt(hh.w+hh.n), withO:this.fmtInt(hh.w), rate:((hh.w/Math.max(1,hh.w+hh.n))*100).toFixed(1).replace('.',',')+'%', gold:goldHours.includes(S.hourHover) }:null;
+
+    // ---- TOP BARS ----
+    const top10=koc.slice(0,10); const tmax=Math.max(1,...top10.map(k=>k.gmv));
+    const topBars=top10.map((k,i)=>({name:this.clean(k.name),pct:(k.gmv/tmax*100).toFixed(1),val:this.fmtVND(k.gmv),
+      rank:i+1, sessions:this.fmtInt(k.sessions), cvr:(k.cvr||0).toFixed(2).replace('.',',')+'%', dtgio:this.fmtVND(k.dtgio),
+      grade:k.grade, gcol:this.gradeColor(k.grade), share:(k.gmv/T.gmv*100).toFixed(1).replace('.',',')+'%',
+      hover:()=>this.setState({barHover:i}), leave:()=>this.setState({barHover:-1}), active:S.barHover===i,
+      bg:S.barHover===i?'#FBF7EF':'transparent', open:()=>this.setState({screen:'detail',kocIdx:i})}));
+
+    // ---- SCATTER ----
+    // ---- SCATTER MATRIX (log scales + median quadrants + hover) ----
+    const SX0=52,SX1=600,SY0=24,SY1=196;
+    const lg=v=>Math.log10((+v||0)+1);
+    const bgPts=(D.scatter||[]); const named=koc;
+    const allH=named.map(k=>k.hours), allG=named.map(k=>k.gmv/1e6);
+    const xMin=lg(0), xMax=lg(Math.max(...allH,320));
+    const yMin=lg(1), yMax=lg(Math.max(...allG,1));
+    const px=h=>SX0+(SX1-SX0)*((lg(h)-xMin)/(xMax-xMin));
+    const py=g=>SY1-(SY1-SY0)*((lg(g)-yMin)/(yMax-yMin));
+    const median=arr=>{ const s=[...arr].sort((a,b)=>a-b); const m=Math.floor(s.length/2); return s.length%2?s[m]:(s[m-1]+s[m])/2; };
+    const medH=median(allH), medG=median(allG);
+    const mx=px(medH), my=py(medG);
+    const bgScatter=bgPts.map(p=>({x:px(p.h).toFixed(1),y:py(p.g).toFixed(1)}));
+    const scatterPts=named.map((k,i)=>{ const g=k.gmv/1e6; const c=k.grade==='S'||k.grade==='A'?'#F47B27':k.grade==='B'?'#2E9C46':k.grade==='C'?'#BE8A14':'#A89B80';
+      return {x:px(k.hours).toFixed(1),y:py(g).toFixed(1),r:(g>200?8:g>60?6:g>15?5:4),c,
+        hover:()=>this.setState({scHover:i}), leave:()=>this.setState({scHover:-1}), active:S.scHover===i?1:0 }; });
+    const xTicks=[1,10,50,150,320].map(h=>({x:px(h).toFixed(1),t:h+'h'}));
+    const yTicks=[10,100,1000].map(g=>({y:py(g).toFixed(1),t:g>=1000?'1 tỷ':g+' tr'}));
+    const sct=S.scHover>=0?named[S.scHover]:null;
+    const scTip=sct?{ x:Math.min(440,Math.max(0,px(sct.hours)-78)), y:Math.max(0,py(sct.gmv/1e6)-86),
+      name:this.clean(sct.name), grade:sct.grade, gcol:this.gradeColor(sct.grade),
+      gmv:this.fmtVND(sct.gmv), hours:(sct.hours||0).toFixed(1).replace('.',',')+'h', dtgio:this.fmtVND(sct.dtgio), score:sct.score }:null;
+    const scatterMX=mx.toFixed(1), scatterMY=my.toFixed(1);
+
+    // ---- KOC LIST ----
+    const grades=D.grades||{}; const gradeBuckets=[['S','Xuất sắc'],['A','Tốt'],['B','Khá'],['C','Trung bình'],['D','Cần cải thiện']].map(([g,l])=>({g,l,n:grades[g]||0,col:this.gradeColor(g)}));
+    let list=koc.map((k,i)=>({k,i})); if(S.q){ const q=S.q.toLowerCase(); list=list.filter(o=>(o.k.name||'').toLowerCase().includes(q)||(o.k.user||'').toLowerCase().includes(q)); }
+    list.sort((a,b)=>((a.k[S.sortKey]||0)-(b.k[S.sortKey]||0))*S.sortDir);
+    const kocRows=list.map((o,r)=>{ const k=o.k; return {rank:r+1,name:this.clean(k.name),user:'@'+k.user,initials:this.initials(k.name),sessions:this.fmtInt(k.sessions),hours:k.hours.toFixed(1).replace('.',',')+'h',gmv:this.fmtVND(k.gmv),orders:this.fmtInt(k.orders),ctr:k.ctr.toFixed(2).replace('.',',')+'%',cvr:k.cvr.toFixed(2).replace('.',',')+'%',dtgio:this.fmtVND(k.dtgio),score:k.score,grade:k.grade,gcol:this.gradeColor(k.grade),open:()=>this.setState({screen:'detail',kocIdx:o.i}),top3:r<3}; });
+    const setSort=key=>()=>this.setState(s=>({sortKey:key,sortDir:s.sortKey===key?-s.sortDir:-1}));
+    const cols=[['sessions','Phiên'],['hours','Giờ'],['gmv','GMV'],['orders','Đơn'],['ctr','CTR'],['cvr','CVR'],['dtgio','DT/giờ'],['score','Điểm']].map(([k,l])=>({key:k,label:l,go:setSort(k),active:S.sortKey===k,arrow:S.sortKey===k?(S.sortDir<0?'▾':'▴'):''}));
+
+    // ---- KOC DETAIL ----
+    const dk=koc[S.kocIdx]||koc[0]||{}; const radar=koc.length?this.radarFor(dk,koc):{grid:[],dots:[],axisL:[],spokes:[],comps:[],valPoly:''};
+    const detail={ name:this.clean(dk.name),user:'@'+dk.user,initials:this.initials(dk.name),grade:dk.grade,gcol:this.gradeColor(dk.grade),score:dk.score,
+      stats:[ {l:'GMV tổng',v:this.fmtVND(dk.gmv),c:'#BE8A14'},{l:'GMV từ LIVE',v:this.fmtVND(dk.gmvLive),c:'#F47B27'},{l:'Đơn hàng',v:this.fmtInt(dk.orders),c:'#BE8A14'},{l:'Phiên Live',v:this.fmtInt(dk.sessions),c:'#F47B27'},{l:'Giờ Live',v:(dk.hours||0).toFixed(1).replace('.',',')+'h',c:'#574C39'},{l:'DT / giờ',v:this.fmtVND(dk.dtgio),c:'#E2502F'},{l:'AOV',v:this.fmtVND(dk.aov),c:'#BE8A14'},{l:'Xem TB',v:this.fmtSec(dk.watchAvg),c:'#F47B27'},{l:'CTR',v:(dk.ctr||0).toFixed(2).replace('.',',')+'%',c:'#BE8A14'},{l:'CVR',v:(dk.cvr||0).toFixed(2).replace('.',',')+'%',c:'#2E9C46'} ],
+      eng:[ {l:'Người xem',v:this.fmtNum(dk.viewers)},{l:'Lượt xem',v:this.fmtNum(dk.views)},{l:'Lượt thích',v:this.fmtNum(dk.likes)},{l:'Bình luận',v:this.fmtNum(dk.comments)},{l:'Lượt chia sẻ',v:this.fmtNum(dk.shares)},{l:'Follower mới',v:this.fmtNum(dk.newfol)} ],
+      sessions:this.kocSessions(dk), radar };
+    const backKoc=()=>this.setState({screen:'koc'});
+
+    // ---- COMPARE ----
+    const cset=S.cmp.map(i=>koc[i]).filter(Boolean);
+    const cmpCards=cset.map((k,i)=>({name:this.clean(k.name),user:'@'+k.user,initials:this.initials(k.name),grade:k.grade,gcol:this.gradeColor(k.grade),score:k.score,col:['#F47B27','#BE8A14','#C2801A'][i],remove:()=>this.toggleCmp(S.cmp[i])}));
+    const mdef=[['gmv','GMV',v=>this.fmtVND(v)],['orders','Đơn hàng',v=>this.fmtInt(v)],['cvr','CVR',v=>v.toFixed(2).replace('.',',')+'%'],['ctr','CTR',v=>v.toFixed(2).replace('.',',')+'%'],['dtgio','DT / giờ',v=>this.fmtVND(v)],['aov','AOV',v=>this.fmtVND(v)],['hours','Giờ Live',v=>v.toFixed(1).replace('.',',')+'h'],['score','Điểm tổng',v=>''+v]];
+    const cmpRows=mdef.map(([key,label,f])=>{ const vals=cset.map(k=>k[key]||0); const mx=Math.max(...vals,1); return {label, cells:cset.map((k,i)=>({val:f(k[key]||0),pct:((k[key]||0)/mx*100).toFixed(0),best:(k[key]||0)===mx&&vals.length>1,col:['#F47B27','#BE8A14','#C2801A'][i]})) }; });
+
+    // ---- SESSIONS daily stacked + table ----
+    // ---- SESSIONS daily stacked (REAL Top-5 attribution) ----
+    const PL=46, PR=14, PT=14, BASE=212, PLOT=716; const innerW=740-PL-PR;
+    const smax=Math.max(1,...days.map(d=>d.gmv));
+    const niceMax=Math.ceil(smax/100)*100; const sc2=(BASE-PT)/niceMax;
+    const stepX=innerW/days.length; const sbw=Math.min(34,stepX*0.6);
+    const stackBars=days.map((d,i)=>{ const cx=PL+stepX*i+stepX/2; const x=cx-sbw/2;
+      const a=(d.t12||0), b=(d.t35||0), c=(d.rest||0); const tot=a+b+c||d.gmv;
+      const ah=a*sc2, bh=b*sc2, ch=c*sc2;
+      return {x:x.toFixed(1),cx:cx.toFixed(1),w:sbw.toFixed(1),
+        ay:(BASE-ah).toFixed(1),ah:ah.toFixed(1),
+        by:(BASE-ah-bh).toFixed(1),bh:bh.toFixed(1),
+        cy:(BASE-ah-bh-ch).toFixed(1),ch:ch.toFixed(1),
+        topY:(BASE-(ah+bh+ch)).toFixed(1),
+        label:d.d, hover:()=>this.setState({stackHover:i}), leave:()=>this.setState({stackHover:-1}),
+        active:S.stackHover===i?1:0 }; });
+    const sGridN=4; const stackGrid=[]; for(let g=0;g<=sGridN;g++){ const val=niceMax*g/sGridN; stackGrid.push({y:(BASE-val*sc2).toFixed(1), v:val>=1000?(val/1000).toFixed(1).replace('.',',')+' tỷ':val+' tr', zero:g===0}); }
+    const sh=S.stackHover>=0?days[S.stackHover]:null; const shBar=S.stackHover>=0?stackBars[S.stackHover]:null;
+    const stackTip=sh?{ x:Math.min(560,Math.max(0,+shBar.cx-70)), d:sh.d, tot:this.fmtVND((sh.gmv||0)*1e6), nkoc:sh.nkoc||'—',
+      rows:[ {l:'Top 1–2',v:this.fmtVND((sh.t12||0)*1e6),p:Math.round((sh.t12||0)/(sh.gmv||1)*100),c:'#F47B27'},
+             {l:'Top 3–5',v:this.fmtVND((sh.t35||0)*1e6),p:Math.round((sh.t35||0)/(sh.gmv||1)*100),c:'#2E9C46'},
+             {l:'Còn lại',v:this.fmtVND((sh.rest||0)*1e6),p:Math.round((sh.rest||0)/(sh.gmv||1)*100),c:'#BE8A14'} ] }:null;
+    const sess=D.sessionsSample||[]; const sessRows=sess.map(s=>({date:s.date,start:s.start,dur:s.dur,gmv:s.gmv>0?this.fmtVND(s.gmv):'0 ₫',orders:this.fmtInt(s.orders),viewers:this.fmtInt(s.viewers),impr:this.fmtInt(s.impr),clicks:this.fmtInt(s.clicks),ctr:s.ctr,zero:s.orders===0}));
+
+    // ---- ALERTS (enriched + interactive) ----
+    const allAlerts=[
+      {id:0,sev:'Cao',cat:'risk',sc:'#E2502F',bg:'#FBE9E2',bd:'#F8D8CD',time:'2 giờ trước',title:'Phụ thuộc KOC chủ lực',metric:'39,5% GMV',desc:'Tun Phạm Official đóng góp 39,5% GMV toàn kỳ. Rủi ro tập trung cao — nên phát triển thêm 3–5 KOC nhóm A để cân bằng danh mục.',act:'Xem kế hoạch mở rộng',steps:['Xác định 5 KOC nhóm B có CVR > 4% để nâng cấp','Phân bổ lại ngân sách booking giảm phụ thuộc top 1','Đặt mục tiêu top-1 ≤ 25% GMV trong 60 ngày'],owner:'Trưởng nhóm KOC'},
+      {id:1,sev:'Cao',cat:'opportunity',sc:'#E2502F',bg:'#FBE9E2',bd:'#F8D8CD',time:'5 giờ trước',title:'82,9% phiên không ra đơn',metric:'3.462 phiên',desc:'3.462/4.176 phiên có 0 đơn, chủ yếu từ nhóm D (523 KOC). Cần rà soát kịch bản, sản phẩm & khung giờ phát.',act:'Lọc phiên 0 đơn',steps:['Lọc danh sách KOC nhóm D có ≥ 3 phiên 0 đơn','Rà soát sản phẩm gắn giỏ & khung giờ live','Thử nghiệm lại với sản phẩm best-seller'],owner:'Vận hành'},
+      {id:2,sev:'Vừa',cat:'optimize',sc:'#BE8A14',bg:'#FBF0DA',bd:'#E6D2A4',time:'Hôm qua',title:'Giờ live cao – chuyển đổi thấp',metric:'626K / giờ',desc:'Mai Trịnh đạt 249h live nhưng DT/giờ chỉ 626K (thấp hơn nhóm A ~18×). Cần tối ưu sản phẩm & ưu tiên khung giờ vàng.',act:'Mở hồ sơ KOC',steps:['Chuyển phiên sang khung 19h–21h','Thay sản phẩm sang nhóm CVR cao','Rút ngắn thời lượng, tăng tần suất chốt'],owner:'Vận hành'},
+      {id:3,sev:'Vừa',cat:'optimize',sc:'#BE8A14',bg:'#FBF0DA',bd:'#E6D2A4',time:'Hôm qua',title:'Khung 13–17h kém hiệu quả',metric:'<12% ra đơn',desc:'Tỷ lệ ra đơn trong khung 13h–17h dưới 12%. Cân nhắc dồn lực sang khung 7h & 19h vốn cho ra đơn cao nhất.',act:'Xem khung giờ',steps:['Giảm 40% số phiên khung 13–17h','Dồn KOC mạnh vào khung 7h & 19h','Theo dõi 2 tuần & đánh giá lại'],owner:'Điều phối lịch'},
+      {id:4,sev:'Tốt',cat:'positive',sc:'#2E9C46',bg:'#EEF3DF',bd:'#D4E2B8',time:'2 ngày trước',title:'CVR vượt trội đáng nhân rộng',metric:'CVR 8,22%',desc:'Hứa Ngân Daily đạt CVR 8,22% — cao nhất hệ thống. Phân tích & nhân rộng kịch bản cho nhóm KOC tương đồng.',act:'Phân tích kịch bản',steps:['Ghi nhận kịch bản & sản phẩm phiên CVR cao','Chia sẻ playbook cho 10 KOC nhóm A/B','Đặt CVR mục tiêu 5% cho nhóm áp dụng'],owner:'Đào tạo KOC'} ];
+    const alertCats=[['all','Tất cả'],['risk','Rủi ro'],['opportunity','Cơ hội'],['optimize','Tối ưu'],['positive','Tích cực']];
+    const alertTabs=alertCats.map(([k,l])=>({k,l,n:k==='all'?allAlerts.length:allAlerts.filter(a=>a.cat===k).length,active:S.alertFilter===k,go:()=>this.setState({alertFilter:k}),activeBg:S.alertFilter===k?'#F47B27':'#FBF7EF',activeBd:S.alertFilter===k?'#F47B27':'#E7DDCA',activeCol:S.alertFilter===k?'#FFFFFF':'#6C5E45',countBg:S.alertFilter===k?'#E7DDCA14':'#E7DDCA',countCol:S.alertFilter===k?'#FFFFFF':'#85775D'}));
+    const alerts=allAlerts.filter(a=>S.alertFilter==='all'||a.cat===S.alertFilter).map(a=>({...a,expanded:S.alertOpen===a.id,chevLabel:S.alertOpen===a.id?'Thu gọn ⌃':'Chi tiết ⌄',toggle:()=>this.setState(s=>({alertOpen:s.alertOpen===a.id?null:a.id}))}));
+    const alertSummary=[{l:'Mức cao',n:2,c:'#E2502F'},{l:'Mức vừa',n:2,c:'#BE8A14'},{l:'Tích cực',n:1,c:'#2E9C46'},{l:'Đang theo dõi',n:18,c:'#9C8F75'}];
+    // alert mini-trend (alerts opened per day)
+    const aTrend=[3,2,4,5,3,6,4,2,5,7,4,3,5,4,6];
+    const aMax=Math.max(...aTrend); const aBars=aTrend.map((v,i)=>({x:(i*(300/15)+3).toFixed(1),w:(300/15*0.6).toFixed(1),y:(64-v/aMax*54).toFixed(1),h:(v/aMax*54).toFixed(1),c:i===9?'#E2502F':'#E6D2A4'}));
+
+    // ---- BRAND DROPDOWN ----
+    const brandMenu=this.brands.map(b=>({label:b,active:S.brand===b,col:S.brand===b?'#F47B27':'#473D2D',go:()=>this.setState({brand:b,brandOpen:false})}));
+
+    // ---- COMPARE PICKER ----
+    const pickList=koc.map((k,i)=>({k,i})).filter(o=>!S.cmp.includes(o.i)).filter(o=>{ if(!S.pickQ) return true; const q=S.pickQ.toLowerCase(); return (o.k.name||'').toLowerCase().includes(q)||(o.k.user||'').toLowerCase().includes(q); }).slice(0,8).map(o=>({name:this.clean(o.k.name),user:'@'+o.k.user,initials:this.initials(o.k.name),gmv:this.fmtVND(o.k.gmv),grade:o.k.grade,gcol:this.gradeColor(o.k.grade),add:()=>this.setState(s=>({pickOpen:false,pickQ:'',cmp:s.cmp.length<3?[...s.cmp,o.i]:s.cmp}))}));
+
+    // ---- TREND HOVER ----
+    const hd=S.hoverDay; const hover= hd!=null && days[hd] ? {x:xs[hd], gy:gpts[hd][1], oy:opts[hd][1], day:days[hd].d, gmv:this.fmtVND(days[hd].gmv*1e6), orders:this.fmtInt(days[hd].orders), sessions:this.fmtInt(days[hd].sessions), tipX:Math.min(Math.max(xs[hd]-70,6),W-150), left:xs[hd]>W*0.6 } : null;
+    const trendHit=days.map((d,i)=>({x:(i===0?0:(xs[i]+xs[i-1])/2).toFixed(1), w:((i===days.length-1?W:(xs[i]+xs[i+1])/2)-(i===0?0:(xs[i]+xs[i-1])/2)).toFixed(1), enter:()=>this.setState({hoverDay:i})}));
+    const trendLeave=()=>this.setState({hoverDay:null});
+
+    // ---- OVERVIEW DEPTH: funnel + grade donut + KPI deltas ----
+    const fImpr=T.impr,fClick=T.clicks,fOrd=T.orders;
+    const funnelRaw=[ {l:'Lượt hiển thị',v:fImpr,prev:null}, {l:'Lượt nhấp',v:fClick,prev:fImpr}, {l:'Đơn hàng',v:fOrd,prev:fClick} ];
+    const funnel=funnelRaw.map((f,i)=>({l:f.l, v:i===2?this.fmtInt(f.v):this.fmtNum(f.v), pct:f.v/fImpr*100, c:i===2?'#BE8A14':'#F47B27', raw:f.v,
+      ofTop:(f.v/fImpr*100).toFixed(2).replace('.',',')+'%', fromPrev:f.prev?(f.v/f.prev*100).toFixed(2).replace('.',',')+'%':'100%', drop:f.prev?this.fmtNum(f.prev-f.v):'—',
+      hover:()=>this.setState({funnelHover:i}), leave:()=>this.setState({funnelHover:-1}), op:(S.funnelHover>=0&&S.funnelHover!==i)?'.5':'1' }));
+    const funnelTip=S.funnelHover>=0?(()=>{const f=funnel[S.funnelHover];return {l:f.l,ofTop:f.ofTop,fromPrev:f.fromPrev,drop:f.drop,first:S.funnelHover===0,top:(S.funnelHover*44).toString()};})():null;
+    const funnelSteps=[ {l:'CTR Hiển thị → Nhấp',v:(T.clicks/T.impr*100).toFixed(2).replace('.',',')+'%'},{l:'CVR Nhấp → Đơn',v:(T.orders/T.clicks*100).toFixed(2).replace('.',',')+'%'} ];
+    const gTotal=Object.values(grades).reduce((a,b)=>a+b,0)||1; let acc=0;
+    const donut=[['S','#F47B27'],['A','#BE8A14'],['B','#2E9C46'],['C','#C2801A'],['D','#9C8F75']].map(([g,c])=>{ const n=grades[g]||0; const frac=n/gTotal; const a0=acc; acc+=frac; const a1=acc; const arc=(a0,a1)=>{ const r=54, R=78, cx=90,cy=90; const s=2*Math.PI*a0-Math.PI/2, e=2*Math.PI*a1-Math.PI/2; const x0=cx+R*Math.cos(s),y0=cy+R*Math.sin(s),x1=cx+R*Math.cos(e),y1=cy+R*Math.sin(e); const xi1=cx+r*Math.cos(e),yi1=cy+r*Math.sin(e),xi0=cx+r*Math.cos(s),yi0=cy+r*Math.sin(s); const laf=(a1-a0)>0.5?1:0; return `M${x0.toFixed(1)},${y0.toFixed(1)} A${R},${R} 0 ${laf} 1 ${x1.toFixed(1)},${y1.toFixed(1)} L${xi1.toFixed(1)},${yi1.toFixed(1)} A${r},${r} 0 ${laf} 0 ${xi0.toFixed(1)},${yi0.toFixed(1)} Z`; }; return {g,c,n,pct:(frac*100).toFixed(1).replace('.',','),d:n>0?arc(a0,a1):'', hover:()=>this.setState({donutHover:g}), leave:()=>this.setState({donutHover:null}), op:(S.donutHover&&S.donutHover!==g)?'.32':'1', rowBg:S.donutHover===g?'#FBF7EF':'transparent'}; });
+    const dHover=S.donutHover?donut.find(d=>d.g===S.donutHover):null;
+    const donutBig=dHover?''+dHover.n:''+gTotal; const donutSmall=dHover?('Hạng '+dHover.g+' · '+dHover.pct+'%'):'KOC';
+
+    // ---- DETAIL DEPTH: percentile, benchmark, gmv trend ----
+    const sortedGmv=[...koc].sort((a,b)=>b.gmv-a.gmv); const rankIdx=sortedGmv.findIndex(k=>k.id===dk.id);
+    const pct=(arr,key,val)=>{ const below=arr.filter(k=>(k[key]||0)<=val).length; return Math.round(below/arr.length*100); };
+    const benchAvg={gmv:koc.reduce((a,k)=>a+k.gmv,0)/koc.length, cvr:koc.reduce((a,k)=>a+k.cvr,0)/koc.length, ctr:koc.reduce((a,k)=>a+k.ctr,0)/koc.length, dtgio:koc.reduce((a,k)=>a+k.dtgio,0)/koc.length};
+    const detailMeta={ rank:rankIdx+1, total:koc.length, pctile:Math.max(1,Math.ceil((rankIdx+1)/koc.length*100)),
+      bench:[ {l:'CVR',v:dk.cvr||0,avg:benchAvg.cvr,unit:'%',mult:(dk.cvr/benchAvg.cvr)},{l:'CTR',v:dk.ctr||0,avg:benchAvg.ctr,unit:'%',mult:(dk.ctr/benchAvg.ctr)},{l:'DT/giờ',v:dk.dtgio||0,avg:benchAvg.dtgio,unit:'',mult:(dk.dtgio/benchAvg.dtgio)} ].map(b=>({l:b.l, mult:(b.mult||0).toFixed(1).replace('.',','), good:b.mult>=1, badgeCol:b.mult>=1?'#2E9C46':'#BE8A14', badgeBg:b.mult>=1?'#EEF3DF':'#FBF0DA', badgeBd:b.mult>=1?'#D4E2B8':'#E6D2A4', pctSelf:Math.min(100,b.v/Math.max(b.v,b.avg)*100).toFixed(0), pctAvg:Math.min(100,b.avg/Math.max(b.v,b.avg)*100).toFixed(0), selfV:b.unit==='%'?b.v.toFixed(2).replace('.',',')+'%':this.fmtVND(b.v), avgV:b.unit==='%'?b.avg.toFixed(2).replace('.',',')+'%':this.fmtVND(b.avg) })) };
+    const dsess=detail.sessions; const dgMax=Math.max(...koc.slice(0,1).map(()=>1),...dsess.map(s=>1)); // placeholder
+    const dGmvVals=this.kocSessions(dk); // reuse; build mini bar from session gmv numeric
+    const dRawSess=(()=>{ const n=Math.min(8,Math.max(1,dk.sessions||1)); const w=[]; let sum=0; for(let i=0;i<n;i++){ const x=Math.pow(0.8,i)*(1+((i*37)%5)/10); w.push(x); sum+=x; } return w.map(x=>x/sum*(dk.gmv||0)).reverse(); })();
+    const dMax=Math.max(1,...dRawSess); const dBars=dRawSess.map((v,i)=>({x:(i*(560/dRawSess.length)+6).toFixed(1),w:(560/dRawSess.length*0.62).toFixed(1),y:(110-v/dMax*92).toFixed(1),h:(v/dMax*92).toFixed(1)}));
+    const strengths=detailMeta.bench.filter(b=>b.good).map(b=>b.l);
+    const weaks=detailMeta.bench.filter(b=>!b.good).map(b=>b.l);
+
+    // ---- PRODUCTS (beta) ----
+    const prods=[ {n:'Serum Vitamin C Brightening 30ml',c:'Skincare',g:412e6,o:2841,ctr:'5,2%',ret:'2,1%'},{n:'Cushion Macaron Velvet SPF50',c:'Trang điểm',g:356e6,o:2410,ctr:'4,8%',ret:'1,7%'},{n:'Kem chống nắng Daily UV 50ml',c:'Skincare',g:298e6,o:3120,ctr:'4,1%',ret:'2,4%'},{n:'Son kem lì Macaron #07',c:'Trang điểm',g:241e6,o:4180,ctr:'6,1%',ret:'3,2%'},{n:'Mặt nạ dưỡng ẩm (hộp 10)',c:'Skincare',g:187e6,o:2050,ctr:'3,9%',ret:'1,2%'},{n:'Tẩy trang Micellar 400ml',c:'Skincare',g:154e6,o:1760,ctr:'3,4%',ret:'1,0%'},{n:'Phấn phủ kiềm dầu',c:'Trang điểm',g:121e6,o:1490,ctr:'4,2%',ret:'2,8%'},{n:'Combo dưỡng da 5 bước',c:'Combo',g:98e6,o:640,ctr:'5,6%',ret:'4,1%'} ];
+    const pmax=Math.max(...prods.map(p=>p.g));
+    const products=prods.map((p,i)=>({rank:i+1,name:p.n,cat:p.c,gmv:this.fmtVND(p.g),pct:(p.g/pmax*100).toFixed(0),orders:this.fmtInt(p.o),ctr:p.ctr,ret:p.ret,col:p.c==='Skincare'?'#BE8A14':p.c==='Trang điểm'?'#F47B27':'#BE8A14'}));
+
+    return {
+      nav1,nav2,ranges,
+      brand:S.brand, brandOpen:S.brandOpen, brandMenu, toggleBrand:()=>this.setState(s=>({brandOpen:!s.brandOpen})),
+      alertTabs, alertMiniBars:aBars,
+      pickOpen:S.pickOpen, pickList, pickQ:S.pickQ, setPickQ:e=>this.setState({pickQ:e.target.value}), openPick:()=>this.setState({pickOpen:true,pickQ:''}), closePick:()=>this.setState({pickOpen:false}), canAdd:S.cmp.length<3, stop:e=>e.stopPropagation(),
+      hover, trendHit, trendLeave,
+      funnel, funnelSteps, funnelTip, donut, gradeTotal:gTotal, donutBig, donutSmall,
+      detailMeta, dBars, strengths:strengths.join(' · ')||'—', weaks:weaks.join(' · ')||'Không có điểm yếu nổi bật',
+      isDetail:S.screen==='detail', q:S.q, setQ:e=>this.setState({q:e.target.value}),
+      gradeBuckets,kocRows,cols, detail,backKoc, cmpCards,cmpRows,
+      stackBars,sessRows,stackGrid,stackTip, alerts,alertSummary, products,
+      weights:[{l:'Hiệu suất giờ (DT/giờ)',v:30,pct:100,c:'#BE8A14'},{l:'Tỷ lệ chuyển đổi (CVR)',v:25,pct:83,c:'#2E9C46'},{l:'Thu hút (CTR)',v:20,pct:67,c:'#BE8A14'},{l:'Quy mô GMV',v:15,pct:50,c:'#F47B27'},{l:'Độ đều đặn (số phiên)',v:10,pct:33,c:'#BE8A14'}],
+      thresholds:[{l:'Phiên 0 đơn liên tiếp',d:'Cảnh báo KOC tụt phong độ',v:'≥ 5 phiên',c:'#E2502F'},{l:'CVR giảm so kỳ trước',d:'Theo dõi chất lượng phiên',v:'> 30%',c:'#BE8A14'},{l:'DT/giờ dưới ngưỡng',d:'Hiệu suất thời gian kém',v:'< 200K/h',c:'#BE8A14'},{l:'Tập trung 1 KOC',d:'Rủi ro phụ thuộc doanh thu',v:'> 35% GMV',c:'#E2502F'},{l:'KOC mới nổi bật',d:'Cơ hội đầu tư mở rộng',v:'Top 20% điểm',c:'#2E9C46'}],
+      screenTitle:tt[0],screenSub:tt[1],
+      isOverview:S.screen==='overview', isKoc:S.screen==='koc', isCompare:S.screen==='compare', isSessions:S.screen==='sessions', isAlerts:S.screen==='alerts', isProducts:S.screen==='products', isData:S.screen==='data', isSettings:S.screen==='settings',
+      kpis,insights,
+      trendGmv,trendOrd,trendArea,trendDots,trendGrid,trendLabels,
+      hourBars,hourLabels,hourGrid,hourTip, topBars, scatterPts,bgScatter,xTicks,yTicks,scatterMX,scatterMY,scTip
+    };
+  }
+}
+</script>
+</body>
+</html>

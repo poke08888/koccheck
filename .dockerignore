@@ -1,0 +1,15 @@
+**/node_modules
+**/dist
+**/*.log
+server/data/*.db
+server/data/*.db-shm
+server/data/*.db-wal
+.git
+.gitignore
+chats
+project/koc-analytics-*.dc.html
+project/*.js
+project/.thumbnail
+project/uploads/*.png
+project/uploads/*.jpg
+project/uploads/*.json
